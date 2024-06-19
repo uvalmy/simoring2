@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Staff;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
 class StaffSiswaController extends Controller
 {
@@ -20,9 +21,13 @@ class StaffSiswaController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($siswa)
                     ->addColumn('aksi', function ($siswa) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1 d-inline-flex" onclick="getModal(`createModal`, `/staff/siswa/'. $siswa->id. '`, [`id`, `kelas_id`, `nis`, `nama`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`])"><i class="bi bi-pencil-square me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex" onclick="confirmDelete(`/staff/siswa/'. $siswa->id. '`, `siswa-table`)"><i class="bi bi-trash me-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/siswa/' . $siswa->id . '`, [`id`,`nis`, `nama`, `kelas_id`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`])">
+                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/siswa/' . $siswa->id . '`, `siswa-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
+                    })
+                    ->addColumn('kelas', function ($siswa) {
+                        return $siswa->kelas->nama;
                     })
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])
@@ -32,14 +37,15 @@ class StaffSiswaController extends Controller
             return $this->successResponse($siswa, 'Data siswa ditemukan.');
         }
 
-        return view('pages.staff.siswa.index');
+        $kelas = Kelas::with('jurusan')->get();
+        return view('pages.staff.siswa.index', compact('kelas'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'kelas_id' => 'required|exists:kelas,id',
-            'nis' => 'required|string|unique:siswa,nis',
+            'nis' => 'required|string|unique:siswas,nis',
             'nama' => 'required|string',
             'alamat' => 'required|string',
             'telepon' => 'required|string',
@@ -84,7 +90,7 @@ class StaffSiswaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'kelas_id' => 'required|exists:kelas,id',
-            'nis' => 'required|string|unique:siswa,nis,' . $id,
+            'nis' => 'required|string|unique:siswas,nis,' . $id,
             'nama' => 'required|string',
             'alamat' => 'required|string',
             'telepon' => 'required|string',

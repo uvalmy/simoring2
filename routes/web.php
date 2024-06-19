@@ -26,17 +26,17 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('staff')->middleware(['checkRole:admin'])->group(function () {
         Route::match(['get', 'post'], '/profile', [StaffProfileController::class, 'index'])->name('staff.profile');
-        Route::put('/profile/password', [StaffProfileController::class, 'updatePassword']);
+        Route::put('/profile/password', [StaffProfileController::class, 'updatePassword'])->name('staff.updatePassword');
         Route::get('/', [StaffDashboardController::class, 'index']);
-        Route::resource('/jurusan', StaffJurusanController::class);
-        Route::resource('/kelas', StaffKelasController::class);
-        Route::resource('/guru', StaffGuruController::class);
-        Route::resource('/siswa', StaffSiswaController::class);
-        Route::resource('/dudi', StaffDudiController::class);
+        Route::resource('/jurusan', StaffJurusanController::class)->names('staff.jurusan');
+        Route::resource('/kelas', StaffKelasController::class)->names('staff.kelas');
+        Route::resource('/guru', StaffGuruController::class)->names('staff.guru');
+        Route::resource('/siswa', StaffSiswaController::class)->names('staff.siswa');
+        Route::resource('/dudi', StaffDudiController::class)->names('staff.dudi');
     });
 });
 

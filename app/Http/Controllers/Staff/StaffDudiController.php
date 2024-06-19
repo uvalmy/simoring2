@@ -16,12 +16,13 @@ class StaffDudiController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $dudi = Dudi::query();
+            $dudi = Dudi::all();
             if ($request->mode == "datatable") {
                 return DataTables::of($dudi)
                     ->addColumn('aksi', function ($dudi) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1 d-inline-flex" onclick="getModal(`createModal`, `/staff/dudi/'. $dudi->id. '`, [`id`,`username`, `password`, `nama`, `instansi`, `alamat`, `telepon`])"><i class="bi bi-pencil-square me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex" onclick="confirmDelete(`/staff/dudi/'. $dudi->id. '`, `dudi-table`)"><i class="bi bi-trash me-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/dudi/' . $dudi->id . '`, [`id`, `nama`, `username`, `instansi`, `telepon`, `alamat`])">
+                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/dudi/' . $dudi->id . '`, `dudi-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addIndexColumn()
@@ -38,9 +39,9 @@ class StaffDudiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|unique:dudi,username',
-            'password' => 'required|string|min:8',
-            'konfirmasi_password' => 'required|string|min:8|same:password',
+            'username' => 'required|string|unique:dudis,username',
+            'password' => 'required|min:8',
+            'konfirmasi_password' => 'required|min:8|same:password',
             'nama' => 'required|string',
             'instansi' => 'required|string',
             'alamat' => 'required|string',
@@ -74,9 +75,9 @@ class StaffDudiController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|unique:dudi,username,'. $id,
-            'password' => 'nullable|string|min:8',
-            'konfirmasi_password' => 'required_with:password|string|min:8|same:password',
+            'username' => 'required|string|unique:dudis,username,'. $id,
+            'password' => 'nullable|min:8',
+            'konfirmasi_password' => 'nullable|required_with:password|same:password|min:8',
             'nama' => 'required|string',
             'instansi' => 'required|string',
             'alamat' => 'required|string',

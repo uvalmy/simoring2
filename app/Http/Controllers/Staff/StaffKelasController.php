@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Models\Kelas;
+use App\Models\Jurusan;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,31 +17,36 @@ class StaffKelasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $kelas = Kelas::all();
+            $kelas = Kelas::with('jurusan')->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($kelas)
                     ->addColumn('aksi', function ($kelas) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1 d-inline-flex" onclick="getModal(`createModal`, `/staff/kelas/'. $kelas->id. '`, [`id`,`jurusan_id`, `kode`, `nama`])"><i class="bi bi-pencil-square me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex" onclick="confirmDelete(`/staff/kelas/'. $kelas->id. '`, `kelas-table`)"><i class="bi bi-trash me-1"></i>Hapus</button>';
-                        return $editButton. $deleteButton;
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/kelas/' . $kelas->id . '`, [`id`,`kode`, `nama`, `jurusan_id`])">
+                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/kelas/' . $kelas->id . '`, `kelas-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
+                        return $editButton . $deleteButton;
+                    })
+                    ->addColumn('jurusan', function ($kelas) {
+                        return $kelas->jurusan->nama ?? 'Belum ditentukan';
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'jurusan'])
                     ->make(true);
             }
 
             return $this->successResponse($kelas, 'Data kelas ditemukan.');
         }
 
-        return view('pages.staff.kelas.index');
+        $jurusan = Jurusan::all();
+        return view('pages.staff.kelas.index', compact('jurusan'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'jurusan_id' => 'equired|exists:jurusans,id',
-            'kode' => 'equired|string|unique:kelas,kode',
-            'nama' => 'equired|string',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'kode' => 'required|string|unique:kelas,kode',
+            'nama' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -69,9 +75,9 @@ class StaffKelasController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'jurusan_id' => 'equired|exists:jurusans,id',
-            'kode' => 'equired|string|unique:kelas,kode,'. $id,
-            'nama' => 'equired|string',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'kode' => 'required|string|unique:kelas,kode,'. $id,
+            'nama' => 'required|string',
         ]);
 
         if ($validator->fails()) {

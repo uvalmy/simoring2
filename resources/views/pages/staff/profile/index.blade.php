@@ -6,8 +6,7 @@
 @endpush
 
 @section('main')
-<div class="container-fluid">
-    <section class="row">
+    <div class="row">
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
@@ -47,9 +46,38 @@
                     </form>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-dark">Ubah Password</h4>
+                </div>
+                <div class="card-body">
+                    <form id="updatePassword">
+                        @method('PUT')
+                        <div class="form-group mb-3">
+                            <label for="password_lama" class="form-label">Password Lama <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password_lama" name="password_lama">
+                            <small class="invalid-feedback" id="errorpassword_lama"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" name="password">
+                            <small class="invalid-feedback" id="errorpassword"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="konfirmasi_password" class="form-label">Konfirmasi Password <span
+                                    class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="konfirmasi_password"
+                                name="konfirmasi_password">
+                            <small class="invalid-feedback" id="errorkonfirmasi_password"></small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
-</div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -71,6 +99,26 @@
                     handleValidationErrors(error, "updateData", ["nama", "email",
                         "nik", "telepon"
                     ]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
+            });
+
+            $("#updatePassword").submit(function(e) {
+                setButtonLoadingState("#updatePassword .btn.btn-primary", true);
+                e.preventDefault();
+                const url = `{{ route('staff.updatePassword') }}`;
+                const data = new FormData(this);
+
+                const successCallback = function(response) {
+                    setButtonLoadingState("#updatePassword .btn.btn-primary", false);
+                    $("#updatePassword")[0].reset();
+                    handleSuccess(response, null, null, "no");
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#updatePassword .btn.btn-primary", false);
+                    handleValidationErrors(error, "updatePassword", ["password_lama", "password", "konfirmasi_password"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

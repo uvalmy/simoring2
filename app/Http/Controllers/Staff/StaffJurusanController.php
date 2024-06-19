@@ -20,8 +20,9 @@ class StaffJurusanController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($jurusans)
                     ->addColumn('aksi', function ($jurusan) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1 d-inline-flex" onclick="getModal(`createModal`, `/staff/jurusan/' . $jurusan->id . '`, [`id`,`kode`, `nama`])"><i class="bi bi-pencil-square me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex" onclick="confirmDelete(`/staff/jurusan/' . $jurusan->id . '`, `jurusan-table`)"><i class="bi bi-trash me-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/jurusan/' . $jurusan->id . '`, [`id`,`kode`, `nama`])">
+                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/jurusan/' . $jurusan->id . '`, `jurusan-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addIndexColumn()

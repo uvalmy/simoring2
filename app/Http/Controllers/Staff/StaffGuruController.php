@@ -20,8 +20,9 @@ class StaffGuruController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($users)
                     ->addColumn('aksi', function ($user) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1 d-inline-flex" onclick="getModal(`createModal`, `/staff/guru/'. $user->id. '`, [`id`,`nik`, `nama`, `email`, `telepon`, `role`])"><i class="bi bi-pencil-square me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex" onclick="confirmDelete(`/staff/guru/'. $user->id. '`, `guru-table`)"><i class="bi bi-trash me-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/guru/' . $user->id . '`, [`id`,`nik`, `nama`, `email`, `role`, `telepon`])">
+                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/guru/' . $user->id . '`, `guru-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addIndexColumn()
@@ -41,8 +42,8 @@ class StaffGuruController extends Controller
             'nik' => 'required|string|size:16|unique:users,nik',
             'nama' => 'required|string',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'konfirmasi_password' => 'required|string|min:8|same:password',
+            'password' => 'required|min:8',
+            'konfirmasi_password' => 'required|min:8|same:password',
             'telepon' => 'required|string',
             'role' => 'required|in:admin,guru_pembimbing,tata_usaha',
         ]);
@@ -77,8 +78,8 @@ class StaffGuruController extends Controller
             'nik' => 'required|string|size:16|unique:users,nik,' . $id,
             'nama' => 'required|string',
             'email' => 'required|string|email|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8',
-            'konfirmasi_password' => 'required_with:password|string|min:8|same:password',
+            'password' => 'nullable|min:8',
+            'konfirmasi_password' => 'nullable|required_with:password|same:password|min:8',
             'telepon' => 'required|string',
             'role' => 'required|in:admin,guru_pembimbing,tata_usaha',
         ]);

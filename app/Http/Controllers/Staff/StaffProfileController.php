@@ -15,7 +15,7 @@ class StaffProfileController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->isMethod('put')) {
+        if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
                 'nik' => 'required|string|unique:users,nik,' . Auth::user()->id,
                 'nama' => 'required|string',
@@ -45,8 +45,8 @@ class StaffProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'password_lama' => 'required|min:8',
-            'password' => 'required|string|min:8',
-            'konfirmasi_password' => 'required|string|min:8|same:password',
+            'password' => 'required|min:8',
+            'konfirmasi_password' => 'required|min:8|same:password',
         ]);
 
         if ($validator->fails()) {

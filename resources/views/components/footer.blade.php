@@ -1,5 +1,3 @@
-<div class="footer">
-    <div class="copyright">
-        <p>Copyright © Simoring {{ date('Y') }}</p>
-    </div>
+<div class="py-6 px-6 text-center">
+    <p class="mb-0 fs-4"></p>
 </div>
