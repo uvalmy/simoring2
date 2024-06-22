@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dudi')
+@section('title', 'Pkl')
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('libs/datatables/datatables.min.css') }}" />
@@ -16,12 +16,14 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="dudi-table" class="table table-bordered table-striped" width="100%">
+                <table id="pkl-table" class="table table-bordered table-striped" width="100%">
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th>Username</th>
-                            <th>Nama</th>
+                            <th>Siswa</th>
+                            <th>Guru</th>
+                            <th>Pembimbing Dudi</th>
+                            <th>Instansi</th>
                             <th width="20%">Aksi</th>
                         </tr>
                     </thead>
@@ -31,7 +33,7 @@
             </div>
         </div>
     </div>
-    @include('pages.staff.dudi.modal')
+    @include('pages.staff.pkl.modal')
 @endsection
 
 @push('scripts')
@@ -39,17 +41,25 @@
 
     <script>
         $(document).ready(function() {
-            datatableCall('dudi-table', '{{ route('staff.dudi.index') }}', [{
+            datatableCall('pkl-table', '{{ route('staff.pkl.index') }}', [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'username',
-                    name: 'username'
+                    data: 'siswa',
+                    name: 'siswa'
                 },
                 {
-                    data: 'nama',
-                    name: 'nama'
+                    data: 'user',
+                    name: 'user'
+                },
+                {
+                    data: 'pembimbing_dudi',
+                    name: 'pembimbing_dudi'
+                },
+                {
+                    data: 'dudi',
+                    name: 'dudi'
                 },
                 {
                     data: 'aksi',
@@ -62,24 +72,24 @@
                 e.preventDefault();
 
                 const kode = $("#saveData #id").val();
-                let url = "{{ route('staff.dudi.store') }}";
+                let url = "{{ route('staff.pkl.store') }}";
                 const data = new FormData(this);
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/staff/dudi/${kode}`;
+                    url = `/staff/pkl/${kode}`;
                 }
 
                 const successCallback = function(response) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleSuccess(response, "dudi-table", "createModal");
+                    handleSuccess(response, "pkl-table", "createModal");
                 };
 
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["username", "nama", "instansi","telepon", "password", "konfirmasi_password", "alamat"]);
+                    handleValidationErrors(error, "saveData", ["siswa_id","user_id","dudi_id","tanggal_mulai","tanggal_selesai","posisi","pembimbing_dudi"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

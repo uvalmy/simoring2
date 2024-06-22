@@ -60,7 +60,16 @@
                 const successCallback = function(response) {
                     setButtonLoadingState("#login .btn.btn-primary", false,
                         `<i class="ti ti-login me-1"></i>Login`);
-                    handleSuccess(response, null, null, "./");
+
+                    let directLink = null;
+                    if(response.data.role == 'admin'){
+                        directLink = "/staff";
+                    } else if (response.data.role == "guru_pembimbing"){
+                        directLink = "/guru";
+                    } else if (response.data.role == "tata_usaha"){
+                        directLink = "/tata-usaha"
+                    }
+                    handleSuccess(response, null, null, directLink);
                 };
 
                 const errorCallback = function(error) {

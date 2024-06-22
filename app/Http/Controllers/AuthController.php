@@ -14,7 +14,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (Auth::check()) {
-            return redirect('/');
+            if (auth()->user()->role == 'admin') {
+                return redirect('/staff');
+            } elseif (auth()->user()->role == 'guru_pembimbing') {
+                return redirect('/guru');
+            }
         }
 
         if ($request->isMethod('post')) {

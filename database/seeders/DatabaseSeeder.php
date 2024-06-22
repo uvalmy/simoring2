@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nik' => $this->generateRandomNik(),
                 'nama' => 'Vina Lestari',
-                'email' => 'vinalestari@gmail.com',
+                'email' => 'vina@gmail.com',
                 'password' => Hash::make('11221122'),
                 'telepon' => '081234567890',
                 'role' => 'guru_pembimbing',

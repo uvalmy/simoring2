@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Models\pkl;
+use App\Models\Pkl;
+use App\Models\Dudi;
+use App\Models\User;
+use App\Models\Siswa;
 use App\Models\Jurusan;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
@@ -21,11 +24,21 @@ class StaffpklController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
                     ->addColumn('aksi', function ($pkl) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/pkl/' . $pkl->id . '`, [`id`,`kode`, `nama`, `jurusan_id`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/pkl/' . $pkl->id . '`, [`id`,`siswa_id`,`user_id`,`dudi_id`, `tanggal_mulai`,`tanggal_selesai`, `posisi`,`pembimbing_dudi`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/pkl/' . $pkl->id . '`, `pkl-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
+                    ->addColumn('user', function($pkl){
+                        return $pkl->user->nama;
+                    })
+                    ->addColumn('siswa', function($pkl){
+                        return $pkl->siswa->nama;
+                    })
+                    ->addColumn('dudi', function($pkl){
+                        return $pkl->dudi->instansi;
+                    })
+
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])
                     ->make(true);
