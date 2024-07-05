@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +24,7 @@ class AuthController extends Controller
 
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'username' => 'required',
                 'password' => 'required|min:8',
             ]);
 
@@ -31,8 +32,14 @@ class AuthController extends Controller
                 return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
             }
 
-            if (!Auth::attempt($request->only('email', 'password'))) {
-                return $this->errorResponse(null, 'Email atau password tidak valid.', 401);
+            if (Auth::guard('web')->attempt(['email' => $request->username, 'password' => $request->password])) {
+                $user = Auth::guard('web')->user();
+            } elseif (Auth::guard('dudi')->attempt(['username' => $request->username, 'password' => $request->password])) {
+                $user = Auth::guard('dudi')->user();
+            } elseif (Auth::guard('siswa')->attempt(['nis' => $request->username, 'password' => $request->password])) {
+                $user = Auth::guard('siswa')->user();
+            } else {
+                return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
             }
 
             $admin = Auth::user();

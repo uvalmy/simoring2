@@ -19,4 +19,12 @@ class Dudi extends Model
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['role'] = 'dudi';
+        return $array;
+    }
+
 }

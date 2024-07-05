@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'siswas',
+        ],
+        'dudi' => [
+            'driver' => 'session',
+            'provider' => 'dudis',
+        ]
     ],
 
     /*
@@ -64,6 +72,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'siswas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Siswa::class,
+        ],
+        'dudis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Dudi::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
@@ -97,6 +113,18 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'siswas' => [
+            'provider' => 'siswas',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'dudis' => [
+            'provider' => 'dudis',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ]
     ],
 
     /*

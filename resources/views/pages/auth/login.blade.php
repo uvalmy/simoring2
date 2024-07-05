@@ -22,10 +22,10 @@
                                 <h4 class="mb-3 fw-bold text-center">Login</h4>
                                 <form id="login" autocomplete="off">
                                     <div class="form-group mb-3">
-                                        <label for="email" class="form-label">Email <span
+                                        <label for="username" class="form-label">Username <span
                                                 class="text-danger">*</span></label>
-                                        <input id="email" type="email" class="form-control" name="email">
-                                        <small class="invalid-feedback" id="erroremail"></small>
+                                        <input id="username" type="text" class="form-control" name="username">
+                                        <small class="invalid-feedback" id="errorusername"></small>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="password" class="form-label">Password <span
@@ -68,6 +68,8 @@
                         directLink = "/guru";
                     } else if (response.data.role == "tata_usaha"){
                         directLink = "/tata-usaha"
+                    } else if (response.data.role == "dudi"){
+                        directLink = "/dudi"
                     }
                     handleSuccess(response, null, null, directLink);
                 };
@@ -75,7 +77,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#login .btn.btn-primary", false,
                         `<i class="ti ti-login me-1"></i>Login`);
-                    handleValidationErrors(error, "login", ["email", "password"]);
+                    handleValidationErrors(error, "login", ["username", "password"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

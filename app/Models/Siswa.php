@@ -25,4 +25,11 @@ class Siswa extends Model
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['role'] = 'siswa';
+        return $array;
+    }
 }
