@@ -51,10 +51,16 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
-        auth('dudi')->logout();
-        auth('siswa')->logout();
+        $guards = ['web', 'dudi', 'siswa'];
+
+        foreach ($guards as $guard) {
+            if (auth($guard)->check()) {
+                auth($guard)->logout();
+            }
+        }
+
         session()->invalidate();
+        session()->regenerateToken();
         return redirect()->route('login');
     }
 }
