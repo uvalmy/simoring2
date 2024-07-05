@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Jurusan;
-use App\Models\Kelas;
+use App\Models\Dudi;
 use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Jurusan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -67,7 +69,11 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        $jurusans = Jurusan::insert($dataJurusan);
+        $jurusans = collect();
+        foreach ($dataJurusan as $jurusanData) {
+            $jurusan = Jurusan::create($jurusanData);
+            $jurusans->push($jurusan);
+        }
 
         foreach ($jurusans as $jurusan) {
             for ($i = 1; $i <= 3; $i++) {
@@ -79,6 +85,73 @@ class DatabaseSeeder extends Seeder
                     'nama' => $nama,
                 ]);
             }
+        }
+
+        $dataDudi = [
+            [
+                'username' => 'dudi1',
+                'password' => Hash::make('password'),
+                'nama' => 'PT. Telekomunikasi Indonesia Tbk',
+                'instansi' => 'Telekomunikasi',
+                'alamat' => 'Jl. Jend. Sudirman Kav. 52-53, Jakarta 12190',
+                'telepon' => '021-1212121',
+            ],
+            [
+                'username' => 'dudi2',
+                'password' => Hash::make('password'),
+                'nama' => 'PT. Bank Rakyat Indonesia (Persero) Tbk',
+                'instansi' => 'Perbankan',
+                'alamat' => 'Gedung BRI 1, Jl. Jenderal Sudirman Kav. 44-46, Jakarta 10210',
+                'telepon' => '021-1212121',
+            ],
+            [
+                'username' => 'dudi3',
+                'password' => Hash::make('password'),
+                'nama' => 'PT. Pertamina (Persero)',
+                'instansi' => 'Minyak dan Gas',
+                'alamat' => 'Gedung Pertamina, Jl. Medan Merdeka Timur No. 1A, Jakarta Pusat',
+                'telepon' => '021-1212121',
+            ],
+            [
+                'username' => 'dudi4',
+                'password' => Hash::make('password'),
+                'nama' => 'PT. Garuda Indonesia (Persero) Tbk',
+                'instansi' => 'Transportasi Udara',
+                'alamat' => 'Gedung Garuda Indonesia, Jl. Medan Merdeka Selatan No. 13, Jakarta 10110',
+                'telepon' => '021-1212121',
+            ],
+            [
+                'username' => 'dudi5',
+                'password' => Hash::make('password'),
+                'nama' => 'PT. Freeport Indonesia',
+                'instansi' => 'Pertambangan',
+                'alamat' => 'Gedung Freeport Indonesia, Jl. HR Rasuna Said Kav. X-5 No. 1-2, Jakarta 12950',
+                'telepon' => '021-1212121',
+            ],
+        ];
+
+        foreach ($dataDudi as $dudi) {
+            Dudi::create($dudi);
+        }
+
+        $kelas = Kelas::all();
+
+        $nimBase = date('Y') . '0000';
+
+        for ($i = 1; $i <= 30; $i++) {
+            $kelasRandom = $kelas->random();
+            $nim = $nimBase + $i;
+
+            Siswa::create([
+                'kelas_id' => $kelasRandom->id,
+                'nis' => $nim,
+                'nama' => 'Siswa ' . $i,
+                'password' => bcrypt('password'),
+                'alamat' => 'Alamat siswa ' . $i,
+                'telepon' => '08123456789',
+                'tempat_lahir' => 'Tempat Lahir Siswa ' . $i,
+                'tanggal_lahir' => now()->subYears(rand(15, 18))->subMonths(rand(0, 11))->subDays(rand(0, 30)), // Tanggal lahir acak antara 15-18 tahun yang lalu
+            ]);
         }
     }
 
