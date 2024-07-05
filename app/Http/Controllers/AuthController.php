@@ -51,10 +51,10 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         auth()->logout();
         auth('dudi')->logout();
         auth('siswa')->logout();
+        session()->invalidate();
         return redirect()->route('login');
     }
 }
