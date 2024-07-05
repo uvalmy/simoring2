@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Pkl;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Dudi extends Model
+class Dudi extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
     protected $guarded = [];
+    protected $guard = 'dudi';
 
     public function pkls()
     {
@@ -20,11 +22,15 @@ class Dudi extends Model
         'password' => 'hashed',
     ];
 
+    public function getRoleAttribute()
+    {
+        return 'dudi';
+    }
+
     public function toArray()
     {
         $array = parent::toArray();
         $array['role'] = 'dudi';
         return $array;
     }
-
 }

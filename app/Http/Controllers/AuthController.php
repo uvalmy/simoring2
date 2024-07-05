@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +14,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::check()) {
+        if (auth()->check()) {
             if (auth()->user()->role == 'admin') {
                 return redirect('/staff');
             } elseif (auth()->user()->role == 'guru_pembimbing') {
@@ -32,18 +32,18 @@ class AuthController extends Controller
                 return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
             }
 
-            if (Auth::guard('web')->attempt(['email' => $request->username, 'password' => $request->password])) {
-                $user = Auth::guard('web')->user();
-            } elseif (Auth::guard('dudi')->attempt(['username' => $request->username, 'password' => $request->password])) {
-                $user = Auth::guard('dudi')->user();
-            } elseif (Auth::guard('siswa')->attempt(['nis' => $request->username, 'password' => $request->password])) {
-                $user = Auth::guard('siswa')->user();
+            $user = null;
+            if (filter_var($request->username, FILTER_VALIDATE_EMAIL) && auth('web')->attempt(['email' => $request->username, 'password' => $request->password])) {
+                $user = auth('web')->user();
+            } elseif (ctype_alnum($request->username) && auth('dudi')->attempt(['username' => $request->username, 'password' => $request->password])) {
+                $user = auth('dudi')->user();
+            } elseif (ctype_digit($request->username) && auth('siswa')->attempt(['nis' => $request->username, 'password' => $request->password])) {
+                $user = auth('siswa')->user();
             } else {
                 return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
             }
 
-            $admin = Auth::user();
-            return $this->successResponse($admin, 'Login berhasil.');
+            return $this->successResponse($user, 'Login berhasil.');
         }
 
         return view('pages.auth.login');
@@ -51,7 +51,10 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+
+        auth()->logout();
+        auth('dudi')->logout();
+        auth('siswa')->logout();
         return redirect()->route('login');
     }
 }

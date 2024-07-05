@@ -16,12 +16,14 @@
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                 <li class="fw-semibold me-3 text-capitalize">
-                    @php
-                        $role = auth()->user()->role;
-                        $roleParts = explode('_', $role);
-                        $formattedRole = implode(' ', $roleParts);
-                    @endphp
-                    {{ auth()->user()->nama }} | {{ $formattedRole }}
+                    @auth
+                        @php
+                            $role = auth()->user()->role;
+                            $roleParts = explode('_', $role);
+                            $formattedRole = implode(' ', $roleParts);
+                        @endphp
+                        {{ auth()->user()->nama }} | {{ $formattedRole }}
+                    @endauth
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -31,22 +33,36 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                         <div class="message-body">
-                            @if(auth()->user()->role == 'admin')
-                                <a href="/staff/profile" class="d-flex align-items-center gap-2 dropdown-item">
+                            @auth
+                                @if (auth()->user()->role == 'admin')
+                                    <a href="/staff/profile" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-user-circle fs-6"></i>
+                                        <p class="mb-0 fs-3">Profile</p>
+                                    </a>
+                                @elseif(auth()->user()->role == 'guru_pembimbing')
+                                    <a href="/guru/profile" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-user-circle fs-6"></i>
+                                        <p class="mb-0 fs-3">Profile</p>
+                                    </a>
+                                @elseif(auth()->user()->role == 'tata_usaha')
+                                    <a href="/guru/profile" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-user-circle fs-6"></i>
+                                        <p class="mb-0 fs-3">Profile</p>
+                                    </a>
+                                @endif
+                            @endauth
+                            @if (auth('dudi')->user())
+                                <a href="/dudi/profile" class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user-circle fs-6"></i>
                                     <p class="mb-0 fs-3">Profile</p>
                                 </a>
-                            @elseif(auth()->user()->role == 'guru_pembimbing')
-                                <a href="/guru/profile" class="d-flex align-items-center gap-2 dropdown-item">
-                                    <i class="ti ti-user-circle fs-6"></i>
-                                    <p class="mb-0 fs-3">Profile</p>
-                                </a>
-                            @elseif(auth()->user()->role == 'tata_usaha')
-                                <a href="/guru/profile" class="d-flex align-items-center gap-2 dropdown-item">
+                            @elseif(auth('siswa')->user())
+                                <a href="/siswa/profile" class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user-circle fs-6"></i>
                                     <p class="mb-0 fs-3">Profile</p>
                                 </a>
                             @endif
+
 
                             <a href="{{ route('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                         </div>

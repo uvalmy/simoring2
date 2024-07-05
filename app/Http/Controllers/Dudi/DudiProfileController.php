@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\TataUsaha;
+namespace App\Http\Controllers\Dudi;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponder;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class TataUsahaProfileController extends Controller
+class DudiProfileController extends Controller
 {
     use ApiResponder;
 
@@ -17,9 +17,9 @@ class TataUsahaProfileController extends Controller
     {
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
-                'nik' => 'required|string|unique:users,nik,' . auth()->user()->id,
                 'nama' => 'required|string',
-                'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+                'instansi' => 'required|string',
+                'alamat' => 'required|string',
                 'telepon' => 'required|string',
             ]);
 
@@ -27,18 +27,18 @@ class TataUsahaProfileController extends Controller
                 return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
             }
 
-            $user = auth()->user();
+            $user = auth('dudi')->user();
 
             if (!$user) {
                 return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);
             }
 
-            $user->update($request->only('nik', 'nama', 'email', 'telepon'));
+            $user->update($request->only('nama', 'instansi', 'alamat', 'telepon'));
 
             return $this->successResponse($user, 'Data Profil diubah.');
         }
 
-        return view('pages.tata-usaha.profile.index');
+        return view('pages.dudi.profile.index');
     }
 
     public function updatePassword(Request $request)
@@ -53,7 +53,7 @@ class TataUsahaProfileController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $user = auth()->user();
+        $user = auth('dudi')->user();
 
         if (!$user) {
             return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);

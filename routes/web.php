@@ -1,19 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Staff\StaffPklController;
+use App\Http\Controllers\Dudi\DudiDashboardController;
+use App\Http\Controllers\Dudi\DudiProfileController;
+use App\Http\Controllers\Guru\GuruDashboardController;
+use App\Http\Controllers\Guru\GuruProfileController;
+use App\Http\Controllers\Siswa\SiswaDashboardController;
+use App\Http\Controllers\Siswa\SiswaProfileController;
+use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Staff\StaffDudiController;
 use App\Http\Controllers\Staff\StaffGuruController;
-use App\Http\Controllers\Guru\GuruProfileController;
-use App\Http\Controllers\Staff\StaffKelasController;
-use App\Http\Controllers\Staff\StaffSiswaController;
-use App\Http\Controllers\Guru\GuruDashboardController;
 use App\Http\Controllers\Staff\StaffJurusanController;
+use App\Http\Controllers\Staff\StaffKelasController;
+use App\Http\Controllers\Staff\StaffPklController;
 use App\Http\Controllers\Staff\StaffProfileController;
-use App\Http\Controllers\Staff\StaffDashboardController;
-use App\Http\Controllers\TataUsaha\TataUsahaProfileController;
+use App\Http\Controllers\Staff\StaffSiswaController;
 use App\Http\Controllers\TataUsaha\TataUsahaDashboardController;
+use App\Http\Controllers\TataUsaha\TataUsahaProfileController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +28,13 @@ use App\Http\Controllers\TataUsaha\TataUsahaDashboardController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return redirect('/login');;
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('staff')->middleware(['checkRole:admin'])->group(function () {
@@ -50,16 +54,28 @@ Route::middleware(['auth'])->group(function () {
         Route::match(['get', 'post'], '/profile', [GuruProfileController::class, 'index'])->name('guru.profile');
         Route::put('/profile/password', [GuruProfileController::class, 'updatePassword'])->name('guru.updatePassword');
     });
+
     Route::prefix('tata-usaha')->middleware(['checkRole:tata_usaha'])->group(function () {
         Route::get('/', [TataUsahaDashboardController::class, 'index'])->name('tata-usaha.dashboard');
         Route::match(['get', 'post'], '/profile', [TataUsahaProfileController::class, 'index'])->name('tata-usaha.profile');
         Route::put('/profile/password', [TataUsahaProfileController::class, 'updatePassword'])->name('tata-usaha.updatePassword');
     });
+
+});
+
+Route::middleware('auth:dudi')->prefix('dudi')->group(function () {
+    Route::get('/', [DudiDashboardController::class, 'index'])->name('dudi.dashboard');
+    Route::match(['get', 'post'], '/profile', [DudiProfileController::class, 'index'])->name('dudi.profile');
+    Route::put('/profile/password', [DudiProfileController::class, 'updatePassword'])->name('dudi.updatePassword');
+});
+
+Route::middleware('auth:siswa')->prefix('siswa')->group(function () {
+    Route::get('/', [SiswaDashboardController::class, 'index'])->name('siswa.dashboard');
+    Route::match(['get', 'post'], '/profile', [SiswaProfileController::class, 'index'])->name('siswa.profile');
+    Route::put('/profile/password', [SiswaProfileController::class, 'updatePassword'])->name('siswa.updatePassword');
 });
 
 Route::middleware(['guest'])->group(function () {
     Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
     Route::match(['get', 'post'], '/register', [AuthController::class, 'register']);
 });
-
-

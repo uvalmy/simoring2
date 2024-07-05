@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\TataUsaha;
+namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponder;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class TataUsahaProfileController extends Controller
+class SiswaProfileController extends Controller
 {
     use ApiResponder;
 
@@ -17,9 +17,8 @@ class TataUsahaProfileController extends Controller
     {
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
-                'nik' => 'required|string|unique:users,nik,' . auth()->user()->id,
                 'nama' => 'required|string',
-                'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+                'alamat' => 'required|string',
                 'telepon' => 'required|string',
             ]);
 
@@ -27,18 +26,18 @@ class TataUsahaProfileController extends Controller
                 return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
             }
 
-            $user = auth()->user();
+            $user = auth('siswa')->user();
 
             if (!$user) {
                 return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);
             }
 
-            $user->update($request->only('nik', 'nama', 'email', 'telepon'));
+            $user->update($request->only('nama', 'alamat', 'telepon'));
 
             return $this->successResponse($user, 'Data Profil diubah.');
         }
 
-        return view('pages.tata-usaha.profile.index');
+        return view('pages.siswa.profile.index');
     }
 
     public function updatePassword(Request $request)
@@ -53,7 +52,7 @@ class TataUsahaProfileController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $user = auth()->user();
+        $user = auth('siswa')->user();
 
         if (!$user) {
             return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);

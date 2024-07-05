@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Staff;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\ApiResponder;
 
 class StaffProfileController extends Controller
 {
@@ -17,9 +17,9 @@ class StaffProfileController extends Controller
     {
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
-                'nik' => 'required|string|unique:users,nik,' . Auth::user()->id,
+                'nik' => 'required|string|unique:users,nik,' . auth()->user()->id,
                 'nama' => 'required|string',
-                'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+                'email' => 'required|email|unique:users,email,' . auth()->user()->id,
                 'telepon' => 'required|string',
             ]);
 
@@ -27,7 +27,7 @@ class StaffProfileController extends Controller
                 return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
             }
 
-            $user = Auth::user();
+            $user = auth()->user();
 
             if (!$user) {
                 return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);
@@ -53,7 +53,7 @@ class StaffProfileController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $user = Auth::user();
+        $user = auth()->user();
 
         if (!$user) {
             return $this->errorResponse(null, 'Data Profil tidak ditemukan.', 404);

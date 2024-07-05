@@ -5,12 +5,15 @@ namespace App\Models;
 use App\Models\Kelas;
 use App\Models\Pkl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Siswa extends Model
+class Siswa extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
     protected $guarded = [];
+    protected $guard = 'siswa';
 
     public function kelas()
     {
@@ -25,6 +28,11 @@ class Siswa extends Model
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function getRoleAttribute()
+    {
+        return 'siswa';
+    }
 
     public function toArray()
     {

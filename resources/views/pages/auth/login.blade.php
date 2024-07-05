@@ -62,14 +62,14 @@
                         `<i class="ti ti-login me-1"></i>Login`);
 
                     let directLink = null;
-                    if(response.data.role == 'admin'){
+                    if (response.data.role == 'admin') {
                         directLink = "/staff";
-                    } else if (response.data.role == "guru_pembimbing"){
+                    } else if (response.data.role == "guru_pembimbing") {
                         directLink = "/guru";
-                    } else if (response.data.role == "tata_usaha"){
+                    } else if (response.data.role == "tata_usaha") {
                         directLink = "/tata-usaha"
-                    } else if (response.data.role == "dudi"){
-                        directLink = "/dudi"
+                    } else {
+                        directLink = `/${response.data.role}`
                     }
                     handleSuccess(response, null, null, directLink);
                 };
