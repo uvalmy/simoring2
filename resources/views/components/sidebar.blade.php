@@ -49,6 +49,12 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link" href="/staff/cp" aria-expanded="false">
+                                <i class="ti ti-building"></i>
+                                <span class="hide-menu">Cp</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/staff/pkl" aria-expanded="false">
                                 <i class="ti ti-building"></i>
                                 <span class="hide-menu">Pkl</span>
@@ -65,6 +71,12 @@
                             <a class="sidebar-link" href="/guru" aria-expanded="false">
                                 <i class="ti ti-layout-dashboard"></i>
                                 <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/guru/pkl" aria-expanded="false">
+                                <i class="ti ti-building"></i>
+                                <span class="hide-menu">Pkl</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -96,6 +108,12 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="/dudi/pkl" aria-expanded="false">
+                            <i class="ti ti-building"></i>
+                            <span class="hide-menu">Pkl</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="/dudi/profile" aria-expanded="false">
                             <i class="ti ti-user-circle"></i>
                             <span class="hide-menu">Profile</span>
@@ -106,6 +124,19 @@
                         <a class="sidebar-link" href="/siswa" aria-expanded="false">
                             <i class="ti ti-layout-dashboard"></i>
                             <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/siswa/pkl" aria-expanded="false">
+                            <i class="ti ti-building"></i>
+                            <span class="hide-menu">Pkl</span>
+                        </a>
+                    </li>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/siswa/laporan-harian" aria-expanded="false">
+                            <i class="ti ti-building"></i>
+                            <span class="hide-menu">Laporan Harian</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

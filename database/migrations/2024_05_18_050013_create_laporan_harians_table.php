@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('pkl_id')->constrained('pkls');
             $table->foreignId('cp_id')->constrained('cps');
             $table->date('tanggal');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }

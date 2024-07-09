@@ -20,9 +20,9 @@ class Siswa extends Authenticatable
         return $this->belongsTo(Kelas::class);
     }
 
-    public function pkls()
+    public function pkl()
     {
-        return $this->hasMany(Pkl::class);
+        return $this->hasOne(Pkl::class);
     }
 
     protected $casts = [
