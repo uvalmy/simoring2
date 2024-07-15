@@ -70,43 +70,6 @@ const getModal = (targetId, url = null, fields = null) => {
                         .trigger("change");
                 }
             });
-
-            if (response.data.hak_akses) {
-                const hakAkses = response.data.hak_akses;
-                $(`#${targetId} #tambah_pengunjung_masuk`)
-                    .prop("checked", hakAkses.tambah_pengunjung_masuk == 1)
-                    .trigger("change");
-                $(`#${targetId} #tambah_pengunjung_murid`)
-                    .prop("checked", hakAkses.tambah_pengunjung_murid == 1)
-                    .trigger("change");
-                $(`#${targetId} #tambah_pengunjung_keluar`)
-                    .prop("checked", hakAkses.tambah_pengunjung_keluar == 1)
-                    .trigger("change");
-                $(`#${targetId} #riwayat_pengunjung_masuk`)
-                    .prop("checked", hakAkses.riwayat_pengunjung_masuk == 1)
-                    .trigger("change");
-                $(`#${targetId} #riwayat_pengunjung_keluar`)
-                    .prop("checked", hakAkses.riwayat_pengunjung_keluar == 1)
-                    .trigger("change");
-                $(`#${targetId} #laporan_keuangan`)
-                    .prop("checked", hakAkses.laporan_keuangan == 1)
-                    .trigger("change");
-                $(`#${targetId} #user_management`)
-                    .prop("checked", hakAkses.user_management == 1)
-                    .trigger("change");
-                $(`#${targetId} #ubah_tarif`)
-                    .prop("checked", hakAkses.ubah_tarif == 1)
-                    .trigger("change");
-                $(`#${targetId} #daftar_bank`)
-                    .prop("checked", hakAkses.daftar_bank == 1)
-                    .trigger("change");
-                $(`#${targetId} #toleransi_waktu`)
-                    .prop("checked", hakAkses.toleransi_waktu == 1)
-                    .trigger("change");
-                $(`#${targetId} #murid`)
-                    .prop("checked", hakAkses.murid == 1)
-                    .trigger("change");
-            }
         };
 
         const errorCallback = function (error) {
@@ -187,6 +150,7 @@ const confirmDelete = (url, tableId) => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
     }).then((result) => {
         if (result.isConfirmed) {
             const data = null;

@@ -104,7 +104,7 @@ class SiswaLaporanHarianController extends Controller
 
     public function destroy($id)
     {
-        $laporanHarian = LaporanHairan::find($id);
+        $laporanHarian = LaporanHarian::find($id);
 
         if (!$laporanHarian) {
             return $this->errorResponse(null, 'Data laporan harian tidak ditemukan.', 404);

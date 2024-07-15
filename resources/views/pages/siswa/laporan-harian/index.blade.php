@@ -22,9 +22,9 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th>Tanggal</th>
                             <th>Elemen</th>
                             <th>Deskripsi</th>
+                            <th>Tanggal</th>
                             <th width="20%">Aksi</th>
                         </tr>
                     </thead>
@@ -47,16 +47,16 @@
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'tanggal',
-                    name: 'tanggal'
-                },
-                {
                     data: 'elemen',
                     name: 'elemen'
                 },
                 {
                     data: 'deskripsi',
                     name: 'deskripsi'
+                },
+                {
+                    data: 'tanggal',
+                    name: 'tanggal'
                 },
                 {
                     data: 'aksi',

@@ -80,6 +80,12 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link" href="/guru/laporan-harian" aria-expanded="false">
+                                <i class="ti ti-building"></i>
+                                <span class="hide-menu">Laporan Harian</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/guru/profile" aria-expanded="false">
                                 <i class="ti ti-user-circle"></i>
                                 <span class="hide-menu">Profile</span>
@@ -111,6 +117,12 @@
                         <a class="sidebar-link" href="/dudi/pkl" aria-expanded="false">
                             <i class="ti ti-building"></i>
                             <span class="hide-menu">Pkl</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/dudi/laporan-harian" aria-expanded="false">
+                            <i class="ti ti-building"></i>
+                            <span class="hide-menu">Laporan Harian</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
