@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('tanggal');
             $table->text('deskripsi');
             $table->text('saran');
+            $table->text('catatan')->nullable();
+            $table->enum('status', ['0', '1','2'])->default('0');
             $table->json('dokumentasi');
             $table->timestamps();
         });

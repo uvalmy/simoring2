@@ -4,6 +4,9 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('libs/datatables/datatables.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endpush
 
 @section('main')
@@ -69,7 +72,7 @@
 
 @push('scripts')
     <script src="{{ asset('libs/datatables/datatables.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script>
         $(document).ready(function() {
             datatableCall('siswa-table', '{{ route('staff.siswa.index') }}', [{
@@ -131,6 +134,16 @@
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);
             });
+
+            $('#kelas_id').select2({
+                theme: 'bootstrap-5',
+                dropdownParent: $("#createModal")
+            });
+
+            $('#kelas_filter').select2({
+                theme: 'bootstrap-5'
+            });
+
         });
     </script>
 @endpush

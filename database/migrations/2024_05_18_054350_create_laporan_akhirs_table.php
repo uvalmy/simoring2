@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('pkl_id')->constrained('pkls');
             $table->string('judul');
             $table->string('dokumen');
+            $table->text('catatan')->nullable();
+            $table->enum('status', ['0', '1','2'])->default('0');
             $table->timestamps();
         });
     }

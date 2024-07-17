@@ -13,28 +13,29 @@
 @section('main')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title fw-semibold">Tambah Data @yield('title')</h5>
+            <h5 class="card-title fw-semibold">Edit Data @yield('title')</h5>
         </div>
         <div class="card-body">
             <form id="saveData" autocomplete="off">
+                @method('PUT')
                 <div class="form-group mb-3">
                     <label for="judul" class="form-label">Judul <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="judul" name="judul">
+                    <input type="text" class="form-control" id="judul" name="judul" value="{{ $laporanProyek->judul }}">
                     <small class="invalid-feedback" id="errorjudul"></small>
                 </div>
                 <div class="form-group mb-3">
                     <label for="tanggal" class="form-label">Tanggal<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal">
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $laporanProyek->tanggal }}">
                     <small class="invalid-feedback" id="errortanggal"></small>
                 </div>
                 <div class="form-group mb-3">
                     <label for="deskripsi" class="form-label">Deskripsi <span class="text-danger">*</span></label>
-                    <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi"></textarea>
+                    <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi">{{ $laporanProyek->deskripsi }}</textarea>
                     <small class="invalid-feedback" id="errordeskripsi"></small>
                 </div>
                 <div class="form-group mb-3">
                     <label for="saran" class="form-label">Saran <span class="text-danger">*</span></label>
-                    <textarea class="form-control" rows="4" id="saran" name="saran"></textarea>
+                    <textarea class="form-control" rows="4" id="saran" name="saran">{{ $laporanProyek->saran }}</textarea>
                     <small class="invalid-feedback" id="errorsaran"></small>
                 </div>
                 <div class="form-group mb-3">
@@ -52,6 +53,7 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script src="{{ asset('libs/dropify/js/dropify.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('.dropify').dropify();
@@ -60,7 +62,7 @@
                 setButtonLoadingState("#saveData .btn.btn-primary", true);
                 e.preventDefault();
 
-                const url = "{{ route('siswa.laporanProyek.store') }}";
+                const url = "/siswa/laporan-proyek/{{ $laporanProyek->id }}";
                 const data = new FormData(this);
 
                 const successCallback = function(response) {

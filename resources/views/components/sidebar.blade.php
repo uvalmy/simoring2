@@ -56,7 +56,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/staff/pkl" aria-expanded="false">
-                                <i class="ti ti-building"></i>
+                                <i class="ti ti-news"></i>
                                 <span class="hide-menu">Pkl</span>
                             </a>
                         </li>
@@ -75,13 +75,13 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/guru/pkl" aria-expanded="false">
-                                <i class="ti ti-building"></i>
+                                <i class="ti ti-news"></i>
                                 <span class="hide-menu">Pkl</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/guru/laporan-harian" aria-expanded="false">
-                                <i class="ti ti-building"></i>
+                                <i class="ti ti-file-description"></i>
                                 <span class="hide-menu">Laporan Harian</span>
                             </a>
                         </li>
@@ -115,13 +115,13 @@
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/dudi/pkl" aria-expanded="false">
-                            <i class="ti ti-building"></i>
+                            <i class="ti ti-news"></i>
                             <span class="hide-menu">Pkl</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/dudi/laporan-harian" aria-expanded="false">
-                            <i class="ti ti-building"></i>
+                            <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Harian</span>
                         </a>
                     </li>
@@ -140,15 +140,27 @@
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/siswa/pkl" aria-expanded="false">
-                            <i class="ti ti-building"></i>
+                            <i class="ti ti-news"></i>
                             <span class="hide-menu">Pkl</span>
                         </a>
                     </li>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/siswa/laporan-harian" aria-expanded="false">
-                            <i class="ti ti-building"></i>
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-harian/*') ? 'active' : '' }}" href="/siswa/laporan-harian" aria-expanded="false">
+                            <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Harian</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-proyek/*') ? 'active' : '' }}" href="/siswa/laporan-proyek" aria-expanded="false">
+                            <i class="ti ti-file-description"></i>
+                            <span class="hide-menu">Laporan Proyek</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-akhir/*') ? 'active' : '' }}" href="/siswa/laporan-akhir" aria-expanded="false">
+                            <i class="ti ti-file-description"></i>
+                            <span class="hide-menu">Laporan Akhir</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

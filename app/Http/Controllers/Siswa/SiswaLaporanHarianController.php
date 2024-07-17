@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cp;
-use App\Models\LaporanHarian;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Models\LaporanHarian;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class SiswaLaporanHarianController extends Controller
 {
@@ -21,8 +22,9 @@ class SiswaLaporanHarianController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanHarians)
                     ->addColumn('aksi', function ($laporanHarian) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/siswa/laporan-harian/' . $laporanHarian->id . '`, [`id`,`tanggal`, `deskripsi`, `cp_id`])">
-                        <i class="ti ti-edit me-1"></i>Edit</button>';
+                        $editButton = '<a class="btn btn-sm btn-warning me-1" href="/siswa/laporan-harian/' . $laporanHarian->id . '">
+                        <i class="ti ti-edit me-1"></i>Edit</a>';
+
                         $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/siswa/laporan-harian/' . $laporanHarian->id . '`, `laporan-harian-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
@@ -32,8 +34,11 @@ class SiswaLaporanHarianController extends Controller
                     ->addColumn('status', function ($laporanHarian) {
                         return statusBadge($laporanHarian->status);
                     })
+                    ->addColumn('dokumentasi', function ($laporanHarian) {
+                        return '<img src="/storage/gambar/laporan-harian/' . $laporanHarian->dokumentasi . '" width="150px" alt="">';
+                    })
                     ->addIndexColumn()
-                    ->rawColumns(['elemen', 'deskripsi-cp', 'aksi', 'status'])
+                    ->rawColumns(['elemen', 'deskripsi-cp', 'aksi', 'status', 'dokumentasi'])
                     ->make(true);
             }
 
@@ -57,18 +62,34 @@ class SiswaLaporanHarianController extends Controller
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
             'nilai_karakter' => 'required|array',
+            'dokumentasi' => 'required|image|mimes:png,jpg,jpeg',
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
+        $cekLaporanHarian = LaporanHarian::where([
+            'pkl_id' => auth('siswa')->user()->pkl->id,
+            'tanggal' => $request->tanggal,
+        ])->first();
+
+        if ($cekLaporanHarian) {
+            return $this->errorResponse(null, 'Data laporan harian sudah ada.', 409);
+        }
+
+        if ($request->hasFile('dokumentasi')) {
+            $dokumentasi = $request->file('dokumentasi')->hashName();
+            $request->file('dokumentasi')->storeAs('public/gambar/laporan-harian', $dokumentasi);
+        }
+
+
         $laporanHarian = LaporanHarian::create([
             'pkl_id' => auth('siswa')->user()->pkl->id,
             'cp_id' => $request->cp_id,
             'tanggal' => $request->tanggal,
             'deskripsi' => $request->deskripsi,
-            'gambar' => "cucuc",
+            'dokumentasi' => $dokumentasi,
             'nilai_karakter' => $request->nilai_karakter,
         ]);
         return $this->successResponse($laporanHarian, 'Data laporan harian ditambahkan.');
@@ -87,7 +108,8 @@ class SiswaLaporanHarianController extends Controller
         }
 
         $laporanHarian = LaporanHarian::findOrFail($id);
-        return view('pages.siswa.laporan-harian.show', compact('laporanHarian'));
+        $cp = Cp::where('jurusan_id', auth('siswa')->user()->kelas->jurusan->id)->get();
+        return view('pages.siswa.laporan-harian.show', compact('laporanHarian', 'cp'));
     }
 
     public function update(Request $request, $id)
@@ -97,6 +119,7 @@ class SiswaLaporanHarianController extends Controller
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
             'nilai_karakter' => 'required|array',
+            'dokumentasi' => 'image|mimes:png,jpg,jpeg',
         ]);
 
         if ($validator->fails()) {
@@ -109,7 +132,32 @@ class SiswaLaporanHarianController extends Controller
             return $this->errorResponse(null, 'Data laporan harian tidak ditemukan.', 404);
         }
 
-        $laporanHarian->update($request->only('cp_id', 'tanggal', 'deskripsi', 'nilai_karakter'));
+        $cekLaporanHarian = LaporanHarian::where([
+            'pkl_id' => auth('siswa')->user()->pkl->id,
+            'tanggal' => $request->tanggal,
+        ])->whereNot('id', $laporanHarian->id)->first();
+
+        if ($cekLaporanHarian) {
+            return $this->errorResponse(null, 'Data laporan harian sudah ada.', 409);
+        }
+
+        $dokumentasi = $laporanHarian->dokumentasi;
+        if ($request->hasFile('dokumentasi')) {
+            if (Storage::exists('public/gambar/laporan-harian/' . $dokumentasi)) {
+                Storage::delete('public/gambar/laporan-harian/' . $dokumentasi);
+            }
+            $dokumentasi = $request->file('dokumentasi')->hashName();
+            $request->file('dokumentasi')->storeAs('public/gambar/laporan-harian', $dokumentasi);
+        }
+
+
+        $laporanHarian->update([
+            'cp_id' => $request->cp_id,
+            'tanggal' => $request->tanggal,
+            'deskripsi' => $request->deskripsi,
+            'dokumentasi' => $dokumentasi,
+            'nilai_karakter' => $request->nilai_karakter,
+        ]);
         return $this->successResponse($laporanHarian, 'Data laporan harian diperbarui.');
     }
 
@@ -121,6 +169,9 @@ class SiswaLaporanHarianController extends Controller
             return $this->errorResponse(null, 'Data laporan harian tidak ditemukan.', 404);
         }
 
+        if (Storage::exists('public/gambar/laporan-harian/' .  $laporanHarian->dokumentasi)) {
+            Storage::delete('public/gambar/laporan-harian/' .  $laporanHarian->dokumentasi);
+        }
         $laporanHarian->delete();
         return $this->successResponse(null, 'Data laporan harian dihapus.');
     }

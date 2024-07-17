@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengaturans', function (Blueprint $table) {
             $table->id();
-            $table->string('syarat_ketentuan');
-            $table->string('format_laporan');
+            $table->string('buku_panduan');
             $table->timestamps();
         });
     }

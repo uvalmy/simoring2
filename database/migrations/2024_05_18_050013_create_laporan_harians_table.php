@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('cp_id');
             $table->date('tanggal');
             $table->text('deskripsi');
-            $table->string('gambar');
+            $table->string('dokumentasi');
             $table->json('nilai_karakter');
             $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();

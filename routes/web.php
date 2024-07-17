@@ -1,28 +1,30 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Dudi\DudiDashboardController;
-use App\Http\Controllers\Dudi\DudiLaporanHarianController;
 use App\Http\Controllers\Dudi\DudiPklController;
-use App\Http\Controllers\Dudi\DudiProfileController;
-use App\Http\Controllers\Guru\GuruDashboardController;
-use App\Http\Controllers\Guru\GuruLaporanHarianController;
 use App\Http\Controllers\Guru\GuruPklController;
-use App\Http\Controllers\Guru\GuruProfileController;
-use App\Http\Controllers\Siswa\SiswaDashboardController;
-use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
-use App\Http\Controllers\Siswa\SiswaPklController;
-use App\Http\Controllers\Siswa\SiswaProfileController;
 use App\Http\Controllers\Staff\StaffCpController;
-use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Siswa\SiswaPklController;
+use App\Http\Controllers\Staff\StaffPklController;
 use App\Http\Controllers\Staff\StaffDudiController;
 use App\Http\Controllers\Staff\StaffGuruController;
-use App\Http\Controllers\Staff\StaffJurusanController;
+use App\Http\Controllers\Dudi\DudiProfileController;
+use App\Http\Controllers\Guru\GuruProfileController;
 use App\Http\Controllers\Staff\StaffKelasController;
-use App\Http\Controllers\Staff\StaffPklController;
-use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\Staff\StaffSiswaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dudi\DudiDashboardController;
+use App\Http\Controllers\Guru\GuruDashboardController;
+use App\Http\Controllers\Siswa\SiswaProfileController;
+use App\Http\Controllers\Staff\StaffJurusanController;
+use App\Http\Controllers\Staff\StaffProfileController;
+use App\Http\Controllers\Siswa\SiswaDashboardController;
+use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Dudi\DudiLaporanHarianController;
+use App\Http\Controllers\Guru\GuruLaporanHarianController;
+use App\Http\Controllers\Siswa\SiswaLaporanAkhirController;
+use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
+use App\Http\Controllers\Siswa\SiswaLaporanProyekController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,9 +77,11 @@ Route::middleware('auth:dudi')->prefix('dudi')->group(function () {
 
 Route::middleware('auth:siswa')->prefix('siswa')->group(function () {
     Route::resource('/pkl', SiswaPklController::class)->names('siswa.pkl');
+    Route::resource('/laporan-proyek', SiswaLaporanProyekController::class)->names('siswa.laporanProyek');
     Route::resource('/laporan-harian', SiswaLaporanHarianController::class)->names('siswa.laporanHarian');
     Route::get('/', [SiswaDashboardController::class, 'index'])->name('siswa.dashboard');
     Route::match(['get', 'post'], '/profile', [SiswaProfileController::class, 'index'])->name('siswa.profile');
+    Route::match(['get', 'post'], '/laporan-akhir', [SiswaLaporanAkhirController::class, 'index'])->name('siswa.laporanAkhir');
     Route::put('/profile/password', [SiswaProfileController::class, 'updatePassword'])->name('siswa.updatePassword');
 });
 

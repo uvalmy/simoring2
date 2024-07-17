@@ -14,9 +14,9 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title fw-semibold">Data @yield('title')</h5>
             @if (auth('siswa')->user()->pkl)
-                <button type="button" class="btn btn-primary" onclick="getModal('createModal')">
+                <a href="{{ route('siswa.laporanHarian.create') }}" class="btn btn-primary">
                     <i class="ti ti-plus me-1"></i>Tambah
-                </button>
+                </a>
             @endif
         </div>
         <div class="card-body">
@@ -30,6 +30,7 @@
                             <th>Nilai Karakter</th>
                             <th>Tanggal</th>
                             <th>Status</th>
+                            <th>Dokumentasi</th>
                             <th width="20%">Aksi</th>
                         </tr>
                     </thead>
@@ -39,7 +40,6 @@
             </div>
         </div>
     </div>
-    @include('pages.siswa.laporan-harian.modal')
 @endsection
 
 @push('scripts')
@@ -72,48 +72,14 @@
                     name: 'status'
                 },
                 {
+                    data: 'dokumentasi',
+                    name: 'dokumentasi'
+                },
+                {
                     data: 'aksi',
                     name: 'aksi'
                 },
             ]);
-
-            $("#saveData").submit(function(e) {
-                setButtonLoadingState("#saveData .btn.btn-primary", true);
-                e.preventDefault();
-
-                const kode = $("#saveData #id").val();
-                let url = "{{ route('siswa.laporanHarian.store') }}";
-                const data = new FormData(this);
-
-                if (kode !== "") {
-                    data.append("_method", "PUT");
-                    url = `/siswa/laporan-harian/${kode}`;
-                }
-
-                const successCallback = function(response) {
-                    setButtonLoadingState("#saveData .btn.btn-primary", false,
-                        `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleSuccess(response, "laporan-harian-table", "createModal");
-                };
-
-                const errorCallback = function(error) {
-                    setButtonLoadingState("#saveData .btn.btn-primary", false,
-                        `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["cp_id", "tanggal", "deskripsi"]);
-                };
-
-                ajaxCall(url, "POST", data, successCallback, errorCallback);
-            });
-
-            $('#cp_id').select2({
-                theme: 'bootstrap-5'
-            });
-
-            $('#nilai_karakter').select2({
-                theme: 'bootstrap-5'
-            });
-
-
         });
     </script>
 @endpush

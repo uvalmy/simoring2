@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Cp;
+use App\Models\Pkl;
 use App\Models\Dudi;
-use App\Models\Jurusan;
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Models\User;
+use App\Models\Jurusan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -39,7 +40,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'naufalaf@gmail.com',
                 'password' => Hash::make('11221122'),
                 'telepon' => '081234567890',
-                'role' => 'tata_usaha',
+                'role' => 'guru_pembimbing',
             ],
         ];
 
@@ -174,9 +175,6 @@ class DatabaseSeeder extends Seeder
             ["jurusan_id" => "1", "elemen" => "Perawatan dan Perbaikan Sepeda Motor Listrik dan Hybrid ", "deskripsi" => "proses perawatan dan perbaikan sepeda motor listrik dan hybrid secara menyeluruh pada berbagai jenis dan merek sepeda motor "],
             ["jurusan_id" => "1", "elemen" => "Perawatan dan Perbaikan Engine Management System Sepeda Motor ", "deskripsi" => "proses perawatan dan perbaikan engine management system sepeda motor secara menyeluruh pada berbagai jenis dan merek mepeda motor "],
             ["jurusan_id" => "1", "elemen" => "Pengelolaan Bengkel Sepeda Motor ", "deskripsi" => "proses pengelolaan dan pengembangan teknik serta manajemen perawatan sepeda motor secara menyeluruh pada berbagai jenis dan merek sepeda motor "],
-            ["jurusan_id" => "2", "elemen" => "proses pengelolaan dan pengembangan teknik serta manajemen perawatan sepeda motor secara menyeluruh pada berbagai jenis dan merek sepeda motor. ", "deskripsi" => "Meliputi proses bisnis pada bidang teknik jaringan komputer dan telekomunikasi, meliputi customer handling, perencanaan, analisis kebutuhan pelanggan, strategi implementasi (instalasi, konfigurasi, monitoring), dan pelayanan pada pelanggan sebagai implementasi penerapan budaya mutu. "],
-            ["jurusan_id" => "2", "elemen" => "proses pengelolaan dan pengembangan teknik serta manajemen perawatan sepeda motor secara menyeluruh pada berbagai jenis dan merek sepeda motor. ", "deskripsi" => "Meliputi perkembangan teknologi pada perangkat teknik jaringan komputer dan telekomunikasi termasuk 5G, Microwave Link, IPV6, teknologi serat optik terkini, IoT, Data Centre, Cloud Computing, dan Information Security. "],
-            ["jurusan_id" => "2", "elemen" => "proses pengelolaan dan pengembangan teknik serta manajemen perawatan sepeda motor secara menyeluruh pada berbagai jenis dan merek sepeda motor ", "deskripsi" => "Meliputi jenis-jenis profesi dan kewirausahaan (job-profil dan technopreneur), personal branding serta peluang usaha di bidang Teknik Jaringan Komputer dan Telekomunikasi. "],
             ["jurusan_id" => "2", "elemen" => "Keselamatan dan Kesehatan Kerja Lingkungan Hidup (K3LH) dan budaya kerja industri ", "deskripsi" => "Meliputi penerapan K3LH dan budaya kerja industri, antara lain: praktik-praktik kerja yang aman, bahaya-bahaya di tempat kerja, prosedur-prosedur dalamkeadaan darurat, dan penerapan budaya kerja industri (Ringkas, Rapi, Resik, Rawat, Rajin), termasuk pencegahan kecelakaan kerja di tempat tinggi dan prosedur kerja di tempat tinggi (pemanjatan) "],
             ["jurusan_id" => "2", "elemen" => "Dasar-dasar teknik jaringan komputer dan telekomunikasi ", "deskripsi" => "Meliputi pemahaman dasar penggunaan dan konfigurasi peralatan/teknologi di bidang jaringan komputer dan telekomunikasi. "],
             ["jurusan_id" => "2", "elemen" => "Media dan Jaringan Telekomunikasi ", "deskripsi" => "Meliputi pemahaman prinsip dasar sistem IPV4/IPV6, TCP IP, Networking Service, Sistem Keamanan Jaringan Telekomunikasi, Sistem Seluler, Sistem Microwave, Sistem VSAT IP, Sistem Optik, dan Sistem WLAN. "],
@@ -232,6 +230,16 @@ class DatabaseSeeder extends Seeder
         ];
 
         Cp::insert($cps);
+
+        $pkls = array(
+            array('siswa_id' => '2','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'dsadad','pembimbing_dudi' => 'adwqeqewq'),
+            array('siswa_id' => '1','user_id' => '3','dudi_id' => '4','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'rffefe','pembimbing_dudi' => 'werwerwrwe'),
+            array('siswa_id' => '4','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'xhajdasd','pembimbing_dudi' => 'tiuerutueur'),
+            array('siswa_id' => '10','user_id' => '3','dudi_id' => '5','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'ttrhtr','pembimbing_dudi' => 'rttrgtrr'),
+            array('siswa_id' => '11','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'tytrry','pembimbing_dudi' => 'gffhfg')
+        );
+
+        Pkl::insert($pkls);
     }
 
     private function generateRandomNik()

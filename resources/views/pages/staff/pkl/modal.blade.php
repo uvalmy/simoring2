@@ -14,15 +14,15 @@
                         <select name="siswa_id" id="siswa_id" class="form-control">
                             <option value="">-- Pilih Siswa --</option>
                             @foreach ($siswa as $row)
-                                <option value="{{ $row->id }}">{{ $row->nis . ' - ' . $row->nama }}</option>
+                                <option value="{{ $row->id }}">{{  $row->nama }} - {{ $row->kelas->nama }}</option>
                             @endforeach
                         </select>
                         <small class="invalid-feedback" id="errorsiswa_id"></small>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="user_id" class="form-label">User <span class="text-danger">*</span></label>
+                        <label for="user_id" class="form-label">Guru Pembimbing <span class="text-danger">*</span></label>
                         <select name="user_id" id="user_id" class="form-control">
-                            <option value="">-- Pilih User --</option>
+                            <option value="">-- Pilih Guru Pembimbing --</option>
                             @foreach ($user as $row)
                                 <option value="{{ $row->id }}">{{ $row->nama }}</option>
                             @endforeach
