@@ -12,7 +12,8 @@ const datatableCall = (targetId, url, columns) => {
                 d.tanggal = $("#tanggal_filter").val() ?? null;
                 d.tanggal_mulai = $("#tanggal_mulai").val() ?? null;
                 d.tanggal_selesai = $("#tanggal_selesai").val() ?? null;
-                d.pembayaran_id = $("#pembayaran_id").val() ?? null;
+                d.kelas = $("#kelas_filter").val() ?? null;
+                d.angkatan = $("#angkatan_filter").val() ?? null;
             },
         },
         columns: columns,
@@ -65,9 +66,17 @@ const getModal = (targetId, url = null, fields = null) => {
         const successCallback = function (response) {
             fields.forEach((field) => {
                 if (response.data[field]) {
-                    $(`#${targetId} #${field}`)
-                        .val(response.data[field])
-                        .trigger("change");
+                    const fieldElement = $(`#${targetId} #${field}`);
+
+                    if (Array.isArray(response.data[field])) {
+                        fieldElement
+                            .val(response.data[field])
+                            .trigger("change");
+                    } else {
+                        fieldElement
+                            .val(response.data[field])
+                            .trigger("change");
+                    }
                 }
             });
         };
@@ -279,13 +288,7 @@ const select2ToJsonMurid = () => {
         console.log(error);
     };
 
-    ajaxCall(
-        "/murid",
-        "GET",
-        null,
-        successCallback,
-        errorCallback
-    );
+    ajaxCall("/murid", "GET", null, successCallback, errorCallback);
 };
 
 let chart = null;

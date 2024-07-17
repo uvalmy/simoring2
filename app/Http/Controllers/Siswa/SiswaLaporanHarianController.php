@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Siswa;
 
+use App\Http\Controllers\Controller;
 use App\Models\Cp;
+use App\Models\LaporanHarian;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Models\LaporanHarian;
-use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class SiswaLaporanHarianController extends Controller
 {
@@ -17,7 +17,7 @@ class SiswaLaporanHarianController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $laporanHarians = LaporanHarian::with('cp')->where('pkl_id', auth('siswa')->user()->pkl->id)->get();
+            $laporanHarians = auth('siswa')->user()->pkl ? LaporanHarian::where('pkl_id', auth('siswa')->user()->pkl->id)->get() : [];
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanHarians)
                     ->addColumn('aksi', function ($laporanHarian) {
@@ -27,13 +27,13 @@ class SiswaLaporanHarianController extends Controller
                         return $editButton . $deleteButton;
                     })
                     ->addColumn('elemen', function ($laporanHarian) {
-                        return $laporanHarian->cp->elemen ?? 'Belum ditentukan';
+                        return Cp::whereIn('id', $laporanHarian->cp_id)->pluck('elemen')->implode(', ');
                     })
-                    ->addColumn('deskripsi-cp', function ($laporanHarian) {
-                        return $laporanHarian->cp->deskripsi ?? 'Belum ditentukan';
+                    ->addColumn('status', function ($laporanHarian) {
+                        return statusBadge($laporanHarian->status);
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['elemen', 'deskripsi-cp', 'aksi'])
+                    ->rawColumns(['elemen', 'deskripsi-cp', 'aksi', 'status'])
                     ->make(true);
             }
 
@@ -44,12 +44,19 @@ class SiswaLaporanHarianController extends Controller
         return view('pages.siswa.laporan-harian.index', compact('cp'));
     }
 
+    public function create()
+    {
+        $cp = Cp::where('jurusan_id', auth('siswa')->user()->kelas->jurusan->id)->get();
+        return view('pages.siswa.laporan-harian.create', compact('cp'));
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'cp_id' => 'required|exists:cps,id',
+            'cp_id' => 'required|array',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
+            'nilai_karakter' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -60,7 +67,9 @@ class SiswaLaporanHarianController extends Controller
             'pkl_id' => auth('siswa')->user()->pkl->id,
             'cp_id' => $request->cp_id,
             'tanggal' => $request->tanggal,
-            'deskripsi' => $request->deskripsi
+            'deskripsi' => $request->deskripsi,
+            'gambar' => "cucuc",
+            'nilai_karakter' => $request->nilai_karakter,
         ]);
         return $this->successResponse($laporanHarian, 'Data laporan harian ditambahkan.');
     }
@@ -77,15 +86,17 @@ class SiswaLaporanHarianController extends Controller
             return $this->successResponse($laporanHarian, 'Data laporan harian ditemukan.');
         }
 
-        abort(404);
+        $laporanHarian = LaporanHarian::findOrFail($id);
+        return view('pages.siswa.laporan-harian.show', compact('laporanHarian'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'cp_id' => 'required|exists:cps,id',
+            'cp_id' => 'required|array',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
+            'nilai_karakter' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +109,7 @@ class SiswaLaporanHarianController extends Controller
             return $this->errorResponse(null, 'Data laporan harian tidak ditemukan.', 404);
         }
 
-        $laporanHarian->update($request->only('cp_id', 'tanggal', 'deskripsi'));
+        $laporanHarian->update($request->only('cp_id', 'tanggal', 'deskripsi', 'nilai_karakter'));
         return $this->successResponse($laporanHarian, 'Data laporan harian diperbarui.');
     }
 

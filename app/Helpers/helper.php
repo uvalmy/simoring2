@@ -10,6 +10,19 @@ if (!function_exists('formatTanggal')) {
     }
 }
 
+if (!function_exists('statusBadge')) {
+    function statusBadge($status)
+    {
+        if ($status == 0) {
+            return '<span class="badge bg-warning">Pending</span>';
+        } elseif ($status == 1) {
+            return '<span class="badge bg-success">Disetujui</span>';
+        } else {
+            return '<span class="badge bg-secondary">Unknown</span>';
+        }
+    }
+}
+
 if (!function_exists('formatRupiah')) {
     function formatRupiah($amount)
     {
@@ -17,3 +30,27 @@ if (!function_exists('formatRupiah')) {
     }
 }
 
+if (!function_exists('nilaiKarakter')) {
+    function nilaiKarakter()
+    {
+        return [
+            'Religius',
+            'Jujur',
+            'Toleran',
+            'Disiplin',
+            'Bekerja Keras',
+            'Kreatif Mandiri',
+            'Demokratis',
+            'Rasa Ingin Tahu',
+            'Semangat Kebangsaan',
+            'Cinta Tanah Air',
+            'Menghargai Prestasi',
+            'Komunikatif',
+            'Gemar Membaca',
+            'Peduli Lingkungan',
+            'Peduli Sosial',
+            'Bertanggung-jawab',
+            'Cinta Damai',
+        ];
+    }
+}

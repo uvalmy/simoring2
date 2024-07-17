@@ -3,7 +3,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><span id="label-modal"></span> Data @yield('title')</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><span id="label-modal"></span> Data
+                    @yield('title')</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="saveData" autocomplete="off">
@@ -37,8 +38,7 @@
                     <div class="form-group mb-3">
                         <label for="konfirmasi_password" class="form-label">Konfirmasi Password <span
                                 class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="konfirmasi_password"
-                            name="konfirmasi_password">
+                        <input type="password" class="form-control" id="konfirmasi_password" name="konfirmasi_password">
                         <small class="invalid-feedback" id="errorkonfirmasi_password"></small>
                     </div>
                     <div class="form-group mb-3">
@@ -47,7 +47,6 @@
                             <option value="">-- Pilih Jurusan --</option>
                             <option value="admin">Admin</option>
                             <option value="guru_pembimbing">Guru Pembimbing</option>
-                            <option value="tata_usaha">Tata Usaha</option>
                         </select>
                         <small class="invalid-feedback" id="errorrole"></small>
                     </div>

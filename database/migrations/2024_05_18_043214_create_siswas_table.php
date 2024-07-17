@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telepon');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
+            $table->year('angkatan');
             $table->timestamps();
         });
     }

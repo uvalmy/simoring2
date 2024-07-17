@@ -47,7 +47,7 @@ class StaffpklController extends Controller
             return $this->successResponse($pkl, 'Data pkl ditemukan.');
         }
 
-        $user = User::all();
+        $user = User::where('role', 'guru_pembimbing')->get();
         $siswa = Siswa::all();
         $dudi = Dudi::all();
         return view('pages.staff.pkl.index', compact('user','siswa','dudi'));

@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('laporan_harians', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pkl_id')->constrained('pkls');
-            $table->foreignId('cp_id')->constrained('cps');
+            $table->json('cp_id');
             $table->date('tanggal');
             $table->text('deskripsi');
+            $table->string('gambar');
+            $table->json('nilai_karakter');
+            $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();
         });
     }

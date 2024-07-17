@@ -51,12 +51,12 @@
                                     </a>
                                 @endif
                             @endauth
-                            @if (auth('dudi')->user())
+                            @if (auth('dudi')->user() && !auth('web')->check())
                                 <a href="/dudi/profile" class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user-circle fs-6"></i>
                                     <p class="mb-0 fs-3">Profile</p>
                                 </a>
-                            @elseif(auth('siswa')->user())
+                            @elseif(auth('siswa')->user() && !auth('web')->check())
                                 <a href="/siswa/profile" class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user-circle fs-6"></i>
                                     <p class="mb-0 fs-3">Profile</p>

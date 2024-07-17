@@ -1,30 +1,28 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dudi\DudiDashboardController;
+use App\Http\Controllers\Dudi\DudiLaporanHarianController;
 use App\Http\Controllers\Dudi\DudiPklController;
+use App\Http\Controllers\Dudi\DudiProfileController;
+use App\Http\Controllers\Guru\GuruDashboardController;
+use App\Http\Controllers\Guru\GuruLaporanHarianController;
 use App\Http\Controllers\Guru\GuruPklController;
-use App\Http\Controllers\Staff\StaffCpController;
+use App\Http\Controllers\Guru\GuruProfileController;
+use App\Http\Controllers\Siswa\SiswaDashboardController;
+use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
 use App\Http\Controllers\Siswa\SiswaPklController;
-use App\Http\Controllers\Staff\StaffPklController;
+use App\Http\Controllers\Siswa\SiswaProfileController;
+use App\Http\Controllers\Staff\StaffCpController;
+use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Staff\StaffDudiController;
 use App\Http\Controllers\Staff\StaffGuruController;
-use App\Http\Controllers\Dudi\DudiProfileController;
-use App\Http\Controllers\Guru\GuruProfileController;
-use App\Http\Controllers\Staff\StaffKelasController;
-use App\Http\Controllers\Staff\StaffSiswaController;
-use App\Http\Controllers\Dudi\DudiDashboardController;
-use App\Http\Controllers\Guru\GuruDashboardController;
-use App\Http\Controllers\Siswa\SiswaProfileController;
 use App\Http\Controllers\Staff\StaffJurusanController;
+use App\Http\Controllers\Staff\StaffKelasController;
+use App\Http\Controllers\Staff\StaffPklController;
 use App\Http\Controllers\Staff\StaffProfileController;
-use App\Http\Controllers\Siswa\SiswaDashboardController;
-use App\Http\Controllers\Staff\StaffDashboardController;
-use App\Http\Controllers\Dudi\DudiLaporanHarianController;
-use App\Http\Controllers\Guru\GuruLaporanHarianController;
-use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
-use App\Http\Controllers\TataUsaha\TataUsahaProfileController;
-use App\Http\Controllers\TataUsaha\TataUsahaDashboardController;
+use App\Http\Controllers\Staff\StaffSiswaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,12 +61,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan-harian', [GuruLaporanHarianController::class, 'index'])->name('guru.laporanHarian');
         Route::match(['get', 'post'], '/profile', [GuruProfileController::class, 'index'])->name('guru.profile');
         Route::put('/profile/password', [GuruProfileController::class, 'updatePassword'])->name('guru.updatePassword');
-    });
-
-    Route::prefix('tata-usaha')->middleware(['checkRole:tata_usaha'])->group(function () {
-        Route::get('/', [TataUsahaDashboardController::class, 'index'])->name('tata-usaha.dashboard');
-        Route::match(['get', 'post'], '/profile', [TataUsahaProfileController::class, 'index'])->name('tata-usaha.profile');
-        Route::put('/profile/password', [TataUsahaProfileController::class, 'updatePassword'])->name('tata-usaha.updatePassword');
     });
 
 });

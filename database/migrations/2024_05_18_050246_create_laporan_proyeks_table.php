@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->text('deskripsi');
             $table->text('saran');
-            $table->string('dokumentasi');
+            $table->json('dokumentasi');
             $table->timestamps();
         });
     }

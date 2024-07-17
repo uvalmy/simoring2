@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Dudi;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pkl;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class DudiPklController extends Controller
@@ -18,10 +18,10 @@ class DudiPklController extends Controller
             $pkl = Pkl::with('user', 'siswa')->where('dudi_id', auth('dudi')->user()->id)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
-                    ->addColumn('siswa', function($pkl){
+                    ->addColumn('siswa', function ($pkl) {
                         return $pkl->siswa->nama;
                     })
-                    ->addColumn('dudi', function($pkl){
+                    ->addColumn('dudi', function ($pkl) {
                         return $pkl->dudi->instansi;
                     })
 

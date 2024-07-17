@@ -15,6 +15,37 @@
             </button>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label for="kelas_filter" class="form-label">Kelas <span class="text-danger">*</span></label>
+                        <select name="kelas_filter" id="kelas_filter" class="form-control">
+                            <option value="">-- Pilih Kelas --</option>
+                            @foreach ($kelas as $row)
+                                <option value="{{ $row->id }}">{{ $row->kode . ' - ' . $row->nama }}</option>
+                            @endforeach
+                        </select>
+                        <small class="invalid-feedback" id="errorkelas_filter"></small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label for="angkatan_filter" class="form-label">Angkatan <span class="text-danger">*</span></label>
+                        <select name="angkatan_filter" id="angkatan_filter" class="form-control">
+                            <option value="">-- Pilih Angkatan --</option>
+                            @php
+                                $currentYear = date('Y');
+                                $lastTenYears = range($currentYear, $currentYear - 10);
+                            @endphp
+                            @foreach ($lastTenYears as $year)
+                                <option value="{{ $year }}" {{ $currentYear == $year ? 'selected' : '' }}>
+                                    {{ $year }}</option>
+                            @endforeach
+                        </select>
+                        <small class="invalid-feedback" id="errorangkatan_filter"></small>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table id="siswa-table" class="table table-bordered table-striped" width="100%">
                     <thead>
@@ -23,6 +54,7 @@
                             <th>Nis</th>
                             <th>Nama</th>
                             <th>Kelas</th>
+                            <th>Angkatan</th>
                             <th width="20%">Aksi</th>
                         </tr>
                     </thead>
@@ -57,10 +89,18 @@
                     name: 'kelas'
                 },
                 {
+                    data: 'angkatan',
+                    name: 'angkatan'
+                },
+                {
                     data: 'aksi',
                     name: 'aksi'
                 },
             ]);
+
+            $("#kelas_filter, #angkatan_filter").on("change", function() {
+                $("#siswa-table").DataTable().ajax.reload();
+            });
 
             $("#saveData").submit(function(e) {
                 setButtonLoadingState("#saveData .btn.btn-primary", true);
@@ -84,7 +124,9 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["kelas_id", "nis", "nama", "alamat", "telepon", "tempat_lahir", "tanggal_lahir"]);
+                    handleValidationErrors(error, "saveData", ["kelas_id", "nis", "nama", "alamat",
+                        "telepon", "tempat_lahir", "tanggal_lahir", "angkatan"
+                    ]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

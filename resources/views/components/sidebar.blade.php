@@ -106,7 +106,7 @@
                         </li>
                     @endif
                 @endauth
-                @if (auth('dudi')->user())
+                @if (auth('dudi')->user() && !auth('web')->check())
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/dudi" aria-expanded="false">
                             <i class="ti ti-layout-dashboard"></i>
@@ -131,7 +131,7 @@
                             <span class="hide-menu">Profile</span>
                         </a>
                     </li>
-                @elseif (auth('siswa')->user())
+                @elseif (auth('siswa')->user() && !auth('web')->check())
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/siswa" aria-expanded="false">
                             <i class="ti ti-layout-dashboard"></i>

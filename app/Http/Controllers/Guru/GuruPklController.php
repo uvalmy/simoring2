@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Guru;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pkl;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class GuruPklController extends Controller
@@ -15,13 +15,13 @@ class GuruPklController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $pkl = Pkl::with('siswa','dudi')->where('user_id', auth()->user()->id)->get();
+            $pkl = Pkl::with('siswa', 'dudi')->where('user_id', auth()->user()->id)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
-                    ->addColumn('siswa', function($pkl){
+                    ->addColumn('siswa', function ($pkl) {
                         return $pkl->siswa->nama;
                     })
-                    ->addColumn('dudi', function($pkl){
+                    ->addColumn('dudi', function ($pkl) {
                         return $pkl->dudi->instansi;
                     })
 
