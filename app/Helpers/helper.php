@@ -17,6 +17,8 @@ if (!function_exists('statusBadge')) {
             return '<span class="badge bg-warning">Pending</span>';
         } elseif ($status == 1) {
             return '<span class="badge bg-success">Disetujui</span>';
+        } elseif ($status == 2) {
+            return '<span class="badge bg-danger">Direvisi</span>';
         } else {
             return '<span class="badge bg-secondary">Unknown</span>';
         }
@@ -51,6 +53,7 @@ if (!function_exists('nilaiKarakter')) {
             'Peduli Sosial',
             'Bertanggung-jawab',
             'Cinta Damai',
+
         ];
     }
 }

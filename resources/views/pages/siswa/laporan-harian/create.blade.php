@@ -11,49 +11,54 @@
 @endpush
 
 @section('main')
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title fw-semibold">Tambah Data @yield('title')</h5>
-        </div>
-        <div class="card-body">
-            <form id="saveData" autocomplete="off">
-                <div class="form-group mb-3">
-                    <label for="image" class="form-label">Dokumentasi <span class="text-danger">* (Dokumentasi harus berupa selfie pada tempat PKL)</span> </label>
-                    <input type="file" name="dokumentasi" id="dokumentasi" class="dropify" data-height="200"
-                        accept=".jpg,.jpeg,.png">
-                    <small class="text-danger" id="errordokumentasi"></small>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title fw-semibold">Tambah Data @yield('title')</h5>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="cp_id" class="form-label">Cp <span class="text-danger">*</span></label>
-                    <select name="cp_id[]" multiple id="cp_id" class="form-control">
-                        @foreach ($cp as $row)
-                            <option value="{{ $row->id }}">{{ $row->elemen }}</option>
-                        @endforeach
-                    </select>
-                    <small class="invalid-feedback" id="errorcp_id"></small>
+                <div class="card-body">
+                    <form id="saveData" autocomplete="off">
+                        <div class="form-group mb-3">
+                            <label for="image" class="form-label">Dokumentasi <span class="text-danger">* (Dokumentasi
+                                    harus berupa selfie pada tempat PKL)</span> </label>
+                            <input type="file" name="dokumentasi" id="dokumentasi" class="dropify" data-height="200"
+                                accept=".jpg,.jpeg,.png">
+                            <small class="text-danger" id="errordokumentasi"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="cp_id" class="form-label">Cp <span class="text-danger">*</span></label>
+                            <select name="cp_id[]" multiple id="cp_id" class="form-control">
+                                @foreach ($cp as $row)
+                                    <option value="{{ $row->id }}">{{ $row->elemen }}</option>
+                                @endforeach
+                            </select>
+                            <small class="invalid-feedback" id="errorcp_id"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="tanggal" class="form-label">Tanggal<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="tanggal" name="tanggal">
+                            <small class="invalid-feedback" id="errortanggal"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="nilai_karakter" class="form-label">Nilai Karakter <span
+                                    class="text-danger">*</span></label>
+                            <select name="nilai_karakter[]" multiple id="nilai_karakter" class="form-control">
+                                @foreach (nilaiKarakter() as $row)
+                                    <option value="{{ $row }}">{{ $row }}</option>
+                                @endforeach
+                            </select>
+                            <small class="invalid-feedback" id="errornilai_karakter"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="deskripsi" class="form-label">Deskripsi <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi"></textarea>
+                            <small class="invalid-feedback" id="errordeskripsi"></small>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Simpan</button>
+                    </form>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="tanggal" class="form-label">Tanggal<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal">
-                    <small class="invalid-feedback" id="errortanggal"></small>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="nilai_karakter" class="form-label">Nilai Karakter <span
-                            class="text-danger">*</span></label>
-                    <select name="nilai_karakter[]" multiple id="nilai_karakter" class="form-control">
-                        @foreach (nilaiKarakter() as $row)
-                            <option value="{{ $row }}">{{ $row }}</option>
-                        @endforeach
-                    </select>
-                    <small class="invalid-feedback" id="errornilai_karakter"></small>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="deskripsi" class="form-label">Deskripsi <span class="text-danger">*</span></label>
-                    <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi"></textarea>
-                    <small class="invalid-feedback" id="errordeskripsi"></small>
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Simpan</button>
-            </form>
+            </div>
         </div>
     </div>
 @endsection
@@ -81,7 +86,9 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["cp_id", "tanggal", "deskripsi", "nilai_karakter", "dokumentasi"]);
+                    handleValidationErrors(error, "saveData", ["cp_id", "tanggal", "deskripsi",
+                        "nilai_karakter", "dokumentasi"
+                    ]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

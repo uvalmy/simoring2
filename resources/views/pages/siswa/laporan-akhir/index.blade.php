@@ -11,28 +11,71 @@
 @endpush
 
 @section('main')
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title fw-semibold">Tambah Data @yield('title')</h5>
+    <div class="row">
+        <div class="col-lg-6 mb-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title fw-semibold">Data @yield('title')</h5>
+                </div>
+                <div class="card-body">
+                    @if (auth('siswa')->user()->pkl)
+                        @if (!$laporanAkhir || $laporanAkhir->status == 0 || $laporanAkhir->status == 2)
+                            <form id="saveData" autocomplete="off">
+                                <div class="form-group mb-3">
+                                    <label for="judul" class="form-label">Judul <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="judul"
+                                        value="{{ $laporanAkhir ? $laporanAkhir->judul : null }}" name="judul">
+                                    <small class="invalid-feedback" id="errorjudul"></small>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="dokumen" class="form-label">Laporan <span
+                                            class="text-danger">*</span></label>
+                                    <input type="file" name="dokumen" id="dokumen" class="dropify" data-height="200"
+                                        accept=".pdf">
+                                    <small class="text-danger" id="errordokumen"></small>
+                                </div>
+                                <button type="submit" class="btn btn-primary"><i
+                                        class="ti ti-plus me-1"></i>Simpan</button>
+                            </form>
+                        @endif
+                        @if ($laporanAkhir)
+                            <div class="row">
+                                @if ($laporanAkhir->status == 1)
+                                    <div class="col-lg-12 mb-3 fw-semibold">
+                                        Judul
+                                    </div>
+                                    <div class="col-lg-12 mb-3">
+                                        {{ $laporanAkhir->judul ?? '-' }}
+                                    </div>
+                                @endif
+                                <div class="col-lg-12 mb-3 fw-semibold">
+                                    Status
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    {!! statusBadge($laporanAkhir->status) !!}
+                                </div>
+                                <div class="col-lg-12 mb-3 fw-semibold">
+                                    Catatan
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    {{ $laporanAkhir->catatan ?? '-' }}
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <div class="w-100 py-5 my-5 text-center">Data PKL Tidak ditemukan</div>
+                    @endif
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            @if (auth('siswa')->user()->pkl)
-                <form id="saveData" autocomplete="off">
-                    <div class="form-group mb-3">
-                        <label for="judul" class="form-label">Judul <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="judul" value="{{  }}" name="judul">
-                        <small class="invalid-feedback" id="errorjudul"></small>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="dokumen" class="form-label">Laporan  <span class="text-danger">*</span></label>
-                        <input type="file" name="dokumen" id="dokumen" class="dropify" data-height="200"
-                            accept=".pdf">
-                        <small class="text-danger" id="errordokumen"></small>
-                    </div>
-                    <button type="submit" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Simpan</button>
-                </form>
-            @else
-                <div class="w-100 py-5 my-5 text-center">Data PKL Tidak ditemukan</div>
+        <div class="col-lg-6 mb-3">
+            @if ($laporanAkhir)
+                <embed src="/storage/laporan/laporan-akhir/{{ $laporanAkhir->dokumen }}" width="100%" height="500px"
+                    type="application/pdf">
+                <div class="mt-3">
+
+                </div>
             @endif
         </div>
     </div>

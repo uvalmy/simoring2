@@ -20,8 +20,11 @@ use App\Http\Controllers\Staff\StaffJurusanController;
 use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Guru\GuruLaporanAkhirController;
 use App\Http\Controllers\Dudi\DudiLaporanHarianController;
+use App\Http\Controllers\Dudi\DudiLaporanProyekController;
 use App\Http\Controllers\Guru\GuruLaporanHarianController;
+use App\Http\Controllers\Guru\GuruLaporanProyekController;
 use App\Http\Controllers\Siswa\SiswaLaporanAkhirController;
 use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
 use App\Http\Controllers\Siswa\SiswaLaporanProyekController;
@@ -61,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/pkl', GuruPklController::class)->names('guru.pkl');
         Route::get('/', [GuruDashboardController::class, 'index'])->name('guru.dashboard');
         Route::get('/laporan-harian', [GuruLaporanHarianController::class, 'index'])->name('guru.laporanHarian');
+        Route::resource('/laporan-proyek', GuruLaporanProyekController::class)->names('guru.laporanProyek');
+        Route::resource('/laporan-akhir', GuruLaporanAkhirController::class)->names('guru.laporanAkhir');
         Route::match(['get', 'post'], '/profile', [GuruProfileController::class, 'index'])->name('guru.profile');
         Route::put('/profile/password', [GuruProfileController::class, 'updatePassword'])->name('guru.updatePassword');
     });
@@ -69,7 +74,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth:dudi')->prefix('dudi')->group(function () {
     Route::get('/', [DudiDashboardController::class, 'index'])->name('dudi.dashboard');
-    Route::get('/laporan-harian', [DudiLaporanHarianController::class, 'index'])->name('dudi.laporanHarian');
+    Route::resource('/laporan-harian', DudiLaporanHarianController::class)->names('dudi.laporanHarian');
+    Route::resource('/laporan-proyek', DudiLaporanProyekController::class)->names('dudi.laporanProyek');
     Route::match(['get', 'post'], '/profile', [DudiProfileController::class, 'index'])->name('dudi.profile');
     Route::put('/profile/password', [DudiProfileController::class, 'updatePassword'])->name('dudi.updatePassword');
     Route::resource('/pkl', DudiPklController::class)->names('dudi.pkl');

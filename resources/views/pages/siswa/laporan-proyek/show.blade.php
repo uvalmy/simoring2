@@ -11,41 +11,102 @@
 @endpush
 
 @section('main')
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title fw-semibold">Edit Data @yield('title')</h5>
-        </div>
-        <div class="card-body">
-            <form id="saveData" autocomplete="off">
-                @method('PUT')
-                <div class="form-group mb-3">
-                    <label for="judul" class="form-label">Judul <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="judul" name="judul" value="{{ $laporanProyek->judul }}">
-                    <small class="invalid-feedback" id="errorjudul"></small>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title fw-semibold">{{ $laporanProyek->status == 1 ? 'Detail' : 'Edit' }} Data
+                        @yield('title')</h5>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="tanggal" class="form-label">Tanggal<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $laporanProyek->tanggal }}">
-                    <small class="invalid-feedback" id="errortanggal"></small>
+                <div class="card-body">
+                    @if ($laporanProyek->status == 1)
+                        <div class="row">
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Judul
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                {{ $laporanProyek->judul }}
+                            </div>
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Tanggal
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                {{ $laporanProyek->tanggal }}
+                            </div>
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Deskripsi
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                {{ $laporanProyek->deskripsi }}
+                            </div>
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Saran
+                            </div>
+                            <div class="col-lg-12 mb-3 ">
+                                {{ $laporanProyek->saran }}
+                            </div>
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Dokumentasi
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                <img src="/storage/gambar/laporan-proyek/{{ $laporanProyek->dokumentasi }}" alt=""
+                                    class="img-fluid">
+                            </div>
+                        </div>
+                    @else
+                        <form id="saveData" autocomplete="off">
+                            @method('PUT')
+                            <div class="form-group mb-3">
+                                <label for="judul" class="form-label">Judul <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="judul" name="judul"
+                                    value="{{ $laporanProyek->judul }}">
+                                <small class="invalid-feedback" id="errorjudul"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="tanggal" class="form-label">Tanggal<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal"
+                                    value="{{ $laporanProyek->tanggal }}">
+                                <small class="invalid-feedback" id="errortanggal"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="deskripsi" class="form-label">Deskripsi <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi">{{ $laporanProyek->deskripsi }}</textarea>
+                                <small class="invalid-feedback" id="errordeskripsi"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="saran" class="form-label">Saran <span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4" id="saran" name="saran">{{ $laporanProyek->saran }}</textarea>
+                                <small class="invalid-feedback" id="errorsaran"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="image" class="form-label">Dokumentasi <span
+                                        class="text-danger">*</span></label>
+                                <input type="file" name="dokumentasi" id="dokumentasi" class="dropify" data-height="200"
+                                    accept=".jpg,.jpeg,.png">
+                                <small class="text-danger" id="errordokumentasi"></small>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Simpan</button>
+                        </form>
+                    @endif
+                    <div class="row mt-3">
+                        <div class="row">
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Status
+                            </div>
+                            <div class="col-lg-12 mb-3 ">
+                                {!! statusBadge($laporanProyek->status) !!}
+                            </div>
+                            <div class="col-lg-12 mb-3 fw-semibold">
+                                Catatan
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                {{ $laporanProyek->catatan ?? '-' }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="deskripsi" class="form-label">Deskripsi <span class="text-danger">*</span></label>
-                    <textarea class="form-control" rows="4" id="deskripsi" name="deskripsi">{{ $laporanProyek->deskripsi }}</textarea>
-                    <small class="invalid-feedback" id="errordeskripsi"></small>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="saran" class="form-label">Saran <span class="text-danger">*</span></label>
-                    <textarea class="form-control" rows="4" id="saran" name="saran">{{ $laporanProyek->saran }}</textarea>
-                    <small class="invalid-feedback" id="errorsaran"></small>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="image" class="form-label">Dokumentasi <span class="text-danger">*</span></label>
-                    <input type="file" name="dokumentasi" id="dokumentasi" class="dropify" data-height="200"
-                        accept=".jpg,.jpeg,.png">
-                    <small class="text-danger" id="errordokumentasi"></small>
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Simpan</button>
-            </form>
+            </div>
         </div>
     </div>
 @endsection
@@ -74,7 +135,9 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["judul", "tanggal", "deskripsi", "saran", "dokumentasi"]);
+                    handleValidationErrors(error, "saveData", ["judul", "tanggal", "deskripsi", "saran",
+                        "dokumentasi"
+                    ]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

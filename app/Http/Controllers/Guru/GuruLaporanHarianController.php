@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cp;
 use App\Models\LaporanHarian;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
@@ -15,28 +16,30 @@ class GuruLaporanHarianController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $laporanHarian = LaporanHarian::with('cp', 'pkl')->whereHas('pkl', function ($query) {
+            $tanggal = $request->tanggal;
+            $laporanHarian = LaporanHarian::where('tanggal', $tanggal)->with('pkl', 'pkl.siswa')->whereHas('pkl', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanHarian)
-                    ->addColumn('pkl', function ($pkl) {
-                        $btn = "Verifikasi";
-                        return $btn;
+                    ->addColumn('elemen', function ($laporanHarian) {
+                        return Cp::whereIn('id', $laporanHarian->cp_id)->pluck('elemen')->implode(', ');
                     })
-                    ->addColumn('cp', function ($laporanHarian) {
-                        return $laporanHarian->cp->elemen ?? 'Belum ditentukan';
+                    ->addColumn('status', function ($laporanHarian) {
+                        return statusBadge($laporanHarian->status);
+                    })
+                    ->addColumn('dokumentasi', function ($laporanHarian) {
+                        return '<img src="/storage/gambar/laporan-harian/' . $laporanHarian->dokumentasi . '" width="150px" alt="">';
                     })
                     ->addColumn('siswa', function ($laporanHarian) {
-                        return $laporanHarian->pkl->siswa->nama ?? 'Belum ditentukan';
+                        return $laporanHarian->pkl->siswa->nama;
                     })
-
                     ->addIndexColumn()
-                    ->rawColumns(['aksi', 'cp', 'siswa'])
+                    ->rawColumns(['elemen', 'status', 'dokumentasi', 'siswa'])
                     ->make(true);
             }
-
         }
+
         return view('pages.guru.laporan-harian.index');
     }
 }

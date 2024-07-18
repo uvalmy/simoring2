@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Models\Cp;
+use App\Http\Controllers\Controller;
 use App\Models\LaporanAkhir;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class SiswaLaporanAkhirController extends Controller
@@ -17,12 +15,12 @@ class SiswaLaporanAkhirController extends Controller
 
     public function index(Request $request)
     {
+        $laporanAkhir = LaporanAkhir::where([
+            'pkl_id' => auth('siswa')->user()->pkl->id ?? null,
+        ])->first() ?? null;
         if ($request->ajax()) {
-            $laporanAkhir = LaporanAkhir::where([
-                'pkl_id' => auth('siswa')->user()->pkl->id,
-            ])->first();
 
-            if($laporanAkhir){
+            if ($laporanAkhir) {
                 $validator = Validator::make($request->all(), [
                     'judul' => 'required',
                     'dokumen' => 'mimes:pdf',
@@ -32,19 +30,18 @@ class SiswaLaporanAkhirController extends Controller
                     return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
                 }
 
-                $dokumentasi = $laporanAkhir->dokumentasi;
-                if ($request->hasFile('dokumentasi')) {
-                    if (Storage::exists('public/gambar/laporan-akhir/' . $dokumentasi)) {
-                        Storage::delete('public/gambar/laporan-akhir/' . $dokumentasi);
+                $dokumen = $laporanAkhir->dokumen;
+                if ($request->hasFile('dokumen')) {
+                    if (Storage::exists('public/laporan/laporan-akhir/' . $dokumen)) {
+                        Storage::delete('public/laporan/laporan-akhir/' . $dokumen);
                     }
-                    $dokumentasi = $request->file('dokumentasi')->hashName();
-                    $request->file('dokumentasi')->storeAs('public/gambar/laporan-akhir', $dokumentasi);
+                    $dokumen = $request->file('dokumen')->hashName();
+                    $request->file('dokumen')->storeAs('public/laporan/laporan-akhir', $dokumen);
                 }
-
 
                 $laporanAkhir->update([
                     'judul' => $request->judul,
-                    'dokumen' => 'mimes:pdf',
+                    'dokumen' => $dokumen,
                 ]);
 
                 return $this->successResponse($laporanAkhir, 'Data laporan akhir diperbarui.');
@@ -68,11 +65,11 @@ class SiswaLaporanAkhirController extends Controller
                     'judul' => $request->judul,
                     'dokumen' => $dokumen,
                 ]);
+
                 return $this->successResponse($laporanAkhir, 'Data laporan akhir ditambahkan.');
             }
 
-
         }
-        return view('pages.siswa.laporan-akhir.index');
+        return view('pages.siswa.laporan-akhir.index', compact('laporanAkhir'));
     }
 }

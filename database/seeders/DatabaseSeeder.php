@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Cp;
-use App\Models\Pkl;
 use App\Models\Dudi;
-use App\Models\User;
-use App\Models\Kelas;
-use App\Models\Siswa;
 use App\Models\Jurusan;
+use App\Models\Kelas;
+use App\Models\Pkl;
+use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -232,11 +232,11 @@ class DatabaseSeeder extends Seeder
         Cp::insert($cps);
 
         $pkls = array(
-            array('siswa_id' => '2','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'dsadad','pembimbing_dudi' => 'adwqeqewq'),
-            array('siswa_id' => '1','user_id' => '3','dudi_id' => '4','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'rffefe','pembimbing_dudi' => 'werwerwrwe'),
-            array('siswa_id' => '4','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'xhajdasd','pembimbing_dudi' => 'tiuerutueur'),
-            array('siswa_id' => '10','user_id' => '3','dudi_id' => '5','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'ttrhtr','pembimbing_dudi' => 'rttrgtrr'),
-            array('siswa_id' => '11','user_id' => '2','dudi_id' => '1','tanggal_mulai' => '2024-07-17','tanggal_selesai' => '2024-10-17','posisi' => 'tytrry','pembimbing_dudi' => 'gffhfg')
+            array('siswa_id' => '2', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'dsadad', 'pembimbing_dudi' => 'adwqeqewq'),
+            array('siswa_id' => '1', 'user_id' => '3', 'dudi_id' => '4', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'rffefe', 'pembimbing_dudi' => 'werwerwrwe'),
+            array('siswa_id' => '4', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'xhajdasd', 'pembimbing_dudi' => 'tiuerutueur'),
+            array('siswa_id' => '10', 'user_id' => '3', 'dudi_id' => '5', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'ttrhtr', 'pembimbing_dudi' => 'rttrgtrr'),
+            array('siswa_id' => '11', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'tytrry', 'pembimbing_dudi' => 'gffhfg'),
         );
 
         Pkl::insert($pkls);

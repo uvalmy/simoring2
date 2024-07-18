@@ -86,20 +86,21 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link {{ request()->is('guru/laporan-proyek/*') ? 'active' : '' }}"
+                                href="/guru/laporan-proyek" aria-expanded="false">
+                                <i class="ti ti-file-description"></i>
+                                <span class="hide-menu">Laporan Proyek</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {{ request()->is('guru/laporan-akhir/*') ? 'active' : '' }}"
+                                href="/guru/laporan-akhir" aria-expanded="false">
+                                <i class="ti ti-file-description"></i>
+                                <span class="hide-menu">Laporan Akhir</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/guru/profile" aria-expanded="false">
-                                <i class="ti ti-user-circle"></i>
-                                <span class="hide-menu">Profile</span>
-                            </a>
-                        </li>
-                    @elseif(auth()->user()->role == 'tata_usaha')
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/tata-usaha" aria-expanded="false">
-                                <i class="ti ti-layout-dashboard"></i>
-                                <span class="hide-menu">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/tata-usaha/profile" aria-expanded="false">
                                 <i class="ti ti-user-circle"></i>
                                 <span class="hide-menu">Profile</span>
                             </a>
@@ -120,9 +121,16 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/dudi/laporan-harian" aria-expanded="false">
+                        <a class="sidebar-link " href="/dudi/laporan-harian" aria-expanded="false">
                             <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Harian</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('dudi/laporan-proyek/*') ? 'active' : '' }}"
+                            href="/dudi/laporan-proyek" aria-expanded="false">
+                            <i class="ti ti-file-description"></i>
+                            <span class="hide-menu">Laporan Proyek</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -146,19 +154,22 @@
                     </li>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link {{ request()->is('siswa/laporan-harian/*') ? 'active' : '' }}" href="/siswa/laporan-harian" aria-expanded="false">
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-harian/*') ? 'active' : '' }}"
+                            href="/siswa/laporan-harian" aria-expanded="false">
                             <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Harian</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link {{ request()->is('siswa/laporan-proyek/*') ? 'active' : '' }}" href="/siswa/laporan-proyek" aria-expanded="false">
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-proyek/*') ? 'active' : '' }}"
+                            href="/siswa/laporan-proyek" aria-expanded="false">
                             <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Proyek</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link {{ request()->is('siswa/laporan-akhir/*') ? 'active' : '' }}" href="/siswa/laporan-akhir" aria-expanded="false">
+                        <a class="sidebar-link {{ request()->is('siswa/laporan-akhir/*') ? 'active' : '' }}"
+                            href="/siswa/laporan-akhir" aria-expanded="false">
                             <i class="ti ti-file-description"></i>
                             <span class="hide-menu">Laporan Akhir</span>
                         </a>

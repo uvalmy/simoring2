@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <div class="form-group mb-3">
                         <label for="kelas_filter" class="form-label">Kelas <span class="text-danger">*</span></label>
                         <select name="kelas_filter" id="kelas_filter" class="form-control">
@@ -31,7 +31,7 @@
                         <small class="invalid-feedback" id="errorkelas_filter"></small>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <div class="form-group mb-3">
                         <label for="angkatan_filter" class="form-label">Angkatan <span class="text-danger">*</span></label>
                         <select name="angkatan_filter" id="angkatan_filter" class="form-control">

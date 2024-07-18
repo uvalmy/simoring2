@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Models\Cp;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Siswa\SiswaLaporanProyekController;
+use App\Models\LaporanProyek;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Models\LaporanProyek;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Siswa\SiswaLaporanProyekController;
+use Yajra\DataTables\Facades\DataTables;
 
 class SiswaLaporanProyekController extends Controller
 {
@@ -19,15 +18,16 @@ class SiswaLaporanProyekController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $laporanProyeks = auth('siswa')->user()->pkl ? LaporanProyek::where('pkl_id', auth('siswa')->user()->pkl->id)->get() : [];
+            $laporanProyeks = auth('siswa')->user()->pkl ? LaporanProyek::where('pkl_id', auth('siswa')->user()->pkl->id)->orderBy('tanggal', 'desc')->get() : [];
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanProyeks)
                     ->addColumn('aksi', function ($laporanProyek) {
                         $editButton = '<a class="btn btn-sm btn-warning me-1" href="/siswa/laporan-proyek/' . $laporanProyek->id . '">
                         <i class="ti ti-edit me-1"></i>Edit</a>';
+                        $detailButton = '<a class="btn btn-sm btn-info me-1" href="/siswa/laporan-proyek/' . $laporanProyek->id . '"><i class="ti ti-eye me-1"></i>Detail</a>';
 
                         $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/siswa/laporan-proyek/' . $laporanProyek->id . '`, `laporan-proyek-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
-                        return $editButton . $deleteButton;
+                        return $laporanProyek->status == 0 ? $editButton . $deleteButton : $detailButton;
                     })
                     ->addColumn('dokumentasi', function ($laporanProyek) {
                         return '<img src="/storage/gambar/laporan-proyek/' . $laporanProyek->dokumentasi . '" width="150px" alt="">';
@@ -36,7 +36,7 @@ class SiswaLaporanProyekController extends Controller
                         return statusBadge($laporanProyek->status);
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi', 'dokumentasi','status'])
+                    ->rawColumns(['aksi', 'dokumentasi', 'status'])
                     ->make(true);
             }
 
@@ -55,7 +55,7 @@ class SiswaLaporanProyekController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'judul' => 'required',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date|before_or_equal:today',
             'deskripsi' => 'required',
             'saran' => 'required',
             'dokumentasi' => 'required|image|mimes:png,jpg,jpeg',
@@ -79,7 +79,6 @@ class SiswaLaporanProyekController extends Controller
             $request->file('dokumentasi')->storeAs('public/gambar/laporan-proyek', $dokumentasi);
         }
 
-
         $laporanProyek = LaporanProyek::create([
             'pkl_id' => auth('siswa')->user()->pkl->id,
             'judul' => $request->judul,
@@ -93,16 +92,6 @@ class SiswaLaporanProyekController extends Controller
 
     public function show(Request $request, $id)
     {
-        if ($request->ajax()) {
-            $laporanProyek = LaporanProyek::find($id);
-
-            if (!$laporanProyek) {
-                return $this->errorResponse(null, 'Data laporan proyek tidak ditemukan.', 404);
-            }
-
-            return $this->successResponse($laporanProyek, 'Data laporan proyek ditemukan.');
-        }
-
         $laporanProyek = LaporanProyek::findOrFail($id);
         return view('pages.siswa.laporan-proyek.show', compact('laporanProyek'));
     }
@@ -111,7 +100,7 @@ class SiswaLaporanProyekController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'judul' => 'required',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date|before_or_equal:today',
             'deskripsi' => 'required',
             'saran' => 'required',
             'dokumentasi' => 'image|mimes:png,jpg,jpeg',
@@ -145,7 +134,6 @@ class SiswaLaporanProyekController extends Controller
             $request->file('dokumentasi')->storeAs('public/gambar/laporan-proyek', $dokumentasi);
         }
 
-
         $laporanProyek->update([
             'judul' => $request->judul,
             'tanggal' => $request->tanggal,
@@ -164,8 +152,8 @@ class SiswaLaporanProyekController extends Controller
             return $this->errorResponse(null, 'Data laporan proyek tidak ditemukan.', 404);
         }
 
-        if (Storage::exists('public/gambar/laporan-proyek/' .  $laporanProyek->dokumentasi)) {
-            Storage::delete('public/gambar/laporan-proyek/' .  $laporanProyek->dokumentasi);
+        if (Storage::exists('public/gambar/laporan-proyek/' . $laporanProyek->dokumentasi)) {
+            Storage::delete('public/gambar/laporan-proyek/' . $laporanProyek->dokumentasi);
         }
         $laporanProyek->delete();
         return $this->successResponse(null, 'Data laporan proyek dihapus.');

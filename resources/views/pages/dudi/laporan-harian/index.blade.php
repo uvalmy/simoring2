@@ -12,15 +12,29 @@
             <h5 class="card-title fw-semibold">Data @yield('title')</h5>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label for="tanggal_filter" class="form-label">Tanggal <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="tanggal_filter"
+                            name="tanggal_filter">
+                        <small class="invalid-feedback" id="errortanggal_filter"></small>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table id="laporan-harian-table" class="table table-bordered table-striped" width="100%">
                     <thead>
                         <tr>
                             <th width="5%">#</th>
                             <th>Siswa</th>
-                            <th>Cp</th>
-                            <th>Deskripsi Kegiatan</th>
+                            <th>Elemen</th>
+                            <th>Deskripsi</th>
+                            <th>Nilai Karakter</th>
                             <th>Tanggal</th>
+                            <th>Status</th>
+                            <th>Dokumentasi</td>
+                            <th>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +50,7 @@
 
     <script>
         $(document).ready(function() {
-            datatableCall('laporan-harian-table', '{{ route('dudi.laporanHarian') }}', [{
+            datatableCall('laporan-harian-table', '{{ route('dudi.laporanHarian.index') }}', [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
@@ -45,18 +59,65 @@
                     name: 'siswa'
                 },
                 {
-                    data: 'cp',
-                    name: 'cp'
+                    data: 'elemen',
+                    name: 'elemen'
                 },
                 {
                     data: 'deskripsi',
                     name: 'deskripsi'
                 },
                 {
+                    data: 'nilai_karakter',
+                    name: 'nilai_karakter'
+                },
+                {
                     data: 'tanggal',
                     name: 'tanggal'
                 },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'dokumentasi',
+                    name: 'dokumentasi'
+                },
+                {
+                    data: 'aksi',
+                    name: 'aksi'
+                },
             ]);
+
+            $("#tanggal_filter").on("change", function() {
+                $("#laporan-harian-table").DataTable().ajax.reload();
+            });
         });
+
+        const confirmStatus = (url, tableId) => {
+            Swal.fire({
+                title: "Apakah Kamu Yakin?",
+                text: "Ingin menyetujui data ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, setujui!",
+                cancelButtonText: "Tidak",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = null;
+
+                    const successCallback = function(response) {
+                        handleSuccess(response, tableId, null);
+                    };
+
+                    const errorCallback = function(error) {
+                        console.log(error);
+                    };
+
+                    ajaxCall(url, "PUT", data, successCallback, errorCallback);
+                }
+            });
+        };
     </script>
 @endpush
