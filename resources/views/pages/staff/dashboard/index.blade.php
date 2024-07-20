@@ -14,7 +14,7 @@
                         <h5>Jurusan</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-tools h1"></i>
-                            <h1>{{ $jurusan ?? 0 }}</span>
+                            <h1>{{ $jurusan }}</span>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         <h5>Kelas</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-school h1"></i>
-                            <h1>{{ $kelas ?? 0 }}</span>
+                            <h1>{{ $kelas }}</span>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <h5>Guru</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-user h1"></i>
-                            <h1>{{ $user ?? 0 }}</span>
+                            <h1>{{ $user }}</span>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <h5>Siswa</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-users h1"></i>
-                            <h1>{{ $siswa ?? 0 }}</span>
+                            <h1>{{ $siswa }}</span>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <h5>Dudi</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-building h1"></i>
-                            <h1>{{ $dudi ?? 0 }}</span>
+                            <h1>{{ $dudi }}</span>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         <h5>PKL</h5>
                         <div class="d-flex gap-2">
                             <i class="ti ti-news h1"></i>
-                            <h1>{{ $pkl ?? 0 }}</span>
+                            <h1>{{ $pkl }}</span>
                         </div>
                     </div>
                 </div>

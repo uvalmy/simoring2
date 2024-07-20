@@ -21,6 +21,6 @@ class StaffDashboardController extends Controller
         $dudi = Dudi::count();
         $kelas = Kelas::count();
         $siswa = Siswa::count();
-        return view('pages.staff.dashboard.index');
+        return view('pages.staff.dashboard.index', compact('jurusan','pkl','user','dudi','kelas','siswa'));
     }
 }
