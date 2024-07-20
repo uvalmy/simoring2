@@ -10,6 +10,9 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title fw-semibold">Data @yield('title')</h5>
+            <div>
+                <a id="cetak_nilai" class="btn btn-danger" target="_blank"><i class="ti ti-file me-1"></i>Cetak Nilai</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -87,9 +90,19 @@
                 },
             ]);
 
+            renderData();
+
             $("#tahun_filter").on("change", function() {
                 $("#pkl-table").DataTable().ajax.reload();
+                renderData();
             });
+
         });
+
+        const renderData = () => {
+            const cetakNilai =
+                `/guru/pkl?mode=pdf&tahun=${$("#tahun_filter").val()}`;
+            $("#cetak_nilai").attr("href", cetakNilai);
+        };
     </script>
 @endpush

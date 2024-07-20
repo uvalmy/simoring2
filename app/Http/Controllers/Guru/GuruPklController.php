@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Guru;
 
-use App\Http\Controllers\Controller;
 use App\Models\Pkl;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class GuruPklController extends Controller
@@ -14,9 +15,9 @@ class GuruPklController extends Controller
 
     public function index(Request $request)
     {
+        $tahun = $request->tahun;
+        $pkl = Pkl::with('siswa', 'dudi', 'nilaiPembimbing')->where('user_id', auth()->user()->id)->whereYear('tanggal_mulai', $tahun)->get();
         if ($request->ajax()) {
-            $tahun = $request->tahun;
-            $pkl = Pkl::with('siswa', 'dudi')->where('user_id', auth()->user()->id)->whereYear('tanggal_mulai', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
                 ->addColumn('aksi', function ($pkl) {
@@ -41,6 +42,27 @@ class GuruPklController extends Controller
             }
 
             return $this->successResponse($pkl, 'Data pkl ditemukan.');
+        }
+
+        if ($request->mode == "pdf")
+        {
+            $namaFile = 'Laporan PKL Tahun ' . $tahun;
+            $pdf = PDF::loadView('pages.guru.pkl.PDF', compact('pkl', 'namaFile'));
+
+            $options = [
+                'margin_top' => 20,
+                'margin_right' => 20,
+                'margin_bottom' => 20,
+                'margin_left' => 20,
+            ];
+
+            $pdf->setOptions($options);
+            $pdf->setPaper('legal', 'landscape');
+
+
+            ob_end_clean();
+            ob_start();
+            return $pdf->stream($namaFile);
         }
 
         return view('pages.guru.pkl.index');
