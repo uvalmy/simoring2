@@ -80,3 +80,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><span id="label-modal"></span>Import Data
+                    @yield('title')</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="importData" autocomplete="off">
+                <div class="modal-body">
+                    <p>Download Template Import Data di  <a class="border-bottom border-2 border-primary" download href="/template.xlsx">Download</a> </p>
+                    <div class="form-group mb-3">
+                        <label for="file" class="form-label">File <span
+                                class="text-danger">*</span></label>
+                        <input type="file" name="file" id="file" class="dropify" data-height="200"
+                            accept=".xlsx,.xls">
+                        <small class="text-danger" id="errorfile"></small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success"><i class="ti ti-file me-1"></i>Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class StaffpklController extends Controller
+class StaffPklController extends Controller
 {
     use ApiResponder;
 

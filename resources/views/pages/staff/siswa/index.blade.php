@@ -3,6 +3,7 @@
 @section('title', 'Siswa')
 
 @push('style')
+    <link rel="stylesheet" href="{{ asset('libs/dropify/css/dropify.css') }}" />
     <link rel="stylesheet" href="{{ asset('libs/datatables/datatables.min.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
@@ -13,9 +14,14 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title fw-semibold">Data @yield('title')</h5>
-            <button type="button" class="btn btn-primary" onclick="getModal('createModal')">
-                <i class="ti ti-plus me-1"></i>Tambah
-            </button>
+            <div>
+                <button type="button" class="btn btn-success" onclick="getModal('importModal')">
+                    <i class="ti ti-file me-1"></i>Import
+                </button>
+                <button type="button" class="btn btn-primary" onclick="getModal('createModal')">
+                    <i class="ti ti-plus me-1"></i>Tambah
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -71,10 +77,13 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('libs/dropify/js/dropify.js') }}"></script>
     <script src="{{ asset('libs/datatables/datatables.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.dropify').dropify();
+
             datatableCall('siswa-table', '{{ route('staff.siswa.index') }}', [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
@@ -142,6 +151,29 @@
 
             $('#kelas_filter').select2({
                 theme: 'bootstrap-5'
+            });
+
+            $("#importData").submit(function(e) {
+                setButtonLoadingState("#importData .btn.btn-success", true);
+                e.preventDefault();
+
+                const url = "{{ route('staff.siswa.import') }}";
+                const data = new FormData(this);
+
+
+                const successCallback = function(response) {
+                    setButtonLoadingState("#importData .btn.btn-success", false,
+                        `<i class="ti ti-file me-1"></i>Import`);
+                    handleSuccess(response, "siswa-table", "importModal");
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#importData .btn.btn-success", false,
+                        `<i class="ti ti-file me-1"></i>Import`);
+                    handleValidationErrors(error, "importData", ["file"]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
             });
 
         });

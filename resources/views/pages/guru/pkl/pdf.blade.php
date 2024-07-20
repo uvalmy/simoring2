@@ -25,18 +25,25 @@
             </thead>
             <tbody>
                 @forelse($pkl as $row)
+                    @php
+                        $nilaiAkhir  = 0;
+                        if($row->nilaiPembimbing)
+                        {
+                            $nilaiAkhir = (int) ($row->nilaiPembimbing->nilai_pelaksanaan * 0.4) + (int) ($row->nilaiPembimbing->nilai_laporan * 0.1) + (int) ($row->nilaiPembimbing->nilai_sertifikat * 0.5);
+                        }
+                    @endphp
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->siswa->nis }}</td>
+                        <td align="center">{{ $loop->iteration }}</td>
+                        <td align="center">{{ $row->siswa->nis }}</td>
                         <td>{{ $row->siswa->nama }}</td>
-                        <td>{{ $row->siswa->kelas->name }}</td>
-                        <td>{{ $row->mulai }}</td>
-                        <td>{{ $row->selesai }}</td>
-                        <td>{{ $row->dudi->name }}</td>
-                        <td>{{ $row->pelaksanaan }}</td>
-                        <td>{{ $row->laporan }}</td>
-                        <td>{{ $row->sertifikat }}</td>
-                        <td>{{ $row->akhir }}</td>
+                        <td>{{ $row->siswa->kelas->nama }}</td>
+                        <td>{{ formatTanggal($row->tanggal_mulai, 'd F Y') }}</td>
+                        <td>{{ formatTanggal($row->tanggal_selesai, 'd F Y') }}</td>
+                        <td>{{ $row->dudi->nama }}</td>
+                        <td align="center">{{ $row->nilaiPembimbing->nilai_pelaksanaan ?? 0 }}</td>
+                        <td align="center">{{ $row->nilaiPembimbing->nilai_laporan ?? 0 }}</td>
+                        <td align="center">{{ $row->nilaiPembimbing->nilai_sertifikat ?? 0 }}</td>
+                        <td align="center">{{ $nilaiAkhir }}</td>
                     </tr>
                 @empty
                     <tr>

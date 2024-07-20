@@ -80,3 +80,18 @@ if (!function_exists('getPredikat')) {
         }
     }
 }
+
+if (!function_exists('compressImage')) {
+    function compressImage($source_image, $compress_image)
+    {
+        $image_info = getimagesize($source_image);
+        if ($image_info['mime'] == 'image/jpeg' || $image_info['mime'] == 'image/jpg' ) {
+            $source_image_resource = imagecreatefromjpeg($source_image);
+            imagejpeg($source_image_resource, $compress_image, 10);
+        } elseif ($image_info['mime'] == 'image/png') {
+            $source_image_resource = imagecreatefrompng($source_image);
+            imagepng($source_image_resource, $compress_image, 9);
+        }
+        return $compress_image;
+    }
+}

@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/kelas', StaffKelasController::class)->names('staff.kelas');
         Route::resource('/cp', StaffCpController::class)->names('staff.cp');
         Route::resource('/guru', StaffGuruController::class)->names('staff.guru');
+        Route::post('/siswa/import', [StaffSiswaController::class, 'import'])->name('staff.siswa.import');
         Route::resource('/siswa', StaffSiswaController::class)->names('staff.siswa');
         Route::resource('/dudi', StaffDudiController::class)->names('staff.dudi');
         Route::resource('/pkl', StaffPklController::class)->names('staff.pkl');

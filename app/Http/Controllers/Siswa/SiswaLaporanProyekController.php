@@ -77,9 +77,32 @@ class SiswaLaporanProyekController extends Controller
             return $this->errorResponse(null, 'Data laporan proyek sudah ada.', 409);
         }
 
+        $dokumentasi = null;
+
         if ($request->hasFile('dokumentasi')) {
-            $dokumentasi = $request->file('dokumentasi')->hashName();
-            $request->file('dokumentasi')->storeAs('public/gambar/laporan-proyek', $dokumentasi);
+            try {
+                $image = $request->file('dokumentasi');
+                $dokumentasi = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'public/gambar/laporan-proyek/';
+                $originalPath = $imagePath . $dokumentasi;
+                $compressedPath = $imagePath . 'compressed-' . $dokumentasi;
+
+                $image->storeAs($imagePath, $dokumentasi);
+
+                $sourceImage = storage_path('app/' . $originalPath);
+                $compressImage = storage_path('app/' . $compressedPath);
+
+                compressImage($sourceImage, $compressImage);
+
+                if (Storage::exists($originalPath)) {
+                    Storage::delete($originalPath);
+                }
+
+                Storage::move($compressedPath, $originalPath);
+
+            } catch (\Exception $e) {
+                return $this->errorResponse(null, 'Terjadi kesalahan saat memproses gambar.', 500);
+            }
         }
 
         $laporanProyek = LaporanProyek::create([
@@ -133,10 +156,31 @@ class SiswaLaporanProyekController extends Controller
             if (Storage::exists('public/gambar/laporan-proyek/' . $dokumentasi)) {
                 Storage::delete('public/gambar/laporan-proyek/' . $dokumentasi);
             }
-            $dokumentasi = $request->file('dokumentasi')->hashName();
-            $request->file('dokumentasi')->storeAs('public/gambar/laporan-proyek', $dokumentasi);
-        }
 
+            try {
+                $image = $request->file('dokumentasi');
+                $dokumentasi = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'public/gambar/laporan-proyek/';
+                $originalPath = $imagePath . $dokumentasi;
+                $compressedPath = $imagePath . 'compressed-' . $dokumentasi;
+
+                $image->storeAs($imagePath, $dokumentasi);
+
+                $sourceImage = storage_path('app/' . $originalPath);
+                $compressImage = storage_path('app/' . $compressedPath);
+
+                compressImage($sourceImage, $compressImage);
+
+                if (Storage::exists($originalPath)) {
+                    Storage::delete($originalPath);
+                }
+
+                Storage::move($compressedPath, $originalPath);
+
+            } catch (\Exception $e) {
+                return $this->errorResponse(null, 'Terjadi kesalahan saat memproses gambar.', 500);
+            }
+        }
         $laporanProyek->update([
             'judul' => $request->judul,
             'tanggal' => $request->tanggal,

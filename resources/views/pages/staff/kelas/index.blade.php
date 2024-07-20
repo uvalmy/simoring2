@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
+                            <th>Id</th>
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Jurusan</th>
@@ -46,6 +47,10 @@
             datatableCall('kelas-table', '{{ route('staff.kelas.index') }}', [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
+                },
+                {
+                    data: 'id',
+                    name: 'id'
                 },
                 {
                     data: 'kode',

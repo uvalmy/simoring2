@@ -81,9 +81,32 @@ class SiswaLaporanHarianController extends Controller
             return $this->errorResponse(null, 'Data laporan harian sudah ada.', 409);
         }
 
+        $dokumentasi = null;
+
         if ($request->hasFile('dokumentasi')) {
-            $dokumentasi = $request->file('dokumentasi')->hashName();
-            $request->file('dokumentasi')->storeAs('public/gambar/laporan-harian', $dokumentasi);
+            try {
+                $image = $request->file('dokumentasi');
+                $dokumentasi = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'public/gambar/laporan-harian/';
+                $originalPath = $imagePath . $dokumentasi;
+                $compressedPath = $imagePath . 'compressed-' . $dokumentasi;
+
+                $image->storeAs($imagePath, $dokumentasi);
+
+                $sourceImage = storage_path('app/' . $originalPath);
+                $compressImage = storage_path('app/' . $compressedPath);
+
+                compressImage($sourceImage, $compressImage);
+
+                if (Storage::exists($originalPath)) {
+                    Storage::delete($originalPath);
+                }
+
+                Storage::move($compressedPath, $originalPath);
+
+            } catch (\Exception $e) {
+                return $this->errorResponse(null, 'Terjadi kesalahan saat memproses gambar.', 500);
+            }
         }
 
         $laporanHarian = LaporanHarian::create([
@@ -109,7 +132,6 @@ class SiswaLaporanHarianController extends Controller
         $validator = Validator::make($request->all(), [
             'cp_id' => 'required|array',
             'tanggal' => 'required|date|before_or_equal:today',
-
             'deskripsi' => 'required|string',
             'nilai_karakter' => 'required|array',
             'dokumentasi' => 'image|mimes:png,jpg,jpeg',
@@ -139,8 +161,30 @@ class SiswaLaporanHarianController extends Controller
             if (Storage::exists('public/gambar/laporan-harian/' . $dokumentasi)) {
                 Storage::delete('public/gambar/laporan-harian/' . $dokumentasi);
             }
-            $dokumentasi = $request->file('dokumentasi')->hashName();
-            $request->file('dokumentasi')->storeAs('public/gambar/laporan-harian', $dokumentasi);
+
+            try {
+                $image = $request->file('dokumentasi');
+                $dokumentasi = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'public/gambar/laporan-harian/';
+                $originalPath = $imagePath . $dokumentasi;
+                $compressedPath = $imagePath . 'compressed-' . $dokumentasi;
+
+                $image->storeAs($imagePath, $dokumentasi);
+
+                $sourceImage = storage_path('app/' . $originalPath);
+                $compressImage = storage_path('app/' . $compressedPath);
+
+                compressImage($sourceImage, $compressImage);
+
+                if (Storage::exists($originalPath)) {
+                    Storage::delete($originalPath);
+                }
+
+                Storage::move($compressedPath, $originalPath);
+
+            } catch (\Exception $e) {
+                return $this->errorResponse(null, 'Terjadi kesalahan saat memproses gambar.', 500);
+            }
         }
 
         $laporanHarian->update([
