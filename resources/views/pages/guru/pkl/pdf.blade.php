@@ -24,7 +24,25 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($pkl as $row)
+                @forelse($pkl as $row)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $row->siswa->nis }}</td>
+                        <td>{{ $row->siswa->nama }}</td>
+                        <td>{{ $row->siswa->kelas->name }}</td>
+                        <td>{{ $row->mulai }}</td>
+                        <td>{{ $row->selesai }}</td>
+                        <td>{{ $row->dudi->name }}</td>
+                        <td>{{ $row->pelaksanaan }}</td>
+                        <td>{{ $row->laporan }}</td>
+                        <td>{{ $row->sertifikat }}</td>
+                        <td>{{ $row->akhir }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="11" class="text-center">Tidak ada data</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
