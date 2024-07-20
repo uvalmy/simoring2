@@ -1,15 +1,15 @@
 <?php
 namespace App\Http\Controllers\Staff;
 
+use App\Http\Controllers\Controller;
+use App\Imports\SiswaImport;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Imports\SiswaImport;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Validator;
 
 class StaffSiswaController extends Controller
 {
@@ -150,15 +150,19 @@ class StaffSiswaController extends Controller
     public function import(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
+            'kelas' => 'required|exists:kelas,id',
+            'angkatan_import' => 'required',
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        Excel::import(new SiswaImport, $request->file('file'));
+        $kelas = $request->input('kelas');
+        $angkatan = $request->input('angkatan_import');
 
+        Excel::import(new SiswaImport($kelas, $angkatan), $request->file('file'));
         return $this->successResponse(null, 'Data siswa ditambahkan.');
     }
 }

@@ -66,11 +66,10 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="angkatan" class="form-label">Angkatan <span class="text-danger">*</span></label>
-                        <input type="number" min="1900" max="2099" step="1" class="form-control"
+                        <input type="number" min="1900" max="3000" step="1" class="form-control"
                             id="angkatan" name="angkatan">
                         <small class="invalid-feedback" id="errorangkatan"></small>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -91,10 +90,27 @@
             </div>
             <form id="importData" autocomplete="off">
                 <div class="modal-body">
-                    <p>Download Template Import Data di  <a class="border-bottom border-2 border-primary" download href="/template.xlsx">Download</a> </p>
+                    <p>Download Template Import Data di <a class="border-bottom border-2 border-primary" download
+                            href="/template.xlsx">Download</a> </p>
                     <div class="form-group mb-3">
-                        <label for="file" class="form-label">File <span
+                        <label for="kelas" class="form-label">Kelas <span class="text-danger">*</span></label>
+                        <select name="kelas" id="kelas" class="form-control">
+                            <option value="">-- Pilih Kelas --</option>
+                            @foreach ($kelas as $row)
+                                <option value="{{ $row->id }}">{{ $row->kode . ' - ' . $row->nama }}</option>
+                            @endforeach
+                        </select>
+                        <small class="invalid-feedback" id="errorkelas"></small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="angkatan_import" class="form-label">Angkatan <span
                                 class="text-danger">*</span></label>
+                        <input type="number" min="1900" max="3000" step="1" class="form-control"
+                            id="angkatan_import" name="angkatan_import">
+                        <small class="invalid-feedback" id="errorangkatan_import"></small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="file" class="form-label">File <span class="text-danger">*</span></label>
                         <input type="file" name="file" id="file" class="dropify" data-height="200"
                             accept=".xlsx,.xls">
                         <small class="text-danger" id="errorfile"></small>

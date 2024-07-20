@@ -149,6 +149,11 @@
                 dropdownParent: $("#createModal")
             });
 
+            $('#kelas').select2({
+                theme: 'bootstrap-5',
+                dropdownParent: $("#importModal")
+            });
+
             $('#kelas_filter').select2({
                 theme: 'bootstrap-5'
             });
@@ -162,6 +167,7 @@
 
 
                 const successCallback = function(response) {
+                    $('#importData #file').parent().find(".dropify-clear").trigger('click');
                     setButtonLoadingState("#importData .btn.btn-success", false,
                         `<i class="ti ti-file me-1"></i>Import`);
                     handleSuccess(response, "siswa-table", "importModal");
@@ -170,7 +176,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#importData .btn.btn-success", false,
                         `<i class="ti ti-file me-1"></i>Import`);
-                    handleValidationErrors(error, "importData", ["file"]);
+                    handleValidationErrors(error, "importData", ["file", "kelas", "angkatan_import"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);
