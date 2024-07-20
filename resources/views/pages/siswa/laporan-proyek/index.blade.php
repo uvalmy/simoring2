@@ -29,7 +29,7 @@
                             <th>Tanggal</th>
                             <th>Status</th>
                             <th>Dokumentasi</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

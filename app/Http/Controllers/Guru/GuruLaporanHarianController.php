@@ -28,6 +28,9 @@ class GuruLaporanHarianController extends Controller
                     ->addColumn('status', function ($laporanHarian) {
                         return statusBadge($laporanHarian->status);
                     })
+                    ->addColumn('tanggal', function ($laporanHarian) {
+                        return  formatTanggal($laporanHarian->tanggal, 'd F y');
+                    })
                     ->addColumn('dokumentasi', function ($laporanHarian) {
                         return '<img src="/storage/gambar/laporan-harian/' . $laporanHarian->dokumentasi . '" width="150px" alt="">';
                     })

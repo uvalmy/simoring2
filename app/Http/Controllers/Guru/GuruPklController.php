@@ -15,16 +15,26 @@ class GuruPklController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $pkl = Pkl::with('siswa', 'dudi')->where('user_id', auth()->user()->id)->get();
+            $tahun = $request->tahun;
+            $pkl = Pkl::with('siswa', 'dudi')->where('user_id', auth()->user()->id)->whereYear('tanggal_mulai', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
+                ->addColumn('aksi', function ($pkl) {
+                    $detailButton = '<a class="btn btn-sm btn-info me-1" href="/guru/pkl/' . $pkl->id . '"><i class="ti ti-eye me-1"></i>Detail</a>';
+                    return $detailButton;
+                    })
                     ->addColumn('siswa', function ($pkl) {
                         return $pkl->siswa->nama;
                     })
                     ->addColumn('dudi', function ($pkl) {
-                        return $pkl->dudi->instansi;
+                        return $pkl->dudi->nama;
                     })
-
+                    ->addColumn('tanggal_mulai', function ($pkl) {
+                        return  formatTanggal($pkl->tanggal_mulai, 'd F y');
+                    })
+                    ->addColumn('tanggal_selesai', function ($pkl) {
+                        return  formatTanggal($pkl->tanggal_selesai, 'd F y');
+                    })
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])
                     ->make(true);
@@ -34,6 +44,11 @@ class GuruPklController extends Controller
         }
 
         return view('pages.guru.pkl.index');
+    }
+    public function show($id)
+    {
+        $pkl = Pkl::with('user', 'siswa', 'nilaiPembimbing','nilaiDudi')->where('user_id', auth()->user()->id)->findOrFail($id);
+        return view('pages.guru.pkl.show', compact('pkl'));
     }
 
 }

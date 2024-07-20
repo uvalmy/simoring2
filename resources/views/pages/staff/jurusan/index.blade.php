@@ -22,7 +22,7 @@
                             <th width="5%">#</th>
                             <th>Kode</th>
                             <th>Nama</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

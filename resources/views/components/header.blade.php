@@ -62,9 +62,10 @@
                                     <p class="mb-0 fs-3">Profile</p>
                                 </a>
                             @endif
-
-
-                            <a href="{{ route('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</button>
+                            </form>
                         </div>
                     </div>
                 </li>

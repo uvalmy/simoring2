@@ -23,7 +23,7 @@
                             <th>Nik</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

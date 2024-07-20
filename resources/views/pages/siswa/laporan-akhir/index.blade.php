@@ -18,6 +18,7 @@
                     <h5 class="card-title fw-semibold">Data @yield('title')</h5>
                 </div>
                 <div class="card-body">
+                    <p>Download Buku Panduan PKL di  <a class="border-bottom border-2 border-primary" download href="/storage/laporan/pengaturan/{{ getPengaturan()->buku_panduan }}">Download</a> </p>
                     @if (auth('siswa')->user()->pkl)
                         @if (!$laporanAkhir || $laporanAkhir->status == 0 || $laporanAkhir->status == 2)
                             <form id="saveData" autocomplete="off">

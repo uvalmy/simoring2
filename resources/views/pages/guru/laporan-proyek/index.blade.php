@@ -15,6 +15,25 @@
             <h5 class="card-title fw-semibold">Data @yield('title')</h5>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 mb-3">
+                    <div class="form-group mb-3">
+                        <label for="tahun_filter" class="form-label">Tahun <span class="text-danger">*</span></label>
+                        <select name="tahun_filter" id="tahun_filter" class="form-control">
+                            <option value="">-- Pilih Tahun --</option>
+                            @php
+                                $currentYear = date('Y');
+                                $lastTenYears = range($currentYear, $currentYear - 10);
+                            @endphp
+                            @foreach ($lastTenYears as $year)
+                                <option value="{{ $year }}" {{ $currentYear == $year ? 'selected' : '' }}>
+                                    {{ $year }}</option>
+                            @endforeach
+                        </select>
+                        <small class="invalid-feedback" id="errortahun_filter"></small>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table id="laporan-proyek-table" class="table table-bordered table-striped" width="100%">
                     <thead>
@@ -25,7 +44,7 @@
                             <th>Tanggal</th>
                             <th>Status</th>
                             <th>Dokumentasi</th>
-                            <th width="20%">Aksi</th>
+                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +89,10 @@
                     name: 'aksi'
                 },
             ]);
+
+            $("#tahun_filter").on("change", function() {
+                $("#laporan-proyek-table").DataTable().ajax.reload();
+            });
         });
     </script>
 @endpush

@@ -31,6 +31,9 @@ class SiswaLaporanHarianController extends Controller
                     ->addColumn('elemen', function ($laporanHarian) {
                         return Cp::whereIn('id', $laporanHarian->cp_id)->pluck('elemen')->implode(', ');
                     })
+                    ->addColumn('tanggal', function ($laporanHarian) {
+                        return  formatTanggal($laporanHarian->tanggal, 'd F y');
+                    })
                     ->addColumn('status', function ($laporanHarian) {
                         return statusBadge($laporanHarian->status);
                     })

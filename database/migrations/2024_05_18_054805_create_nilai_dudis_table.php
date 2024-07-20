@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('nilai_dudis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pkl_id')->constrained('pkls');
-            $table->string('prestasi_kerja');
-            $table->string('kehadiran_dan_disiplin');
-            $table->string('inisiatif_dan_kreatifitas');
-            $table->string('kerjasama');
-            $table->string('tanggung_jawab');
-            $table->string('sikap');
-            $table->string('kompetensi_keahlian');
+            $table->integer('prestasi_kerja');
+            $table->integer('kehadiran_dan_disiplin');
+            $table->integer('inisiatif_dan_kreatifitas');
+            $table->integer('kerjasama');
+            $table->integer('tanggung_jawab');
+            $table->integer('sikap');
+            $table->integer('kompetensi_keahlian');
             $table->timestamps();
         });
     }

@@ -49,18 +49,18 @@ class AuthController extends Controller
         return view('pages.auth.login');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         $guards = ['web', 'dudi', 'siswa'];
 
-        foreach ($guards as $guard) {
-            if (auth($guard)->check()) {
-                auth($guard)->logout();
-            }
+        foreach($guards as $row){
+            auth($row)->logout();
         }
 
-        session()->invalidate();
-        session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
+
 }

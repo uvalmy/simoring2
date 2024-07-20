@@ -58,7 +58,7 @@
                             <th>Nama</th>
                             <th>Kelas</th>
                             <th>Angkatan</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

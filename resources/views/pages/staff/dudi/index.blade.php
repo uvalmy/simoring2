@@ -23,7 +23,7 @@
                             <th>Username</th>
                             <th>Nama</th>
                             <th>Instansi</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

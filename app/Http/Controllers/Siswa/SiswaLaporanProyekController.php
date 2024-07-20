@@ -32,6 +32,9 @@ class SiswaLaporanProyekController extends Controller
                     ->addColumn('dokumentasi', function ($laporanProyek) {
                         return '<img src="/storage/gambar/laporan-proyek/' . $laporanProyek->dokumentasi . '" width="150px" alt="">';
                     })
+                    ->addColumn('tanggal', function ($laporanProyek) {
+                        return  formatTanggal($laporanProyek->tanggal, 'd F y');
+                    })
                     ->addColumn('status', function ($laporanProyek) {
                         return statusBadge($laporanProyek->status);
                     })

@@ -26,7 +26,7 @@
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Jurusan</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('nilai_pembimbings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pkl_id')->constrained('pkls');
-            $table->string('nilai_pelaksanaan');
-            $table->string('nilai_laporan');
-            $table->string('nilai_sertifikat');
+            $table->integer('nilai_pelaksanaan');
+            $table->integer('nilai_laporan');
+            $table->integer('nilai_sertifikat');
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@
                             <th>Jurusan</th>
                             <th>Elemen</th>
                             <th>Deskripsi</th>
-                            <th width="20%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

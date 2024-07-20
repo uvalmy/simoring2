@@ -20,14 +20,16 @@ class StaffpklController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $pkl = Pkl::with('user','siswa','dudi')->get();
+            $tahun = $request->tahun;
+            $pkl = Pkl::with('user','siswa','dudi')->whereYear('tanggal_mulai', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($pkl)
                     ->addColumn('aksi', function ($pkl) {
+                        $detailButton = '<a class="btn btn-sm btn-info me-1" href="/staff/pkl/' . $pkl->id . '"><i class="ti ti-eye me-1"></i>Detail</a>';
                         $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/pkl/' . $pkl->id . '`, [`id`,`siswa_id`,`user_id`,`dudi_id`, `tanggal_mulai`,`tanggal_selesai`, `posisi`,`pembimbing_dudi`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/pkl/' . $pkl->id . '`, `pkl-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
-                        return $editButton . $deleteButton;
+                        return $detailButton . $editButton . $deleteButton;
                     })
                     ->addColumn('user', function($pkl){
                         return $pkl->user->nama;
@@ -36,9 +38,14 @@ class StaffpklController extends Controller
                         return $pkl->siswa->nama;
                     })
                     ->addColumn('dudi', function($pkl){
-                        return $pkl->dudi->instansi;
+                        return $pkl->dudi->nama;
                     })
-
+                    ->addColumn('tanggal_mulai', function ($pkl) {
+                        return  formatTanggal($pkl->tanggal_mulai, 'd F y');
+                    })
+                    ->addColumn('tanggal_selesai', function ($pkl) {
+                        return  formatTanggal($pkl->tanggal_selesai, 'd F y');
+                    })
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])
                     ->make(true);
@@ -85,7 +92,8 @@ class StaffpklController extends Controller
             return $this->successResponse($pkl, 'Data pkl ditemukan.');
         }
 
-        abort(404);
+        $pkl = Pkl::with('user', 'siswa', 'nilaiPembimbing','nilaiDudi')->findOrFail($id);
+        return view('pages.staff.pkl.show', compact('pkl'));
     }
 
     public function update(Request $request, $id)

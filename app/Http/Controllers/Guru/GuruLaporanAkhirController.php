@@ -16,9 +16,10 @@ class GuruLaporanAkhirController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            $tahun = $request->tahun;
             $laporanAkhirs = LaporanAkhir::with('pkl', 'pkl.siswa')->whereHas('pkl', function ($query) {
                 $query->where('user_id', auth()->user()->id);
-            })->get();
+            })->whereYear('created_at', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanAkhirs)
                     ->addColumn('aksi', function ($laporanAkhir) {

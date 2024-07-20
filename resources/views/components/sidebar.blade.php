@@ -50,14 +50,20 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/staff/cp" aria-expanded="false">
-                                <i class="ti ti-building"></i>
+                                <i class="ti ti-book"></i>
                                 <span class="hide-menu">Cp</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/staff/pkl" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('staff/pkl/*') ? 'active' : '' }}" href="/staff/pkl" aria-expanded="false">
                                 <i class="ti ti-news"></i>
                                 <span class="hide-menu">Pkl</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/staff/pengaturan" aria-expanded="false">
+                                <i class="ti ti-settings"></i>
+                                <span class="hide-menu">Pengaturan</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -74,7 +80,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/guru/pkl" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('guru/pkl/*') ? 'active' : '' }}" href="/guru/pkl" aria-expanded="false">
                                 <i class="ti ti-news"></i>
                                 <span class="hide-menu">Pkl</span>
                             </a>
@@ -115,7 +121,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/dudi/pkl" aria-expanded="false">
+                        <a class="sidebar-link {{ request()->is('dudi/pkl/*') ? 'active' : '' }}" href="/dudi/pkl" aria-expanded="false">
                             <i class="ti ti-news"></i>
                             <span class="hide-menu">Pkl</span>
                         </a>
@@ -145,13 +151,6 @@
                             <i class="ti ti-layout-dashboard"></i>
                             <span class="hide-menu">Dashboard</span>
                         </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/siswa/pkl" aria-expanded="false">
-                            <i class="ti ti-news"></i>
-                            <span class="hide-menu">Pkl</span>
-                        </a>
-                    </li>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link {{ request()->is('siswa/laporan-harian/*') ? 'active' : '' }}"

@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Pengaturan;
 
 if (!function_exists('formatTanggal')) {
     function formatTanggal($tanggal = null, $format = 'l, j F Y')
@@ -55,5 +56,27 @@ if (!function_exists('nilaiKarakter')) {
             'Cinta Damai',
 
         ];
+    }
+}
+
+if (!function_exists('getPengaturan')) {
+    function getPengaturan()
+    {
+        return Pengaturan::first();
+    }
+}
+
+if (!function_exists('getPredikat')) {
+    function getPredikat($nilai)
+    {
+        if ($nilai >= 86 && $nilai <= 100) {
+            return 'Amat Baik';
+        } elseif ($nilai >= 70 && $nilai <= 85) {
+            return 'Baik';
+        } elseif ($nilai < 70) {
+            return 'Kurang';
+        } else {
+            return 'Nilai tidak valid';
+        }
     }
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dudi\DudiPklController;
 use App\Http\Controllers\Guru\GuruPklController;
 use App\Http\Controllers\Staff\StaffCpController;
+use App\Http\Controllers\Dudi\DudiNilaiController;
+use App\Http\Controllers\Guru\GuruNilaiController;
 use App\Http\Controllers\Siswa\SiswaPklController;
 use App\Http\Controllers\Staff\StaffPklController;
 use App\Http\Controllers\Staff\StaffDudiController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\Guru\GuruProfileController;
 use App\Http\Controllers\Staff\StaffKelasController;
 use App\Http\Controllers\Staff\StaffSiswaController;
 use App\Http\Controllers\Dudi\DudiDashboardController;
+use App\Http\Controllers\Dudi\DudiNilaiDudiController;
 use App\Http\Controllers\Guru\GuruDashboardController;
 use App\Http\Controllers\Siswa\SiswaProfileController;
 use App\Http\Controllers\Staff\StaffJurusanController;
@@ -21,6 +24,7 @@ use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Guru\GuruLaporanAkhirController;
+use App\Http\Controllers\Staff\StaffPengaturanController;
 use App\Http\Controllers\Dudi\DudiLaporanHarianController;
 use App\Http\Controllers\Dudi\DudiLaporanProyekController;
 use App\Http\Controllers\Guru\GuruLaporanHarianController;
@@ -45,7 +49,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('staff')->middleware(['checkRole:admin'])->group(function () {
         Route::get('/', [StaffDashboardController::class, 'index'])->name('staff.dashboard');
@@ -58,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/siswa', StaffSiswaController::class)->names('staff.siswa');
         Route::resource('/dudi', StaffDudiController::class)->names('staff.dudi');
         Route::resource('/pkl', StaffPklController::class)->names('staff.pkl');
+        Route::match(['get', 'post'], '/pengaturan', [StaffPengaturanController::class, 'index'])->name('staff.pengaturan');
     });
 
     Route::prefix('guru')->middleware(['checkRole:guru_pembimbing'])->group(function () {
@@ -68,6 +73,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/laporan-akhir', GuruLaporanAkhirController::class)->names('guru.laporanAkhir');
         Route::match(['get', 'post'], '/profile', [GuruProfileController::class, 'index'])->name('guru.profile');
         Route::put('/profile/password', [GuruProfileController::class, 'updatePassword'])->name('guru.updatePassword');
+        Route::post('/nilai', [GuruNilaiController::class, 'store'])->name('guru.nilai');
     });
 
 });
@@ -79,6 +85,7 @@ Route::middleware('auth:dudi')->prefix('dudi')->group(function () {
     Route::match(['get', 'post'], '/profile', [DudiProfileController::class, 'index'])->name('dudi.profile');
     Route::put('/profile/password', [DudiProfileController::class, 'updatePassword'])->name('dudi.updatePassword');
     Route::resource('/pkl', DudiPklController::class)->names('dudi.pkl');
+    Route::post('/nilai', [DudiNilaiController::class, 'store'])->name('dudi.nilai');
 });
 
 Route::middleware('auth:siswa')->prefix('siswa')->group(function () {

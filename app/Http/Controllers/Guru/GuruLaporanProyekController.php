@@ -15,9 +15,10 @@ class GuruLaporanProyekController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            $tahun = $request->tahun;
             $laporanProyeks = LaporanProyek::with('pkl', 'pkl.siswa')->whereHas('pkl', function ($query) {
                 $query->where('user_id', auth()->user()->id);
-            })->get();
+            })->whereYear('tanggal', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanProyeks)
                     ->addColumn('aksi', function ($laporanProyek) {
@@ -31,8 +32,11 @@ class GuruLaporanProyekController extends Controller
                     ->addColumn('status', function ($laporanProyek) {
                         return statusBadge($laporanProyek->status);
                     })
-                    ->addColumn('siswa', function ($laporanHarian) {
-                        return $laporanHarian->pkl->siswa->nama;
+                    ->addColumn('tanggal', function ($laporanProyek) {
+                        return  formatTanggal($laporanProyek->tanggal, 'd F y');
+                    })
+                    ->addColumn('siswa', function ($laporanProyek) {
+                        return $laporanProyek->pkl->siswa->nama;
                     })
                     ->addIndexColumn()
                     ->rawColumns(['aksi', 'dokumentasi', 'status', 'siswa'])

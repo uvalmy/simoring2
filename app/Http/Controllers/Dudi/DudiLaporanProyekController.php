@@ -16,9 +16,10 @@ class DudiLaporanProyekController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            $tahun = $request->tahun;
             $laporanProyeks = LaporanProyek::with('pkl', 'pkl.siswa')->whereHas('pkl', function ($query) {
                 $query->where('dudi_id', auth('dudi')->user()->id);
-            })->get();
+            })->whereYear('tanggal', $tahun)->get();
             if ($request->mode == "datatable") {
                 return DataTables::of($laporanProyeks)
                     ->addColumn('aksi', function ($laporanProyek) {
@@ -31,11 +32,14 @@ class DudiLaporanProyekController extends Controller
                     ->addColumn('dokumentasi', function ($laporanProyek) {
                         return '<img src="/storage/gambar/laporan-proyek/' . $laporanProyek->dokumentasi . '" width="150px" alt="">';
                     })
+                    ->addColumn('tanggal', function ($laporanProyek) {
+                        return  formatTanggal($laporanProyek->tanggal, 'd F y');
+                    })
                     ->addColumn('status', function ($laporanProyek) {
                         return statusBadge($laporanProyek->status);
                     })
-                    ->addColumn('siswa', function ($laporanHarian) {
-                        return $laporanHarian->pkl->siswa->nama;
+                    ->addColumn('siswa', function ($laporanProyek) {
+                        return $laporanProyek->pkl->siswa->nama;
                     })
                     ->addIndexColumn()
                     ->rawColumns(['aksi', 'dokumentasi', 'status', 'siswa'])

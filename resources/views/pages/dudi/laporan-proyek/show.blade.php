@@ -15,7 +15,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title fw-semibold">{{ $laporanProyek->status == 1 ? 'Detail' : 'Edit' }} Data
+                    <h5 class="card-title fw-semibold">{{ $laporanProyek->status == 1 ? 'Detail' : 'Edit' }} 
                         @yield('title')</h5>
                 </div>
                 <div class="card-body">

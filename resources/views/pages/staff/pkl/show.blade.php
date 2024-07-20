@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Nilai')
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('libs/datatables/datatables.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('libs/dropify/css/dropify.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endpush
 
 @section('main')
-
-    @php
-        $pkl = auth('siswa')->user()->pkl ?? null;
-    @endphp
     @if($pkl)
         <div class="row">
             <div class="col-lg-6 mb-2">
@@ -37,40 +37,38 @@
             </div>
         </div>
     @endif
-    <div class="card mb-3">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title fw-semibold">Data @yield('title')</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                @if ($pkl)
-                    <div class="col-lg-4 mb-3">Guru Pembimbing</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->user->nama }}</div>
-                    <div class="col-lg-4 mb-3">Telepon Pembimbing</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->user->telepon }}</div>
-                    <div class="col-lg-4 mb-3">Email Pembimbing</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->user->email }}</div>
-                    <div class="col-lg-4 mb-3">Nama Perusahaan PKL</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->dudi->nama }}</div>
-                    <div class="col-lg-4 mb-3">Instansi</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->dudi->instansi }}</div>
-                    <div class="col-lg-4 mb-3">Pembimbing dudi</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->pembimbing_dudi }}</div>
-                    <div class="col-lg-4 mb-3">Alamat Perusahaan</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->dudi->alamat }}</div>
-                    <div class="col-lg-4 mb-3">Telepon Perusahaan</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->dudi->telepon }}</div>
-                    <div class="col-lg-4 mb-3">Tanggal Mulai</div>
-                    <div class="col-lg-8 mb-3">: {{ formatTanggal($pkl->tanggal_mulai, 'd F y') }}</div>
-                    <div class="col-lg-4 mb-3">Tanggal Selesai</div>
-                    <div class="col-lg-8 mb-3">: {{ formatTanggal($pkl->tanggal_selesai, 'd F y') }}</div>
-                @else
-                    <div class="col-12 py-5 my-5 text-center">Data PKL Tidak ditemukan</div>
-                @endif
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title fw-semibold"> Data Siswa</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 mb-3">NIS</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->siswa->nis }}</div>
+                        <div class="col-lg-4 mb-3">Nama siswa</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->siswa->nama }}</div>
+                        <div class="col-lg-4 mb-3">Pembimbing Dudi</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->pembimbing_dudi }}</div>
+                        <div class="col-lg-4 mb-3">Telepon Pembimbing Dudi</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->user->telepon }}</div>
+                        <div class="col-lg-4 mb-3">Nama Perusahaan PKL</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->dudi->nama }}</div>
+                        <div class="col-lg-4 mb-3">Instansi</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->dudi->instansi }}</div>
+                        <div class="col-lg-4 mb-3">Alamat Perusahaan</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->dudi->alamat }}</div>
+                        <div class="col-lg-4 mb-3">Telepon Perusahaan</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->dudi->telepon }}</div>
+                        <div class="col-lg-4 mb-3">Tanggal Mulai</div>
+                        <div class="col-lg-8 mb-3">: {{ formatTanggal($pkl->tanggal_mulai, 'd F y') }}</div>
+                        <div class="col-lg-4 mb-3">Tanggal Selesai</div>
+                        <div class="col-lg-8 mb-3">: {{ formatTanggal($pkl->tanggal_selesai, 'd F y') }}</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    @if($pkl)
         @if($pkl->nilaiDudi)
             <div class="col-12 mb-3">
                 <div class="card mb-3">
@@ -153,8 +151,6 @@
                 </div>
             </div>
         @endif
-    @endif
-    @if($pkl)
         @if($pkl->nilaiPembimbing)
             <div class="col-12 mb-3">
                 <div class="card mb-3">
@@ -207,9 +203,10 @@
                 </div>
             </div>
         @endif
-    @endif
- @endsection
+    </div>
+@endsection
 
 @push('scripts')
-    <script src="{{ asset('libs/datatables/datatables.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="{{ asset('libs/dropify/js/dropify.js') }}"></script>
 @endpush
