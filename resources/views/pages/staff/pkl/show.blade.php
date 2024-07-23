@@ -50,7 +50,7 @@
                         <div class="col-lg-4 mb-3">Nama siswa</div>
                         <div class="col-lg-8 mb-3">: {{ $pkl->siswa->nama }}</div>
                         <div class="col-lg-4 mb-3">Pembimbing Dudi</div>
-                        <div class="col-lg-8 mb-3">: {{ $pkl->pembimbing_dudi }}</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->dudi->pembimbing }}</div>
                         <div class="col-lg-4 mb-3">Telepon Pembimbing Dudi</div>
                         <div class="col-lg-8 mb-3">: {{ $pkl->user->telepon }}</div>
                         <div class="col-lg-4 mb-3">Nama Perusahaan PKL</div>

@@ -20,10 +20,10 @@ class StaffGuruController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($users)
                     ->addColumn('aksi', function ($user) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/guru/' . $user->id . '`, [`id`,`nik`, `nama`, `email`, `role`, `telepon`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
+                        staff/guru/' . $user->id . '`, [`id`,`nik`, `nama`, `email`, `role`, `telepon`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/guru/' . $user->id . '`, `guru-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
-                        return $editButton . $deleteButton;
+                        return $editButton;
                     })
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])
@@ -46,13 +46,14 @@ class StaffGuruController extends Controller
             'konfirmasi_password' => 'required|min:8|same:password',
             'telepon' => 'required|string',
             'role' => 'required|in:admin,guru_pembimbing,tata_usaha',
+            'status' => 'required|in:0,1'
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $user = User::create($request->only('nik', 'nama', 'email', 'password', 'telepon', 'role'));
+        $user = User::create($request->only('nik', 'nama', 'email', 'password', 'telepon', 'role','status'));
 
         return $this->successResponse($user, 'Data Guru ditambahkan.');
     }
@@ -82,6 +83,7 @@ class StaffGuruController extends Controller
             'konfirmasi_password' => 'nullable|required_with:password|same:password|min:8',
             'telepon' => 'required|string',
             'role' => 'required|in:admin,guru_pembimbing,tata_usaha',
+            'status' => 'required|in:0,1'
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +103,7 @@ class StaffGuruController extends Controller
             'password' => $request->password ? $request->password : $user->password,
             'telepon' => $request->telepon,
             'role' => $request->role,
+            'status' => $request->status
         ]);
 
         return $this->successResponse($user, 'Data Guru diperbarui.');

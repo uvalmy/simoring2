@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('telepon');
             $table->enum('role', ['admin','guru_pembimbing','tata_usaha']);
+            $table->boolean('status')->default('1');
             $table->rememberToken();
             $table->timestamps();
         });

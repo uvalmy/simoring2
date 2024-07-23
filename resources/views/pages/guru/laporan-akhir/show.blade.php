@@ -20,28 +20,28 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Siswa
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanAkhir->pkl->siswa->nama }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Judul
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanAkhir->judul }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Status
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {!! statusBadge($laporanAkhir->status) !!}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Catatan
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanAkhir->catatan ?? '-' }}
                         </div>
                     </div>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->year('angkatan');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

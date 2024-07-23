@@ -137,7 +137,7 @@
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
                     handleValidationErrors(error, "saveData", ["kelas_id", "nis", "nama", "alamat",
-                        "telepon", "tempat_lahir", "tanggal_lahir", "angkatan"
+                        "telepon", "tempat_lahir", "tanggal_lahir", "angkatan","status"
                     ]);
                 };
 

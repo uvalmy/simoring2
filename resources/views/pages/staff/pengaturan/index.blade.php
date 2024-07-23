@@ -22,6 +22,39 @@
                                 accept=".pdf">
                             <small class="text-danger" id="errorbuku_panduan"></small>
                         </div>
+                        @if($pengaturan)
+                            <div class="form-group mb-3">
+                                <label for="persentase_nilai_pelaksanaan" class="form-label">Persentase Nilai Pelaksanaan <span class="text-danger">*</span></label>
+                                <input type="number" value="{{ $pengaturan->persentase_nilai_pelaksanaan }}" class="form-control" id="persentase_nilai_pelaksanaan" name="persentase_nilai_pelaksanaan">
+                                <small class="invalid-feedback" id="errorpersentase_nilai_pelaksanaan"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="persentase_nilai_laporan" class="form-label">Persentase Nilai Laporan <span class="text-danger">*</span></label>
+                                <input type="number" value="{{ $pengaturan->persentase_nilai_laporan }}" class="form-control" id="persentase_nilai_laporan" name="persentase_nilai_laporan">
+                                <small class="invalid-feedback" id="errorpersentase_nilai_laporan"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="persentase_nilai_sertifikat" class="form-label">Persentase Nilai Sertifikat <span class="text-danger">*</span></label>
+                                <input type="number" value="{{ $pengaturan->persentase_nilai_sertifikat }}" class="form-control" id="persentase_nilai_sertifikat" name="persentase_nilai_sertifikat">
+                                <small class="invalid-feedback" id="errorpersentase_nilai_sertifikat"></small>
+                            </div>
+                        @else
+                        <div class="form-group mb-3">
+                            <label for="persentase_nilai_pelaksanaan" class="form-label">Persentase Nilai Pelaksanaan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="persentase_nilai_pelaksanaan" name="persentase_nilai_pelaksanaan">
+                            <small class="invalid-feedback" id="errorpersentase_nilai_pelaksanaan"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="persentase_nilai_laporan" class="form-label">Persentase Nilai Laporan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="persentase_nilai_laporan" name="persentase_nilai_laporan">
+                            <small class="invalid-feedback" id="errorpersentase_nilai_laporan"></small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="persentase_nilai_sertifikat" class="form-label">Persentase Nilai Sertifikat <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="persentase_nilai_sertifikat" name="persentase_nilai_sertifikat">
+                            <small class="invalid-feedback" id="errorpersentase_nilai_sertifikat"></small>
+                        </div>
+                        @endif
                         <button type="submit" class="btn btn-primary"><i
                                 class="ti ti-plus me-1"></i>Simpan</button>
                     </form>
@@ -62,7 +95,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["buku_panduan"]);
+                    handleValidationErrors(error, "saveData", ["buku_panduan","persentase_nilai_pelaksanaan","persentase_nilai_laporan","persentase_nilai_sertifikat"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

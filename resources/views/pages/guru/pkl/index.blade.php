@@ -42,7 +42,6 @@
                             <th>Siswa</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
-                            <th>Pembimbing Dudi</th>
                             <th>Dudi</th>
                             <th width="10%">Aksi</th>
                         </tr>
@@ -75,10 +74,6 @@
                 {
                     data: 'tanggal_selesai',
                     name: 'tanggal_selesai'
-                },
-                {
-                    data: 'pembimbing_dudi',
-                    name: 'pembimbing_dudi'
                 },
                 {
                     data: 'dudi',

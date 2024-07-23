@@ -92,7 +92,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["kode", "nama", "jurusan_id"]);
+                    handleValidationErrors(error, "saveData", ["kode", "nama", "jurusan_id","status"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

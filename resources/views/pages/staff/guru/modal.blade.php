@@ -44,11 +44,20 @@
                     <div class="form-group mb-3">
                         <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
                         <select name="role" id="role" class="form-control">
-                            <option value="">-- Pilih Jurusan --</option>
+                            <option value="">-- Pilih Role --</option>
                             <option value="admin">Admin</option>
                             <option value="guru_pembimbing">Guru Pembimbing</option>
                         </select>
                         <small class="invalid-feedback" id="errorrole"></small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="">-- Pilih Status --</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                        <small class="invalid-feedback" id="errorstatus"></small>
                     </div>
                 </div>
                 <div class="modal-footer">

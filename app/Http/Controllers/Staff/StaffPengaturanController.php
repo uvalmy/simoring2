@@ -21,6 +21,9 @@ class StaffPengaturanController extends Controller
             if ($pengaturan) {
                 $validator = Validator::make($request->all(), [
                     'buku_panduan' => 'required|mimes:pdf',
+                    'persentase_nilai_pelaksanaan' => 'required|numeric',
+                    'persentase_nilai_laporan' => 'required|numeric',
+                    'persentase_nilai_sertifikat' => 'required|numeric'
                 ]);
 
                 if ($validator->fails()) {
@@ -39,12 +42,18 @@ class StaffPengaturanController extends Controller
 
                 $pengaturan->update([
                     'buku_panduan' => $bukuPanduan,
+                    'persentase_nilai_pelaksanaan' => $request->persentase_nilai_pelaksanaan,
+                    'persentase_nilai_laporan' => $request->persentase_nilai_laporan,
+                    'persentase_nilai_sertifikat' => $request->persentase_nilai_sertifikat
                 ]);
 
                 return $this->successResponse($pengaturan, 'Data berhasil diperbarui.');
             } else {
                 $validator = Validator::make($request->all(), [
                     'buku_panduan' => 'required|mimes:pdf',
+                    'persentase_nilai_pelaksanaan' => 'required|numeric',
+                    'persentase_nilai_laporan' => 'required|numeric',
+                    'persentase_nilai_sertifikat' => 'required|numeric'
                 ]);
 
                 if ($validator->fails()) {
@@ -58,6 +67,9 @@ class StaffPengaturanController extends Controller
 
                 $pengaturan = Pengaturan::create([
                     'buku_panduan' => $bukuPanduan,
+                    'persentase_nilai_pelaksanaan' => $request->persentase_nilai_pelaksanaan,
+                    'persentase_nilai_laporan' => $request->persentase_nilai_laporan,
+                    'persentase_nilai_sertifikat' => $request->persentase_nilai_sertifikat
                 ]);
 
                 return $this->successResponse($pengaturan, 'Data berhasil ditambahkan.');

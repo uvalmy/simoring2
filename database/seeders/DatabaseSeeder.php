@@ -93,6 +93,7 @@ class DatabaseSeeder extends Seeder
             [
                 'username' => 'dudi1',
                 'password' => Hash::make('password'),
+                'pembimbing' => 'Soekarno',
                 'nama' => 'PT. Telekomunikasi Indonesia Tbk',
                 'instansi' => 'Telekomunikasi',
                 'alamat' => 'Jl. Jend. Sudirman Kav. 52-53, Jakarta 12190',
@@ -101,6 +102,7 @@ class DatabaseSeeder extends Seeder
             [
                 'username' => 'dudi2',
                 'password' => Hash::make('password'),
+                'pembimbing' => 'Habibie',
                 'nama' => 'PT. Bank Rakyat Indonesia (Persero) Tbk',
                 'instansi' => 'Perbankan',
                 'alamat' => 'Gedung BRI 1, Jl. Jenderal Sudirman Kav. 44-46, Jakarta 10210',
@@ -109,6 +111,7 @@ class DatabaseSeeder extends Seeder
             [
                 'username' => 'dudi3',
                 'password' => Hash::make('password'),
+                'pembimbing' => 'Sayuti',
                 'nama' => 'PT. Pertamina (Persero)',
                 'instansi' => 'Minyak dan Gas',
                 'alamat' => 'Gedung Pertamina, Jl. Medan Merdeka Timur No. 1A, Jakarta Pusat',
@@ -117,6 +120,7 @@ class DatabaseSeeder extends Seeder
             [
                 'username' => 'dudi4',
                 'password' => Hash::make('password'),
+                'pembimbing' => 'Hatta',
                 'nama' => 'PT. Garuda Indonesia (Persero) Tbk',
                 'instansi' => 'Transportasi Udara',
                 'alamat' => 'Gedung Garuda Indonesia, Jl. Medan Merdeka Selatan No. 13, Jakarta 10110',
@@ -125,6 +129,7 @@ class DatabaseSeeder extends Seeder
             [
                 'username' => 'dudi5',
                 'password' => Hash::make('password'),
+                'pembimbing' => 'Putin',
                 'nama' => 'PT. Freeport Indonesia',
                 'instansi' => 'Pertambangan',
                 'alamat' => 'Gedung Freeport Indonesia, Jl. HR Rasuna Said Kav. X-5 No. 1-2, Jakarta 12950',
@@ -232,11 +237,11 @@ class DatabaseSeeder extends Seeder
         Cp::insert($cps);
 
         $pkls = array(
-            array('siswa_id' => '2', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'dsadad', 'pembimbing_dudi' => 'adwqeqewq'),
-            array('siswa_id' => '1', 'user_id' => '3', 'dudi_id' => '4', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'rffefe', 'pembimbing_dudi' => 'werwerwrwe'),
-            array('siswa_id' => '4', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'xhajdasd', 'pembimbing_dudi' => 'tiuerutueur'),
-            array('siswa_id' => '10', 'user_id' => '3', 'dudi_id' => '5', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'ttrhtr', 'pembimbing_dudi' => 'rttrgtrr'),
-            array('siswa_id' => '11', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'tytrry', 'pembimbing_dudi' => 'gffhfg'),
+            array('siswa_id' => '2', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'dsadad' ),
+            array('siswa_id' => '1', 'user_id' => '3', 'dudi_id' => '4', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'rffefe' ),
+            array('siswa_id' => '4', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'xhajdasd' ),
+            array('siswa_id' => '10', 'user_id' => '3', 'dudi_id' => '5', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'ttrhtr' ),
+            array('siswa_id' => '11', 'user_id' => '2', 'dudi_id' => '1', 'tanggal_mulai' => '2024-07-17', 'tanggal_selesai' => '2024-10-17', 'posisi' => 'tytrry' ),
         );
 
         Pkl::insert($pkls);

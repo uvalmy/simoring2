@@ -46,7 +46,6 @@
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
                             <th>Guru</th>
-                            <th>Pembimbing Dudi</th>
                             <th>Dudi</th>
                             <th width="15%">Aksi</th>
                         </tr>
@@ -86,10 +85,6 @@
                     name: 'user'
                 },
                 {
-                    data: 'pembimbing_dudi',
-                    name: 'pembimbing_dudi'
-                },
-                {
                     data: 'dudi',
                     name: 'dudi'
                 },
@@ -126,7 +121,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["siswa_id","user_id","dudi_id","tanggal_mulai","tanggal_selesai","posisi","pembimbing_dudi"]);
+                    handleValidationErrors(error, "saveData", ["siswa_id","user_id","dudi_id","tanggal_mulai","tanggal_selesai","posisi"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

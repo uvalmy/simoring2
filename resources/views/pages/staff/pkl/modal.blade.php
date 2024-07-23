@@ -54,11 +54,6 @@
                         <input type="text" class="form-control" id="posisi" name="posisi">
                         <small class="invalid-feedback" id="errorposisi"></small>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="pembimbing_dudi" class="form-label">Pembimbing Dudi <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="pembimbing_dudi" name="pembimbing_dudi">
-                        <small class="invalid-feedback" id="errorpembimbing_dudi"></small>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

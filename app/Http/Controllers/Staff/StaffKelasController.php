@@ -21,10 +21,10 @@ class StaffKelasController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($kelas)
                     ->addColumn('aksi', function ($kelas) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/kelas/' . $kelas->id . '`, [`id`,`kode`, `nama`, `jurusan_id`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
+                        staff/kelas/' . $kelas->id . '`, [`id`,`kode`, `nama`, `jurusan_id`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/kelas/' . $kelas->id . '`, `kelas-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
-                        return $editButton . $deleteButton;
+                        return $editButton;
                     })
                     ->addColumn('jurusan', function ($kelas) {
                         return $kelas->jurusan->nama ?? 'Belum ditentukan';
@@ -47,13 +47,14 @@ class StaffKelasController extends Controller
             'jurusan_id' => 'required|exists:jurusans,id',
             'kode' => 'required|string|unique:kelas,kode',
             'nama' => 'required|string',
+            'status' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'nama'));
+        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'nama','status'));
         return $this->successResponse($kelas, 'Data kelas ditambahkan.');
     }
 
@@ -78,6 +79,7 @@ class StaffKelasController extends Controller
             'jurusan_id' => 'required|exists:jurusans,id',
             'kode' => 'required|string|unique:kelas,kode,'. $id,
             'nama' => 'required|string',
+            'status' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
@@ -90,7 +92,7 @@ class StaffKelasController extends Controller
             return $this->errorResponse(null, 'Data kelas tidak ditemukan.', 404);
         }
 
-        $kelas->update($request->only('jurusan_id', 'kode', 'nama'));
+        $kelas->update($request->only('jurusan_id', 'kode', 'nama','status'));
         return $this->successResponse($kelas, 'Data kelas diperbarui.');
     }
 

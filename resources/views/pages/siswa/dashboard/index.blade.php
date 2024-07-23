@@ -55,7 +55,7 @@
                     <div class="col-lg-4 mb-3">Instansi</div>
                     <div class="col-lg-8 mb-3">: {{ $pkl->dudi->instansi }}</div>
                     <div class="col-lg-4 mb-3">Pembimbing dudi</div>
-                    <div class="col-lg-8 mb-3">: {{ $pkl->pembimbing_dudi }}</div>
+                    <div class="col-lg-8 mb-3">: {{ $pkl->dudi->pembimbing }}</div>
                     <div class="col-lg-4 mb-3">Alamat Perusahaan</div>
                     <div class="col-lg-8 mb-3">: {{ $pkl->dudi->alamat }}</div>
                     <div class="col-lg-4 mb-3">Telepon Perusahaan</div>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="card-body">
                         @php
-                            $totalNilaiPembimbing = (int) ($pkl->nilaiPembimbing->nilai_pelaksanaan * 0.4) + (int) ($pkl->nilaiPembimbing->nilai_laporan * 0.1) + (int) ($pkl->nilaiPembimbing->nilai_sertifikat * 0.5);
+                            $totalNilaiPembimbing = (int) ($pkl->nilaiPembimbing->nilai_pelaksanaan * (getPengaturan()->persentase_nilai_pelaksanaan / 100 )) + (int) ($pkl->nilaiPembimbing->nilai_laporan * (getPengaturan()->persentase_nilai_laporan/ 100 )) + (int) ($pkl->nilaiPembimbing->nilai_sertifikat * (getPengaturan()->persentase_nilai_sertifikat / 100 ));
                         @endphp
                         <table class="table table-bordered mb-3">
                             <thead>

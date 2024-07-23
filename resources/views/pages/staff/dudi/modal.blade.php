@@ -16,7 +16,12 @@
                         <small class="invalid-feedback" id="errorusername"></small>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
+                        <label for="pembimbing" class="form-label">Pembimbing <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="pembimbing" name="pembimbing">
+                        <small class="invalid-feedback" id="errorpembimbing"></small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="nama" class="form-label">Nama Dudi<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nama" name="nama">
                         <small class="invalid-feedback" id="errornama"></small>
                     </div>

@@ -84,7 +84,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["nik", "nama", "email","telepon", "password", "konfirmasi_password", "role"]);
+                    handleValidationErrors(error, "saveData", ["nik", "nama", "email","telepon", "password", "konfirmasi_password", "role","status"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

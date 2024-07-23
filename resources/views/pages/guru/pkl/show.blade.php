@@ -160,7 +160,7 @@
                     <form id="saveData" autocomplete="off">
                         @if($pkl->nilaiPembimbing)
                             @php
-                                $totalNilaiPembimbing = (int) ($pkl->nilaiPembimbing->nilai_pelaksanaan * 0.4) + (int) ($pkl->nilaiPembimbing->nilai_laporan * 0.1) + (int) ($pkl->nilaiPembimbing->nilai_sertifikat * 0.5);
+                                $totalNilaiPembimbing = (int) ($pkl->nilaiPembimbing->nilai_pelaksanaan * (getPengaturan()->persentase_nilai_pelaksanaan / 100 )) + (int) ($pkl->nilaiPembimbing->nilai_laporan * (getPengaturan()->persentase_nilai_laporan / 100 )) + (int) ($pkl->nilaiPembimbing->nilai_sertifikat * (getPengaturan()->persentase_nilai_sertifikat / 100 ));
                             @endphp
                             <input type="hidden" name="pkl_id" id="pkl_id" value="{{ $pkl->id }}">
                             <table class="table table-bordered mb-3">

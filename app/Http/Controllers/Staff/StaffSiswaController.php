@@ -31,10 +31,10 @@ class StaffSiswaController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($siswa)
                     ->addColumn('aksi', function ($siswa) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/siswa/' . $siswa->id . '`, [`id`,`nis`, `nama`, `kelas_id`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`, `angkatan`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
+                        staff/siswa/' . $siswa->id . '`, [`id`,`nis`, `nama`, `kelas_id`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`, `angkatan`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/siswa/' . $siswa->id . '`, `siswa-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
-                        return $editButton . $deleteButton;
+                        return $editButton;
                     })
                     ->addColumn('kelas', function ($siswa) {
                         return $siswa->kelas->nama;
@@ -62,6 +62,7 @@ class StaffSiswaController extends Controller
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
             'angkatan' => 'required',
+            'status' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
@@ -78,6 +79,7 @@ class StaffSiswaController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'angkatan' => $request->angkatan,
+            'status' => $request->status,
         ]);
 
         return $this->successResponse($siswa, 'Data siswa ditambahkan.');
@@ -109,6 +111,7 @@ class StaffSiswaController extends Controller
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
             'angkatan' => 'required',
+            'status' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
@@ -130,6 +133,7 @@ class StaffSiswaController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'angkatan' => $request->angkatan,
+            'status' => $request->status,
         ]);
 
         return $this->successResponse($siswa, 'Data siswa diperbarui.');

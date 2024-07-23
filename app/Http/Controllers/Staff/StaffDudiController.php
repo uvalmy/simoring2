@@ -20,7 +20,7 @@ class StaffDudiController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($dudi)
                     ->addColumn('aksi', function ($dudi) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/dudi/' . $dudi->id . '`, [`id`, `nama`, `username`, `instansi`, `telepon`, `alamat`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/dudi/' . $dudi->id . '`, [`id`, `nama`, `username`, `instansi`, `telepon`, `alamat`, `pembimbing`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         $deleteButton = '<button class="btn btn-sm btn-danger" onclick="confirmDelete(`/staff/dudi/' . $dudi->id . '`, `dudi-table`)"><i class="ti ti-trash me-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
@@ -46,6 +46,7 @@ class StaffDudiController extends Controller
             'instansi' => 'required|string',
             'alamat' => 'required|string',
             'telepon' => 'required|string',
+            'pembimbing' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -82,6 +83,7 @@ class StaffDudiController extends Controller
             'instansi' => 'required|string',
             'alamat' => 'required|string',
             'telepon' => 'required|string',
+            'pembimbing' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +99,7 @@ class StaffDudiController extends Controller
         $dudi->update([
             'username' => $request->input('username'),
             'password' => $request->password ? $request->password : $dudi->password,
+            'pembimbing' => $request->input('pembimbing'),
             'nama' => $request->input('nama'),
             'instansi' => $request->input('instansi'),
             'alamat' => $request->input('alamat'),

@@ -12,61 +12,61 @@
 
 @section('main')
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title fw-semibold">{{ $laporanProyek->status == 1 ? 'Detail' : 'Edit' }} 
+                    <h5 class="card-title fw-semibold">{{ $laporanProyek->status == 1 ? 'Detail' : 'Edit' }}
                         @yield('title')</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Siswa
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanProyek->pkl->siswa->nama }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Judul
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanProyek->judul }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Tanggal
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanProyek->tanggal }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Deskripsi
                         </div>
-                        <div class="col-lg-12 mb-3 ">
+                        <div class="col-lg-8 mb-3 ">
                             {{ $laporanProyek->deskripsi }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Saran
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanProyek->saran }}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Dokumentasi
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             <img src="/storage/gambar/laporan-proyek/{{ $laporanProyek->dokumentasi }}" alt=""
                                 class="img-fluid">
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Status
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {!! statusBadge($laporanProyek->status) !!}
                         </div>
-                        <div class="col-lg-12 mb-3 fw-semibold">
+                        <div class="col-lg-4 mb-3 fw-semibold">
                             Catatan
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-8 mb-3">
                             {{ $laporanProyek->catatan ?? '-' }}
                         </div>
                     </div>

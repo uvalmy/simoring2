@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('pengaturans', function (Blueprint $table) {
             $table->id();
             $table->string('buku_panduan');
+            $table->integer('persentase_nilai_pelaksanaan');
+            $table->integer('persentase_nilai_laporan');
+            $table->integer('persentase_nilai_sertifikat');
             $table->timestamps();
         });
     }

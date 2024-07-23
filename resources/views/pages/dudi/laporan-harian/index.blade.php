@@ -94,17 +94,7 @@
         });
 
         const confirmStatus = (url, tableId) => {
-            Swal.fire({
-                title: "Apakah Kamu Yakin?",
-                text: "Ingin menyetujui data ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, setujui!",
-                cancelButtonText: "Tidak",
-            }).then((result) => {
-                if (result.isConfirmed) {
+
                     const data = null;
 
                     const successCallback = function(response) {
@@ -116,8 +106,6 @@
                     };
 
                     ajaxCall(url, "PUT", data, successCallback, errorCallback);
-                }
-            });
         };
     </script>
 @endpush

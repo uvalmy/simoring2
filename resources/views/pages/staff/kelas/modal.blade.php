@@ -29,6 +29,15 @@
                         </select>
                         <small class="invalid-feedback" id="errorjurusan_id"></small>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="">-- Pilih Status --</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                        <small class="invalid-feedback" id="errorstatus"></small>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
