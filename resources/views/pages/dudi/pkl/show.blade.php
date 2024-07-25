@@ -74,7 +74,7 @@
         <div class="col-12 mb-3">
             <div class="card mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title fw-semibold"> Data Nilai Siswa</h5>
+                    <h5 class="card-title fw-semibold"> Data Nilai Dudi</h5>
                 </div>
                 <div class="card-body">
                     <form id="saveData" autocomplete="off">

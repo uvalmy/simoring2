@@ -141,18 +141,6 @@ class StaffSiswaController extends Controller
         return $this->successResponse($siswa, 'Data siswa diperbarui.');
     }
 
-    public function destroy($id)
-    {
-        $siswa = Siswa::find($id);
-
-        if (!$siswa) {
-            return $this->errorResponse(null, 'Data siswa tidak ditemukan.', 404);
-        }
-
-        $siswa->delete();
-        return $this->successResponse(null, 'Data siswa dihapus.');
-    }
-
     public function import(Request $request)
     {
         $validator = Validator::make($request->all(), [

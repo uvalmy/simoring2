@@ -41,7 +41,7 @@
         <div class="col-12 mb-3">
             <div class="card mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title fw-semibold"> Data Siswa</h5>
+                    <h5 class="card-title fw-semibold"> Data Pkl</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -49,10 +49,12 @@
                         <div class="col-lg-8 mb-3">: {{ $pkl->siswa->nis }}</div>
                         <div class="col-lg-4 mb-3">Nama siswa</div>
                         <div class="col-lg-8 mb-3">: {{ $pkl->siswa->nama }}</div>
+                        <div class="col-lg-4 mb-3">Guru Pembimbing</div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->user->nama }}</div>
+                        <div class="col-lg-4 mb-3">Telepon Guru Pembimbing </div>
+                        <div class="col-lg-8 mb-3">: {{ $pkl->user->telepon }}</div>
                         <div class="col-lg-4 mb-3">Pembimbing Dudi</div>
                         <div class="col-lg-8 mb-3">: {{ $pkl->dudi->pembimbing }}</div>
-                        <div class="col-lg-4 mb-3">Telepon Pembimbing Dudi</div>
-                        <div class="col-lg-8 mb-3">: {{ $pkl->user->telepon }}</div>
                         <div class="col-lg-4 mb-3">Nama Perusahaan PKL</div>
                         <div class="col-lg-8 mb-3">: {{ $pkl->dudi->nama }}</div>
                         <div class="col-lg-4 mb-3">Instansi</div>

@@ -90,16 +90,4 @@ class StaffJurusanController extends Controller
         $jurusan->update($request->only('kode', 'nama', 'status'));
         return $this->successResponse($jurusan, 'Data jurusan diperbarui.');
     }
-
-    public function destroy($id)
-    {
-        $jurusan = Jurusan::find($id);
-
-        if (!$jurusan) {
-            return $this->errorResponse(null, 'Data jurusan tidak ditemukan.', 404);
-        }
-
-        $jurusan->delete();
-        return $this->successResponse(null, 'Data jurusan dihapus.');
-    }
 }

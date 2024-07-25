@@ -53,7 +53,7 @@ class StaffDudiController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $dudi = Dudi::create($request->only('username', 'password', 'nama', 'instansi', 'alamat', 'telepon'));
+        $dudi = Dudi::create($request->only('username', 'password', 'nama', 'instansi', 'alamat', 'telepon','pembimbing'));
 
         return $this->successResponse($dudi, 'Data DUDI ditambahkan.');
     }
