@@ -1,37 +1,36 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Dudi\DudiPklController;
-use App\Http\Controllers\Guru\GuruPklController;
-use App\Http\Controllers\Staff\StaffCpController;
-use App\Http\Controllers\Dudi\DudiNilaiController;
-use App\Http\Controllers\Guru\GuruNilaiController;
-use App\Http\Controllers\Siswa\SiswaPklController;
-use App\Http\Controllers\Staff\StaffPklController;
-use App\Http\Controllers\Staff\StaffDudiController;
-use App\Http\Controllers\Staff\StaffGuruController;
-use App\Http\Controllers\Dudi\DudiProfileController;
-use App\Http\Controllers\Guru\GuruProfileController;
-use App\Http\Controllers\Staff\StaffKelasController;
-use App\Http\Controllers\Staff\StaffSiswaController;
 use App\Http\Controllers\Dudi\DudiDashboardController;
-use App\Http\Controllers\Dudi\DudiNilaiDudiController;
-use App\Http\Controllers\Guru\GuruDashboardController;
-use App\Http\Controllers\Siswa\SiswaProfileController;
-use App\Http\Controllers\Staff\StaffJurusanController;
-use App\Http\Controllers\Staff\StaffProfileController;
-use App\Http\Controllers\Siswa\SiswaDashboardController;
-use App\Http\Controllers\Staff\StaffDashboardController;
-use App\Http\Controllers\Guru\GuruLaporanAkhirController;
-use App\Http\Controllers\Staff\StaffPengaturanController;
 use App\Http\Controllers\Dudi\DudiLaporanHarianController;
 use App\Http\Controllers\Dudi\DudiLaporanProyekController;
+use App\Http\Controllers\Dudi\DudiNilaiController;
+use App\Http\Controllers\Dudi\DudiPklController;
+use App\Http\Controllers\Dudi\DudiProfileController;
+use App\Http\Controllers\Guru\GuruDashboardController;
+use App\Http\Controllers\Guru\GuruLaporanAkhirController;
 use App\Http\Controllers\Guru\GuruLaporanHarianController;
 use App\Http\Controllers\Guru\GuruLaporanProyekController;
+use App\Http\Controllers\Guru\GuruNilaiController;
+use App\Http\Controllers\Guru\GuruPklController;
+use App\Http\Controllers\Guru\GuruProfileController;
+use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaLaporanAkhirController;
 use App\Http\Controllers\Siswa\SiswaLaporanHarianController;
 use App\Http\Controllers\Siswa\SiswaLaporanProyekController;
+use App\Http\Controllers\Siswa\SiswaPklController;
+use App\Http\Controllers\Siswa\SiswaProfileController;
+use App\Http\Controllers\Staff\StaffCpController;
+use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Staff\StaffDudiController;
+use App\Http\Controllers\Staff\StaffGuruController;
+use App\Http\Controllers\Staff\StaffJurusanController;
+use App\Http\Controllers\Staff\StaffKelasController;
+use App\Http\Controllers\Staff\StaffPengaturanController;
+use App\Http\Controllers\Staff\StaffPklController;
+use App\Http\Controllers\Staff\StaffProfileController;
+use App\Http\Controllers\Staff\StaffSiswaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

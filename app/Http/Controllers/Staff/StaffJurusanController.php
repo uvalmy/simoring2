@@ -20,8 +20,7 @@ class StaffJurusanController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($jurusans)
                     ->addColumn('aksi', function ($jurusan) {
-                        $status = (string) $jurusan->status;
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/jurusan/' . $jurusan->id . '`, [`id`,`kode`, `nama`,`'.$status.'`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/jurusan/' . $jurusan->id . '`, [`id`,`kode`, `nama`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })

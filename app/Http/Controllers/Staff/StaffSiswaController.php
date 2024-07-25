@@ -31,8 +31,7 @@ class StaffSiswaController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($siswa)
                     ->addColumn('aksi', function ($siswa) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
-                        staff/siswa/' . $siswa->id . '`, [`id`,`nis`, `nama`, `kelas_id`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`, `angkatan`,`status`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/siswa/' . $siswa->id . '`, [`id`,`nis`, `nama`, `kelas_id`, `alamat`, `telepon`, `tempat_lahir`, `tanggal_lahir`, `angkatan`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })
@@ -47,7 +46,7 @@ class StaffSiswaController extends Controller
             return $this->successResponse($siswa, 'Data siswa ditemukan.');
         }
 
-        $kelas = Kelas::with('jurusan')->get();
+        $kelas = Kelas::with('jurusan')->where('status', 1)->get();
         return view('pages.staff.siswa.index', compact('kelas'));
     }
 

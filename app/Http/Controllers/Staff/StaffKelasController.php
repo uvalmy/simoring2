@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Models\Kelas;
+use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class StaffKelasController extends Controller
 {
@@ -21,8 +21,7 @@ class StaffKelasController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($kelas)
                     ->addColumn('aksi', function ($kelas) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
-                        staff/kelas/' . $kelas->id . '`, [`id`,`kode`, `nama`, `jurusan_id`,`status`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/kelas/' . $kelas->id . '`, [`id`,`kode`, `nama`, `jurusan_id`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })
@@ -37,7 +36,7 @@ class StaffKelasController extends Controller
             return $this->successResponse($kelas, 'Data kelas ditemukan.');
         }
 
-        $jurusan = Jurusan::all();
+        $jurusan = Jurusan::where('status', 1)->get();
         return view('pages.staff.kelas.index', compact('jurusan'));
     }
 
@@ -54,7 +53,7 @@ class StaffKelasController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'nama','status'));
+        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'nama', 'status'));
         return $this->successResponse($kelas, 'Data kelas ditambahkan.');
     }
 
@@ -77,7 +76,7 @@ class StaffKelasController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'jurusan_id' => 'required|exists:jurusans,id',
-            'kode' => 'required|string|unique:kelas,kode,'. $id,
+            'kode' => 'required|string|unique:kelas,kode,' . $id,
             'nama' => 'required|string',
             'status' => 'required|in:0,1',
         ]);
@@ -92,7 +91,7 @@ class StaffKelasController extends Controller
             return $this->errorResponse(null, 'Data kelas tidak ditemukan.', 404);
         }
 
-        $kelas->update($request->only('jurusan_id', 'kode', 'nama','status'));
+        $kelas->update($request->only('jurusan_id', 'kode', 'nama', 'status'));
         return $this->successResponse($kelas, 'Data kelas diperbarui.');
     }
 

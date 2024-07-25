@@ -20,8 +20,7 @@ class StaffGuruController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($users)
                     ->addColumn('aksi', function ($user) {
-                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/
-                        staff/guru/' . $user->id . '`, [`id`,`nik`, `nama`, `email`, `role`, `telepon`,`status`])">
+                        $editButton = '<button class="btn btn-sm btn-warning me-1" onclick="getModal(`createModal`,  `/staff/guru/' . $user->id . '`, [`id`,`nik`, `nama`, `email`, `role`, `telepon`,`status`])">
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })
