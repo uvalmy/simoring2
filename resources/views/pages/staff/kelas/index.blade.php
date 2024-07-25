@@ -25,7 +25,6 @@
                             <th width="5%">#</th>
                             <th>Id</th>
                             <th>Kode</th>
-                            <th>Nama</th>
                             <th>Jurusan</th>
                             <th width="15%">Aksi</th>
                         </tr>
@@ -55,10 +54,6 @@
                 {
                     data: 'kode',
                     name: 'kode'
-                },
-                {
-                    data: 'nama',
-                    name: 'nama'
                 },
                 {
                     data: 'jurusan',
@@ -92,7 +87,7 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["kode", "nama", "jurusan_id","status"]);
+                    handleValidationErrors(error, "saveData", ["kode", "jurusan_id","status"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

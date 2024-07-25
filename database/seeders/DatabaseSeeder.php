@@ -84,7 +84,6 @@ class DatabaseSeeder extends Seeder
                 Kelas::create([
                     'jurusan_id' => $jurusan->id,
                     'kode' => $kode,
-                    'nama' => $nama,
                 ]);
             }
         }

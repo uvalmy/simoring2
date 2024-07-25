@@ -15,11 +15,6 @@
                         <small class="invalid-feedback" id="errorkode"></small>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nama" name="nama">
-                        <small class="invalid-feedback" id="errornama"></small>
-                    </div>
-                    <div class="form-group mb-3">
                         <label for="jurusan_id" class="form-label">Jurusan <span class="text-danger">*</span></label>
                         <select name="jurusan_id" id="jurusan_id" class="form-control">
                             <option value="">-- Pilih Jurusan --</option>

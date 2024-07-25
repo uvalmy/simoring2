@@ -45,7 +45,6 @@ class StaffKelasController extends Controller
         $validator = Validator::make($request->all(), [
             'jurusan_id' => 'required|exists:jurusans,id',
             'kode' => 'required|string|unique:kelas,kode',
-            'nama' => 'required|string',
             'status' => 'required|in:0,1',
         ]);
 
@@ -53,7 +52,7 @@ class StaffKelasController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'nama', 'status'));
+        $kelas = Kelas::create($request->only('jurusan_id', 'kode', 'status'));
         return $this->successResponse($kelas, 'Data kelas ditambahkan.');
     }
 
@@ -77,7 +76,6 @@ class StaffKelasController extends Controller
         $validator = Validator::make($request->all(), [
             'jurusan_id' => 'required|exists:jurusans,id',
             'kode' => 'required|string|unique:kelas,kode,' . $id,
-            'nama' => 'required|string',
             'status' => 'required|in:0,1',
         ]);
 
@@ -91,7 +89,7 @@ class StaffKelasController extends Controller
             return $this->errorResponse(null, 'Data kelas tidak ditemukan.', 404);
         }
 
-        $kelas->update($request->only('jurusan_id', 'kode', 'nama', 'status'));
+        $kelas->update($request->only('jurusan_id', 'kode', 'status'));
         return $this->successResponse($kelas, 'Data kelas diperbarui.');
     }
 

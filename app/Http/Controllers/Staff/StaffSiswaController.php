@@ -36,7 +36,7 @@ class StaffSiswaController extends Controller
                         return $editButton;
                     })
                     ->addColumn('kelas', function ($siswa) {
-                        return $siswa->kelas->nama;
+                        return $siswa->kelas->kode;
                     })
                     ->addIndexColumn()
                     ->rawColumns(['aksi'])

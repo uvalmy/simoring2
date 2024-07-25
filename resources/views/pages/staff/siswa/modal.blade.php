@@ -42,7 +42,7 @@
                         <select name="kelas_id" id="kelas_id" class="form-control">
                             <option value="">-- Pilih Kelas --</option>
                             @foreach ($kelas as $row)
-                                <option value="{{ $row->id }}">{{ $row->kode . ' - ' . $row->nama }}</option>
+                                <option value="{{ $row->id }}">{{ $row->kode . ' - ' . $row->jurusan->nama }}</option>
                             @endforeach
                         </select>
                         <small class="invalid-feedback" id="errorkelas_id"></small>

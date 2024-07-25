@@ -21,7 +21,8 @@
                         <tr>
                             <th width="5%">#</th>
                             <th>Username</th>
-                            <th>Nama</th>
+                            <th>Pembimbing</th>
+                            <th>Nama Dudi</th>
                             <th>Instansi</th>
                             <th width="15%">Aksi</th>
                         </tr>
@@ -47,6 +48,10 @@
                 {
                     data: 'username',
                     name: 'username'
+                },
+                {
+                    data: 'pembimbing',
+                    name: 'pembimbing'
                 },
                 {
                     data: 'nama',
