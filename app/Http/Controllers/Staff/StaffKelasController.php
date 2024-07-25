@@ -28,8 +28,11 @@ class StaffKelasController extends Controller
                     ->addColumn('jurusan', function ($kelas) {
                         return $kelas->jurusan->nama ?? 'Belum ditentukan';
                     })
+                    ->addColumn('status', function ($jurusan) {
+                        return status($jurusan->status);
+                    })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi', 'jurusan'])
+                    ->rawColumns(['aksi', 'jurusan', 'status'])
                     ->make(true);
             }
 

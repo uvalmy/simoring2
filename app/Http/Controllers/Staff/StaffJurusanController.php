@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class StaffJurusanController extends Controller
 {
@@ -24,8 +24,11 @@ class StaffJurusanController extends Controller
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })
+                    ->addColumn('status', function ($jurusan) {
+                        return status($jurusan->status);
+                    })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'status'])
                     ->make(true);
             }
 
@@ -47,7 +50,7 @@ class StaffJurusanController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $jurusan = Jurusan::create($request->only('kode', 'nama','status'));
+        $jurusan = Jurusan::create($request->only('kode', 'nama', 'status'));
         return $this->successResponse($jurusan, 'Data jurusan ditambahkan.');
     }
 
@@ -84,7 +87,7 @@ class StaffJurusanController extends Controller
             return $this->errorResponse(null, 'Data jurusan tidak ditemukan.', 404);
         }
 
-        $jurusan->update($request->only('kode', 'nama','status'));
+        $jurusan->update($request->only('kode', 'nama', 'status'));
         return $this->successResponse($jurusan, 'Data jurusan diperbarui.');
     }
 

@@ -1,7 +1,7 @@
 <?php
 
-use Carbon\Carbon;
 use App\Models\Pengaturan;
+use Carbon\Carbon;
 
 if (!function_exists('formatTanggal')) {
     function formatTanggal($tanggal = null, $format = 'l, j F Y')
@@ -22,6 +22,17 @@ if (!function_exists('statusBadge')) {
             return '<span class="badge bg-danger">Direvisi</span>';
         } else {
             return '<span class="badge bg-secondary">Unknown</span>';
+        }
+    }
+}
+
+if (!function_exists('status')) {
+    function status($status)
+    {
+        if ($status == 0) {
+            return '<span class="badge bg-danger">Tidak Aktif</span>';
+        } elseif ($status == 1) {
+            return '<span class="badge bg-success">Aktif</span>';
         }
     }
 }
@@ -85,7 +96,7 @@ if (!function_exists('compressImage')) {
     function compressImage($source_image, $compress_image)
     {
         $image_info = getimagesize($source_image);
-        if ($image_info['mime'] == 'image/jpeg' || $image_info['mime'] == 'image/jpg' ) {
+        if ($image_info['mime'] == 'image/jpeg' || $image_info['mime'] == 'image/jpg') {
             $source_image_resource = imagecreatefromjpeg($source_image);
             imagejpeg($source_image_resource, $compress_image, 10);
         } elseif ($image_info['mime'] == 'image/png') {

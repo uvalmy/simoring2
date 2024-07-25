@@ -38,8 +38,11 @@ class StaffSiswaController extends Controller
                     ->addColumn('kelas', function ($siswa) {
                         return $siswa->kelas->kode;
                     })
+                    ->addColumn('status', function ($siswa) {
+                        return status($siswa->status);
+                    })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'kelas', 'status'])
                     ->make(true);
             }
 

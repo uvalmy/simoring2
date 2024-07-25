@@ -64,6 +64,7 @@
                             <th>Nama</th>
                             <th>Kelas</th>
                             <th>Angkatan</th>
+                            <th width="10%">Status</th>
                             <th width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -103,6 +104,10 @@
                 {
                     data: 'angkatan',
                     name: 'angkatan'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'aksi',

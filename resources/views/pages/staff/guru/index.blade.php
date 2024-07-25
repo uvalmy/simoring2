@@ -23,6 +23,7 @@
                             <th>Nik</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th width="10%">Status</th>
                             <th width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -57,6 +58,10 @@
                     name: 'email'
                 },
                 {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
                     data: 'aksi',
                     name: 'aksi'
                 },
@@ -84,7 +89,9 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-primary", false,
                         `<i class="ti ti-plus me-1"></i>Simpan`);
-                    handleValidationErrors(error, "saveData", ["nik", "nama", "email","telepon", "password", "konfirmasi_password", "role","status"]);
+                    handleValidationErrors(error, "saveData", ["nik", "nama", "email", "telepon",
+                        "password", "konfirmasi_password", "role", "status"
+                    ]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

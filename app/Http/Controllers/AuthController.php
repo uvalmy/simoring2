@@ -35,10 +35,16 @@ class AuthController extends Controller
             $user = null;
             if (filter_var($request->username, FILTER_VALIDATE_EMAIL) && auth('web')->attempt(['email' => $request->username, 'password' => $request->password])) {
                 $user = auth('web')->user();
+                if ($user->status == 0) {
+                    return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
+                }
             } elseif (ctype_alnum($request->username) && auth('dudi')->attempt(['username' => $request->username, 'password' => $request->password])) {
                 $user = auth('dudi')->user();
             } elseif (ctype_digit($request->username) && auth('siswa')->attempt(['nis' => $request->username, 'password' => $request->password])) {
                 $user = auth('siswa')->user();
+                if ($user->status == 0) {
+                    return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
+                }
             } else {
                 return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
             }
@@ -53,7 +59,7 @@ class AuthController extends Controller
     {
         $guards = ['web', 'dudi', 'siswa'];
 
-        foreach($guards as $row){
+        foreach ($guards as $row) {
             auth($row)->logout();
         }
 

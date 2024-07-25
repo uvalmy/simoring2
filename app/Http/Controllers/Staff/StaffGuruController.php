@@ -24,8 +24,11 @@ class StaffGuruController extends Controller
                         <i class="ti ti-edit me-1"></i>Edit</button>';
                         return $editButton;
                     })
+                    ->addColumn('status', function ($user) {
+                        return status($user->status);
+                    })
                     ->addIndexColumn()
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'status'])
                     ->make(true);
             }
 

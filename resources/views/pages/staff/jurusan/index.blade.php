@@ -22,6 +22,7 @@
                             <th width="5%">#</th>
                             <th>Kode</th>
                             <th>Nama</th>
+                            <th width="10%">Status</th>
                             <th width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -50,6 +51,10 @@
                 {
                     data: 'nama',
                     name: 'nama'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'aksi',
