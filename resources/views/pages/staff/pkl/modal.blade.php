@@ -14,7 +14,7 @@
                         <select name="siswa_id" id="siswa_id" class="form-control">
                             <option value="">-- Pilih Siswa --</option>
                             @foreach ($siswa as $row)
-                                <option value="{{ $row->id }}">{{  $row->nama }} - {{ $row->kelas->nama }}</option>
+                                <option value="{{ $row->id }}">{{  $row->nama }} </option>
                             @endforeach
                         </select>
                         <small class="invalid-feedback" id="errorsiswa_id"></small>
