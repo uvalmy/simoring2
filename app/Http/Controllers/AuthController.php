@@ -13,47 +13,59 @@ class AuthController extends Controller
     use ApiResponder;
 
     public function login(Request $request)
-    {
-        if (auth()->check()) {
-            if (auth()->user()->role == 'admin') {
-                return redirect('/staff');
-            } elseif (auth()->user()->role == 'guru_pembimbing') {
-                return redirect('/guru');
-            }
+{
+    if (auth()->check()) {
+        if (auth()->user()->role == 'admin') {
+            return redirect('/staff');
+        } elseif (auth()->user()->role == 'guru_pembimbing') {
+            return redirect('/guru');
+        }
+    }
+
+    if ($request->isMethod('post')) {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        if ($request->isMethod('post')) {
-            $validator = Validator::make($request->all(), [
-                'username' => 'required',
-                'password' => 'required|min:8',
-            ]);
+        $credentials = ['password' => $request->password];
 
-            if ($validator->fails()) {
-                return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $request->username;
+            $guard = 'web';
+        } elseif (ctype_alnum($request->username)) {
+            $credentials['username'] = $request->username;
+            $guard = 'dudi';
+        } elseif (ctype_digit($request->username)) {
+            $credentials['nis'] = $request->username;
+            $guard = 'siswa';
+        } else {
+            return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
+        }
+
+        if (auth($guard)->attempt($credentials)) {
+            $user = auth($guard)->user();
+            if ($guard !== 'dudi' && $user->status == 0) {
+                return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
             }
-
-            $user = null;
-            if (filter_var($request->username, FILTER_VALIDATE_EMAIL) && auth('web')->attempt(['email' => $request->username, 'password' => $request->password])) {
-                $user = auth('web')->user();
-                if ($user->status == 0) {
-                    return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
-                }
-            } elseif (ctype_alnum($request->username) && auth('dudi')->attempt(['username' => $request->username, 'password' => $request->password])) {
-                $user = auth('dudi')->user();
-            } elseif (ctype_digit($request->username) && auth('siswa')->attempt(['nis' => $request->username, 'password' => $request->password])) {
-                $user = auth('siswa')->user();
-                if ($user->status == 0) {
-                    return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
-                }
+            return $this->successResponse($user, 'Login berhasil.');
+        } else {
+            $user = auth($guard)->getProvider()->retrieveByCredentials(array_diff_key($credentials, ['password' => '']));
+            if ($user) {
+                return $this->errorResponse(null, 'Password yang Anda masukkan salah.', 401);
             } else {
                 return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
             }
-
-            return $this->successResponse($user, 'Login berhasil.');
         }
-
-        return view('pages.auth.login');
     }
+
+    return view('pages.auth.login');
+}
+
 
     public function logout(Request $request)
     {
