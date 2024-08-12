@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dudi;
+use App\Models\Siswa;
+use App\Models\User;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -13,59 +17,61 @@ class AuthController extends Controller
     use ApiResponder;
 
     public function login(Request $request)
-{
-    if (auth()->check()) {
-        if (auth()->user()->role == 'admin') {
-            return redirect('/staff');
-        } elseif (auth()->user()->role == 'guru_pembimbing') {
-            return redirect('/guru');
-        }
-    }
-
-    if ($request->isMethod('post')) {
-        $validator = Validator::make($request->all(), [
-            'username' => 'required',
-            'password' => 'required|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
-        }
-
-        $credentials = ['password' => $request->password];
-
-        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
-            $credentials['email'] = $request->username;
-            $guard = 'web';
-        } elseif (ctype_alnum($request->username)) {
-            $credentials['username'] = $request->username;
-            $guard = 'dudi';
-        } elseif (ctype_digit($request->username)) {
-            $credentials['nis'] = $request->username;
-            $guard = 'siswa';
-        } else {
-            return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
-        }
-
-        if (auth($guard)->attempt($credentials)) {
-            $user = auth($guard)->user();
-            if ($guard !== 'dudi' && $user->status == 0) {
-                return $this->errorResponse(null, 'Akun anda sudah tidak aktif.', 401);
+    {
+        if (auth()->check()) {
+            if (auth()->user()->role == 'admin') {
+                return redirect('/staff');
+            } elseif (auth()->user()->role == 'guru_pembimbing') {
+                return redirect('/guru');
             }
-            return $this->successResponse($user, 'Login berhasil.');
-        } else {
-            $user = auth($guard)->getProvider()->retrieveByCredentials(array_diff_key($credentials, ['password' => '']));
-            if ($user) {
-                return $this->errorResponse(null, 'Password yang Anda masukkan salah.', 401);
+        }
+
+        if ($request->isMethod('post')) {
+            $validator = Validator::make($request->all(), [
+                'username' => 'required',
+                'password' => 'required|min:8',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
+            }
+
+            $user = null;
+            $guard = null;
+            $password = $request->password;
+
+            if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+                $user = User::where('email', $request->username)->first();
+                $guard = 'web';
             } else {
-                return $this->errorResponse(null, 'Username atau password tidak valid.', 401);
+                $user = Dudi::where('username', $request->username)->first();
+                if ($user) {
+                    $guard = 'dudi';
+                } else {
+                    $user = Siswa::where('nis', $request->username)->first();
+                    $guard = 'siswa';
+                }
             }
+
+            if (!$user) {
+                return $this->errorResponse(null, 'Akun tidak ditemukan.', 404);
+            }
+
+            if ($guard != 'dudi' && $user->status == '0') {
+                return $this->errorResponse(null, 'Akun tidak aktif.', 401);
+            }
+
+            if (!Hash::check($password, $user->password)) {
+                return $this->errorResponse(null, 'Password salah.', 401);
+            }
+
+            auth()->guard($guard)->login($user);
+
+            return $this->successResponse($user, 'Login berhasil.');
         }
+
+        return view('pages.auth.login');
     }
-
-    return view('pages.auth.login');
-}
-
 
     public function logout(Request $request)
     {
